@@ -35,7 +35,7 @@ export const authOption = {
                 const user = await User.findOne({ email })
 
                 if (user && user.password === password) {
-                    console.log(user) //hanya terprint di vscode
+                    console.log({ user }) //hanya terprint di vscode
                     return user
                 }
 
