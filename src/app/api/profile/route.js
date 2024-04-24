@@ -8,10 +8,7 @@ export async function POST(req) {
 
     mongoose.connect(process.env.MONGO_URL)
     const session = await getServerSession(authOption)
-    // const response = await User.findOneAndUpdate({ email }, { name: name })
-    const user = await User.findOne({ email })
-    user.name = name
-    const response = user.save()
+    const response = await User.findOneAndUpdate({ email }, { name: name, phone: phone })
 
-    return Response.json({ response })
+    return Response.json(response)
 }
