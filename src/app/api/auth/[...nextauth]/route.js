@@ -7,8 +7,7 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from "@/libs/mongoConnect";
 
 
-
-const handler = NextAuth({
+export const authOption = {
     // Configure one or more authentication providers
     secret: process.env.SECRET,
     adapter: MongoDBAdapter(clientPromise),
@@ -45,5 +44,8 @@ const handler = NextAuth({
         })
         // ...add more providers here
     ],
-})
+}
+
+
+const handler = NextAuth(authOption)
 export { handler as GET, handler as POST }
