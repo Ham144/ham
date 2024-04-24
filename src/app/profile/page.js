@@ -12,19 +12,22 @@ const Profilepage = () => {
 
     const user = session?.data?.user
 
-    async function getDataFromDatabase() {
-        mongoose.connect(process.env.MONGO_URL)
-        const _user = await User.findOne(user?.email)
-
-        console.log(_user)
-    }
-
-    getDataFromDatabase()
-
-    const [name, setName] = useState(user?.name)
-    const [email, setEmail] = useState(user?.email) //ilegal change
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("") //ilegal change
     const [phone, setPhone] = useState("")
 
+
+
+    async function handleRefresh() {
+        const response = await fetch("/api/profile")
+        const data = await response.json()
+        setName(prev => prev = data.name)
+        setEmail(prev => prev = data.email)
+        setPhone(prev => prev = data.phone)
+    }
+    useEffect(() => {
+        handleRefresh()
+    }, [])
 
 
     async function handleSave(ev) {
@@ -64,6 +67,7 @@ const Profilepage = () => {
             <Toaster />
             <div className='flex md:w-[50%] w-full mt-6 border-t-8  border-yellow-500 mx-auto py-5 px-12  bg-slate-100 min-h-[500px] rounded-b-md shadow-md'>
                 <form onSubmit={handleSave} className='flex flex-col w-full gap-y-5 h-[120%] '>
+                    <button type='button' onClick={handleRefresh} className='shadow-md active:shadow-none px-6 py-2'>Refresh</button>
                     <div className='flex justify-between items-center'>
                         <label htmlFor="name" className='text-primer'>Name </label>
                         <input type="text" id='name' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={name} onChange={e => setName(e.target.value)} />
