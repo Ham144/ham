@@ -10,13 +10,12 @@ const Profilepage = () => {
 
     const user = session?.data?.user
 
+    console.log(session)
+
     const [name, setName] = useState(user?.name)
     const [email, setEmail] = useState(user?.email) //ilegal change
-    const [phone, setPhone] = useState(user?.phone) //ilegal change
+    const [phone, setPhone] = useState("")
 
-    useEffect(() => {
-        setName(name)
-    }, [name])
 
 
     async function handleSave(ev) {
