@@ -1,8 +1,10 @@
 "use client"
+import mongoose from 'mongoose'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import toast, { Toast, Toaster } from 'react-hot-toast'
+import { User } from '../models/user'
 
 const Profilepage = () => {
     let session = useSession()
@@ -10,7 +12,14 @@ const Profilepage = () => {
 
     const user = session?.data?.user
 
-    console.log(session)
+    async function getDataFromDatabase() {
+        mongoose.connect(process.env.MONGO_URL)
+        const _user = await User.findOne(user?.email)
+
+        console.log(_user)
+    }
+
+    getDataFromDatabase()
 
     const [name, setName] = useState(user?.name)
     const [email, setEmail] = useState(user?.email) //ilegal change
@@ -32,8 +41,9 @@ const Profilepage = () => {
                 })
             })
             const data = await response.json()
-            console.log(data)
-            if (response.ok) return toast.success("Saved")
+            // console.log(data)
+            if (response.ok) toast.success("Saved")
+            return
         } catch (error) {
             toast.error("failed saving")
             console.log(error)
@@ -77,10 +87,11 @@ const Profilepage = () => {
                     <div className='flex justify-between items-center'>
                         <label htmlFor="confirm" className='text-primer  text-wrap max-md:text-sm'>Confirm Password</label>
                         <input type="password" id='confirmnewpassword' className='px-3  bg-slate-200  w-[70%] max-sm:w-[100%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' />
-                    </div> */}
+                    </div>
 
+                */}
                     <div className='flex justify-between items-center'>
-                        <label htmlFor="phone" className='text-primer'>Phone </label>
+                        <label htmlFor="phone" className='text-primer'>phone </label>
                         <input type="text" id='phone' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={phone} onChange={e => setPhone(e.target.value)} />
                     </div>
 

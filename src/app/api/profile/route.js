@@ -8,7 +8,6 @@ export async function POST(req) {
 
     mongoose.connect(process.env.MONGO_URL)
     const session = await getServerSession(authOption)
-    const response = await User.findOneAndUpdate({ email }, { name: name, phone: { $setOnInsert: phone } })
-
+    const response = await User.findOneAndUpdate({ email }, { name: name, phone: phone })
     return Response.json(response)
 }
