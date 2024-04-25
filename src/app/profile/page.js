@@ -1,16 +1,15 @@
 "use client"
 import mongoose from 'mongoose'
 import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import toast, { Toast, Toaster } from 'react-hot-toast'
-import { User } from '../models/user'
 
 const Profilepage = () => {
     let session = useSession()
 
 
-    const user = session?.data?.user
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("") //ilegal change
@@ -65,7 +64,8 @@ const Profilepage = () => {
     return (
         <section className='flex w-full px-4 '>
             <Toaster />
-            <div className='flex md:w-[50%] w-full mt-6 border-t-8  border-yellow-500 mx-auto py-5 px-12  bg-slate-100 min-h-[500px] rounded-b-md shadow-md'>
+            <div className='flex md:w-[50%] w-full mt-6 border-t-8  border-yellow-500 mx-auto py-5 px-12  bg-slate-100 min-h-[500px] rounded-b-md shadow-md gap-x-5 max-md:flex-col max-md:items-center'>
+                <Image className='w-[50%] h-[50%]  rounded-full border-4 border-yellow-500' src={session?.data?.user?.image || "/profile.png"} alt='profile pic' width={400} height={400} />
                 <form onSubmit={handleSave} className='flex flex-col w-full gap-y-5 h-[120%] '>
                     <button type='button' onClick={handleRefresh} className='shadow-md active:shadow-none px-6 py-2'>Refresh</button>
                     <div className='flex justify-between items-center'>

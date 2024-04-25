@@ -12,7 +12,7 @@ const Navbar = () => {
     const router = useRouter()
     const session = useSession() //data return authentication semua disini
 
-    // console.log(session)
+    console.log(session)
 
     return (
         <nav className='flex justify-between items-center md:px-5 px-1 py-4 w-full  border-b-2 '>
