@@ -23,6 +23,7 @@ const Profilepage = () => {
         setName(prev => prev = data.name)
         setEmail(prev => prev = data.email)
         setPhone(prev => prev = data.phone)
+
     }
     useEffect(() => {
         handleRefresh()
@@ -53,7 +54,20 @@ const Profilepage = () => {
 
     }
 
-    function handleChangePicture(ev) {
+    async function handleChangePicture(ev) {
+        const file = ev.target.values
+        try {
+            const data = new FormData()
+            data.set("file", file[0])
+            const resposne = await fetch("/api/changepicture", {
+                method: "POST",
+                body: data
+            })
+            if (resposne.ok)
+                console.log("Sukses sent to backend")
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 
@@ -68,13 +82,15 @@ const Profilepage = () => {
     return (
         <section className='flex w-full px-4 '>
             <Toaster />
-            <div className='flex md:w-[50%] w-full mt-6 border-t-8  border-yellow-500 mx-auto py-5 px-12  bg-slate-100 min-h-[500px] rounded-b-md shadow-md gap-x-5 max-md:flex-col  justify-center  md:items-start items-center'  >
-                <Image onClick={() => setZoomin((prev) => setZoomin(!zoomin))} style={zoomin ? { position: "absolute", width: "1680px", height: "1000px", borderRadius: "0", objectFit: "contain", border: "none", padding: "15%", backgroundColor: "rgba(23,23,23,0.3)", zIndex: "20", alignSelf: "center", cursor: "zoom-out" } : ""} className='w-[50%] h-[50%]  rounded-full border-4 border-yellow-500 cursor-zoom-in' src={session?.data?.user?.image || "/profile.png"} alt='profile pic' width={1000} height={1000} />
-                <div className='mt-3
-                 md:absolute md:translate-x-[-220px]  md:translate-y-[580%]'>
-                    <input type="file" className='bg-primer' />
+            <div className='flex flex-col md:w-[50%] w-full mt-6 border-t-8  border-yellow-500 mx-auto py-5 px-12  bg-slate-100 min-h-[500px] rounded-b-md shadow-md gap-x-5 max-md:flex-col  justify-center   items-center'  >
+                <Image onClick={() => setZoomin((prev) => setZoomin(!zoomin))} style={zoomin ? { position: "absolute", width: "1680px", height: "1000px", borderRadius: "0", objectFit: "contain", border: "none", padding: "15%", backgroundColor: "rgba(23,23,23,0.3)", zIndex: "20", alignSelf: "center", cursor: "zoom-out" } : ""} className='w-[30%] h-[50%]  rounded-full border-4 border-yellow-500 cursor-zoom-in' src={session?.data?.user?.image || "/profile.png"} alt='profile pic' width={1000} height={1000} />
+                <div className='mt-[-10px] '>
+                    <label htmlFor="change">
+                        <input type="file" id='change' onChange={handleChangePicture} className='hidden' />
+                        <span className='bg-primer max-md:p-2'>change</span>
+                    </label>
                 </div>
-                <form onSubmit={handleSave} className='flex flex-col w-full gap-y-5 h-[120%] '>
+                <form onSubmit={handleSave} className='flex flex-col w-full gap-y-5 h-[120%] mb-10'>
                     <button type='button' onClick={handleRefresh} className='shadow-md active:shadow-none px-6 py-2'>Refresh</button>
                     <div className='flex justify-between items-center'>
                         <label htmlFor="name" className='text-primer'>Name </label>
