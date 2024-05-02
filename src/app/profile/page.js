@@ -20,9 +20,9 @@ const Profilepage = () => {
     async function handleRefresh() {
         const response = await fetch("/api/profile")
         const data = await response.json()
-        setName(prev => prev = data.name)
-        setEmail(prev => prev = data.email)
-        setPhone(prev => prev = data.phone)
+        setName(prev => prev = data?.name)
+        setEmail(prev => prev = data?.email)
+        setPhone(prev => prev = data?.phone)
 
     }
     useEffect(() => {
@@ -58,7 +58,7 @@ const Profilepage = () => {
         const file = ev.target.values
         try {
             const data = new FormData()
-            data.set("file", file[0])
+            data.set("file", file)
             const resposne = await fetch("/api/changepicture", {
                 method: "POST",
                 body: data
