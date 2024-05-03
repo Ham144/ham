@@ -14,16 +14,24 @@ const Profilepage = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("") //ilegal change
     const [phone, setPhone] = useState("")
+    const [city, setCity] = useState("")
+    const [country, setCountry] = useState("")
+    const [postalCode, setPostalCode] = useState("")
+    const [specificAddress, setSpecificAddress] = useState("")
 
 
 
     async function handleRefresh() {
         const response = await fetch("/api/profile")
         const data = await response.json()
+        console.log(data)
         setName(prev => prev = data?.name)
         setEmail(prev => prev = data?.email)
         setPhone(prev => prev = data?.phone)
-
+        setCity(prev => prev = data?.city)
+        setPostalCode(prev => prev = data?.postalCode)
+        setCountry(prev => prev = data?.country)
+        setSpecificAddress(prev => prev = data?.specificAddress)
     }
     useEffect(() => {
         handleRefresh()
@@ -40,7 +48,7 @@ const Profilepage = () => {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        name, email, phone
+                        name, email, phone, country, postalCode, city, specificAddress
                     })
                 })
                 const data = await response.json()
@@ -115,25 +123,29 @@ const Profilepage = () => {
                     </div>
 
 
-                    {/* <div className='flex justify-between items-center'>
-                        <label htmlFor="password" className='text-primer'>Password</label>
-                        <input type="password" disabled id='password' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' />
-                    </div>
-                    <div className='flex justify-between items-center'>
-                        <label htmlFor="newpassword" className='text-primer max-md:text-sm '>new Password</label>
-                        <input type="password" id='newpassword' className='px-3  bg-slate-200 w-[70%] max-sm:w-[80%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' />
-                    </div>
 
-                    <div className='flex justify-between items-center'>
-                        <label htmlFor="confirm" className='text-primer  text-wrap max-md:text-sm'>Confirm Password</label>
-                        <input type="password" id='confirmnewpassword' className='px-3  bg-slate-200  w-[70%] max-sm:w-[100%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' />
-                    </div>
-
-                */}
                     <div className='flex justify-between items-center'>
                         <label htmlFor="phone" className='text-primer'>phone </label>
                         <input type="text" id='phone' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={phone} onChange={e => setPhone(e.target.value)} />
                     </div>
+
+                    <div className='flex justify-between items-center'>
+                        <label htmlFor="city" className='text-primer'>city </label>
+                        <input type="text" id='city' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={city} onChange={e => setCity(e.target.value)} />
+                    </div>
+                    <div className='flex justify-between items-center'>
+                        <label htmlFor="postalCode" className='text-primer'>Postal code</label>
+                        <input type="text" id='postalCode' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={postalCode} onChange={e => setPostalCode(e.target.value)} />
+                    </div>
+                    <div className='flex justify-between items-center'>
+                        <label htmlFor="country" className='text-primer'>country</label>
+                        <input type="text" id='country' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={country} onChange={e => setCountry(e.target.value)} />
+                    </div>
+                    <div className='flex justify-between items-center'>
+                        <label htmlFor="specificAddress" className='text-primer'>specific address</label>
+                        <input type="text" id='specificAddress' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={specificAddress} onChange={e => setSpecificAddress(e.target.value)} />
+                    </div>
+
 
                     <input type="submit" className='bg-primer' />
                 </form>

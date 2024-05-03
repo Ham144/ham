@@ -11,10 +11,6 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    password: {
-        type: String,
-        required: true,
-    },
     phone: {
         type: String,
         required: true,
@@ -23,6 +19,26 @@ const userSchema = new Schema({
     image: {
         type: String,
         required: false
+    },
+    country: {
+        type: String,
+        required: true,
+        default: ""
+    },
+    postalCode: {
+        type: String,
+        required: true,
+        default: ""
+    },
+    city: {
+        type: String,
+        required: true,
+        default: ""
+    },
+    specificAddress: {
+        type: String,
+        required: true,
+        default: ""
     }
 }, { timestamps: true })
 
