@@ -32,25 +32,37 @@ const Profilepage = () => {
 
     async function handleSave(ev) {
         ev.preventDefault()
-        toast("saving..")
         try {
-            const response = await fetch("/api/profile", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    name, email, phone
+            const profilePromise = new Promise(async (resolve, reject) => {
+                const response = await fetch("/api/profile", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name, email, phone
+                    })
                 })
+                const data = await response.json()
+                if (response.ok) {
+                    resolve()
+                }
+                else {
+                    reject()
+                }
             })
-            const data = await response.json()
-            // console.log(data)
-            if (response.ok) toast.success("Saved")
-            return
+            await toast.promise(profilePromise, {
+                loading: "loading..",
+                success: "success!!",
+                error: "saving failed :("
+            })
+
         } catch (error) {
             toast.error("failed saving")
             console.log(error)
         }
+
+
 
     }
 
