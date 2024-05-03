@@ -12,14 +12,11 @@ export async function POST(req) {
         postalCode,
         country,
         specificAddress } = await req.json()
-    const session = await getServerSession(authOption)
-    const sessionEmail = session?.user?.email
-    console.log(email)
     mongoose.connect(process.env.MONGO_URL)
-    const response = await User.findOneAndUpdate({ email: sessionEmail }, {
-        name: name,
-        email: email,
-        phone: phone,
+    const response = await User.findOneAndUpdate({ email }, {
+        name,
+        email,
+        phone,
         city: city,
         postalCode: postalCode,
         country: country,
