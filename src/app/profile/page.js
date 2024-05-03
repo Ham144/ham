@@ -20,11 +20,9 @@ const Profilepage = () => {
     const [specificAddress, setSpecificAddress] = useState("")
 
 
-
     async function handleRefresh() {
         const response = await fetch("/api/profile")
         const data = await response.json()
-        console.log(data)
         setName(prev => prev = data?.name)
         setEmail(prev => prev = data?.email)
         setPhone(prev => prev = data?.phone)
