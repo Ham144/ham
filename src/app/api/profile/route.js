@@ -7,15 +7,31 @@ import { UserInfo } from "@/app/models/userInfo"
 export async function POST(req) {
     const {
         name,
-        ...others } = await req.json()
+        email,
+        phone,
+        city,
+        postalCode,
+        country,
+        specificAddress
+    } = await req.json()
     const session = await getServerSession(authOption)
-    const email = session?.user?.email
+    const sessionEmail = session?.user?.email
     mongoose.connect(process.env.MONGO_URL)
-    const response = await User.findOneAndUpdate({ email }, {
+    const response = await User.findOneAndUpdate({ email: sessionEmail }, {
         name,
     })
+    const responseInfo = await UserInfo.findOneAndUpdate({ email: sessionEmail }, {
+        $set: {
+            email,
+            phone,
+            city,
+            postalCode,
+            country,
+            specificAddress
+        }
+    }, { upsert: true });
 
-    const responseInfo = await UserInfo.updateOne({ email }, others)
+
 
     console.log(responseInfo);
     return Response.json(responseInfo)
@@ -25,6 +41,7 @@ export async function GET() {
     mongoose.connect(process.env.MONGO_URL)
     const session = await getServerSession(authOption)
     const _user = await User.findOne({ email: session?.user?.email })//
+    const userInfo = await UserInfo.findOne({ email: session?.user?.email })//
 
-    return Response.json(_user)
+    return Response.json(userInfo)
 }
