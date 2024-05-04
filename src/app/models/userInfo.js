@@ -1,6 +1,11 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, models } = require("mongoose");
 
 const userInfoSchema = new Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
     phone: {
         type: String,
         required: true,
@@ -29,4 +34,4 @@ const userInfoSchema = new Schema({
     }
 }, { timestamps: true })
 
-export const UserInfo = model?.UserInfo || model("UserInfo", userInfoSchema)
+export const UserInfo = models?.UserInfo || model("UserInfo", userInfoSchema)
