@@ -12,3 +12,14 @@
 .text-primer {
 	@apply font-semibold uppercase font-serif;
 }
+
+.buble-menu {
+	@apply border md:rounded-r-xl md:p-3 bg-slate-100 outline-dotted outline-yellow-600 max-md:rotate-90 left-0 translate-x-[-8px]
+	max-md:mx-auto max-md:py-4 max-md:px-2 max-md:rounded-t-xl max-md:mt-[60px];
+}
+.buble-menu-selected {
+	@apply border md:rounded-r-xl md:p-3 bg-yellow-200 text-white text-center  outline  outline-yellow-300  translate-x-[-9px] max-md:mx-auto max-md:py-4 max-md:px-2 max-md:rotate-90 max-md:mt-[60px] max-md:rounded-t-lg;
+}
+.buble-menu:hover {
+	@apply bg-yellow-100;
+}

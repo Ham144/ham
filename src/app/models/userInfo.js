@@ -1,6 +1,6 @@
 import { Schema, model, models } from "mongoose"
 
-const userInfoSchema = new Schema({
+const UserInfoSchema = new Schema({
     email: {
         type: String,
         required: true,
@@ -31,7 +31,11 @@ const userInfoSchema = new Schema({
         type: String,
         required: true,
         default: ""
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true })
 
-export const UserInfo = models?.UserInfo || model("UserInfo", userInfoSchema)
+export const UserInfo = models?.UserInfo || model("UserInfo", UserInfoSchema)

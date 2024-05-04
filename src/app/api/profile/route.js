@@ -8,40 +8,32 @@ export async function POST(req) {
     const {
         name,
         email,
-        phone,
-        city,
-        postalCode,
-        country,
-        specificAddress
+        ...others
     } = await req.json()
     const session = await getServerSession(authOption)
     const sessionEmail = session?.user?.email
     mongoose.connect(process.env.MONGO_URL)
     const response = await User.findOneAndUpdate({ email: sessionEmail }, {
-        name,
-    })
+        name, email
+    }, { upsert: true })
     const responseInfo = await UserInfo.findOneAndUpdate({ email: sessionEmail }, {
-        $set: {
-            email,
-            phone,
-            city,
-            postalCode,
-            country,
-            specificAddress
-        }
+        email,
+        ...others
     }, { upsert: true });
 
 
 
-    console.log(responseInfo);
-    return Response.json(responseInfo)
+    return Response.json({ ...response, ...responseInfo })
 }
 
 export async function GET() {
     mongoose.connect(process.env.MONGO_URL)
     const session = await getServerSession(authOption)
-    const _user = await User.findOne({ email: session?.user?.email })//
-    const userInfo = await UserInfo.findOne({ email: session?.user?.email })//
+    const _user = await User.findOne({ email: session?.user?.email })
+        .lean()
+    const userInfo = await UserInfo.findOne({ email: session?.user?.email })
+        .lean()
 
-    return Response.json(userInfo)
+    console.log(userInfo)
+    return Response.json({ ..._user, ...userInfo });
 }
