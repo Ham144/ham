@@ -34,6 +34,5 @@ export async function GET() {
     const userInfo = await UserInfo.findOne({ email: session?.user?.email })
         .lean()
 
-    console.log(userInfo)
     return Response.json({ ..._user, ...userInfo });
 }
