@@ -67,7 +67,7 @@ const CategoriesPage = () => {
 
 
     return (
-        <div className='flex flex-col px-4 min-h-screen mb-20'>
+        <div className='flex flex-col px-4 min-h-screen mb-20 '>
             <ProfileBar isAdmin={data?.isAdmin} />
             <div className='flex flex-col justify-center items-center  mx-auto'>
                 <form onSubmit={handleSubmitCategories} className='flex flex-col md:w-[500px] py-5 gap-y-4'>
