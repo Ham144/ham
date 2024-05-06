@@ -4,12 +4,25 @@ const MenuItemsSchema = new Schema({
     menuItem: {
         type: String,
         required: true
-    }, description: {
+    },
+    description: {
         type: String,
         required: false
-    }, basePrice: {
+    },
+    basePrice: {
         type: Number,
-        required: true
+        required: true,
+        validate: (e) => {
+            if (e.value <= 0) throw new Error("Base price cannot be zero or negative");
+        }
+    },
+    photoUrl: {
+        type: String,
+        required: false,
+    },
+    categories: {
+        type: [String],
+        required: false
     }
 })
 
