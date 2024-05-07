@@ -17,9 +17,10 @@ export async function PUT(req) {
     return Response.json("ok")
 }
 
+//get All created Menu
 export async function GET() {
     mongoose.connect(process.env.MONGO_URL)
-    const data = MenuItems.find()
+    const data = await MenuItems.find()
     if (!data || (await data).length <= 0) return Response.json({ status: 404, msg: "item is 0" })
     return Response.json(data)
 }

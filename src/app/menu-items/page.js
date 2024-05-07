@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ProfileBar from '../components/ProfileBar'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
+import MenuCard from '../components/MenuCard'
 
 const MenuItemsPage = () => {
     const [menuItem, setMenuItem] = useState("")
@@ -17,19 +18,10 @@ const MenuItemsPage = () => {
 
 
     function fetchingMenus() {
-        const getMenuPromise = (async (resolve, reject) => {
-            try {
-                const response = await fetch("/api/menuitems")
-                const data = await response.json()
-                console.log(data)
-                if (response.ok) {
-                    return resolve(data)
-                } else return reject()
-            } catch (error) {
-                console.log(error)
-                return reject(error)
-            }
-        })
+        const getMenuPromise = fetch("/api/menuitems")
+            .then(response => response.json())
+            .then(data => setCreatedMenus(data))
+            .catch(err => console.log(err))
         toast.promise(getMenuPromise, {
             error: "failed fetching menus info",
             success: "menus is extracted from database",
@@ -98,14 +90,6 @@ const MenuItemsPage = () => {
         setCategories(temp)
     }
 
-    function handleCheck(name) {
-        const found = categories.findIndex((item) => {
-            return item.name == name
-        })
-        if (found != -1) {
-            return true
-        } else return false
-    }
 
 
     return (
@@ -133,9 +117,9 @@ const MenuItemsPage = () => {
                     <label htmlFor="base-price" className='text-wrap'>base price</label>
                     <input type="text" className='flex px-3 py-1 rounded-full w-[60%]  bg-slate-300 font-bold ' value={basePrice} onChange={e => setBasePrice(e.target.value)} />
                 </div>
-                <div className='grid  justify-center items-center grid-cols-3'>
+                <div className='grid border p-4 justify-center items-center grid-cols-3'>
                     {getCategories && getCategories[0]?.map((categ, index) => (
-                        <div key={categ?._id} className='flex items-center  py-5 hover:bg-slate-100 justify-around'>
+                        <div key={categ?._id} className='flex items-center  py-5 hover:bg-slate-100 justify-around shadow-lg'>
                             <label htmlFor={categ?._id}>{categ?.name}
                             </label>
                             <input type="checkbox" id={categ?.id} className='flex' onChange={e => setSelectedCategory(categ?.name)} checked={categories?.find((item) => item.name == categ.name && index)}
@@ -149,8 +133,19 @@ const MenuItemsPage = () => {
 
             </form>
             {/* ----------------------- */}
-            <div className='flex flex-col justify-center md:w-[50%]  min-h-screen'>
+            <div className='flex flex-col my-4 md:w-[50%]  min-h-screen'>
+                <h1 className='text-center uppercase flex justify-center font-bold'>All menu List</h1>
+                <div className='flex flex-col'>
+                    {
+                        createdMenus && createdMenus.length > 0 ?
+                            createdMenus?.map((menu) => (
+                                <MenuCard key={menu._id} menuItem={menu?.menuItem} description={menu?.description} basePrice={menu?.basePrice} photoUrl={menu?.photoUrl} categories={menu?.categories} />
+                            ))
+                            :
+                            ""
+                    }
 
+                </div>
             </div>
         </div>
     )
