@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import ProfileBar from '../components/ProfileBar'
 import Image from 'next/image'
+import toast from 'react-hot-toast'
 
 const MenuItemsPage = () => {
     const [menuItem, setMenuItem] = useState("")
@@ -17,11 +18,10 @@ const MenuItemsPage = () => {
         const response = await fetch("/api/categories")
         const data = await response.json()
         if (data.length) {
-
-            setGetCategories(getCategories.push(...data))
+            const [...colection] = data
+            getCategories.push(colection)
         }
-        console.log(getCategories)
-        return
+
     }
 
     useEffect(() => {
@@ -49,7 +49,19 @@ const MenuItemsPage = () => {
         }
     }
 
-
+    function setSelectedCategory(categ) {
+        const found = categories?.findIndex(categ)
+        const temp = categories
+        if (found != -1) {
+            temp?.splice(found, 1)
+            toast.error("i found it, then i remove it")
+        }
+        else {
+            temp.push(categ)
+            toast.success("added to " + categ + " categorie")
+        }
+        setCategories(temp)
+    }
 
 
     return (
@@ -76,15 +88,14 @@ const MenuItemsPage = () => {
                     <label htmlFor="base-price" className='text-wrap'>base price</label>
                     <input type="text" className='flex px-3 py-1 rounded-full w-[60%]  bg-slate-300 font-bold ' value={basePrice} onChange={e => setBasePrice(e.target.value)} />
                 </div>
-                <div className='flex justify-center items-center grid-cols-3'>
-                    {
-                        getCategories.length <= 0 ? <p>no category provided</p> :
-                            <div>
-                                {getCategories?.map((categ) => (
-                                    categ?.name
-                                ))}
-                            </div>
-                    }
+                <div className='grid  justify-center items-center grid-cols-3'>
+                    {getCategories && getCategories[0]?.map((categ, index) => (
+                        <div key={categ?._id} className='flex items-center  py-5 hover:bg-slate-100 justify-around'>
+                            <label htmlFor={categ?._id}>{categ?.name}
+                            </label>
+                            <input type="checkbox" id={categ?.id} className='flex' onChange={e => setSelectedCategory(categ?.name)} checked={categories.includes(categ.name)} />
+                        </div>
+                    ))}
                 </div>
 
                 <button className='bg-sekunder hover:bg-slate-200 w-full mt-3 '>Submit</button>
