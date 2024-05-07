@@ -6,7 +6,7 @@ import React from 'react'
 const ProfileBar = ({ isAdmin }) => {
     const path = usePathname()
     return (
-        <div className={`${isAdmin ? "" : "hidden"} fixed flex flex-col items-start translate-x-[-7px]  max-md:translate-x-[-39px]
+        <div className={`${isAdmin ? "" : "hidden"}  fixed flex flex-col items-start translate-x-[-7px]  max-md:translate-x-[-39px]
         
         md:gap-y-3
         `}>

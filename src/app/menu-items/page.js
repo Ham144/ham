@@ -31,6 +31,8 @@ const MenuItemsPage = () => {
     async function handleNewItem(ev) {
         ev.preventDefault()
         try {
+            menuItem.at(0).toUpperCase()
+            description.at(0).toUpperCase()
             const response = await fetch('/api/menuitems', {
                 method: "PUT",
                 headers: {
@@ -43,10 +45,10 @@ const MenuItemsPage = () => {
             if (response.ok) {
                 toast.success("Item added successfully")
                 setMenuItem("")
+                setNewPhoto("")
                 setDescription("")
                 setBasePrice("")
                 setPhotoUrl("")
-                setCategories([])
             }
 
         } catch (error) {
@@ -79,10 +81,11 @@ const MenuItemsPage = () => {
 
 
     return (
-        <div className='px-4 flex  min-h-screen'>
+        <div className='px-4 flex max-md:flex-col  min-h-screen gap-y-3 mb-8'>
             <ProfileBar isAdmin={true} />
 
-            <form onSubmit={handleNewItem} className=' flex flex-col gap-y-6 mx-auto border px-9 rounded-xl shadow-md py-4 mt-3 w-[600px]  max-md:w-[400px] '>
+            <form onSubmit={handleNewItem} className=' flex flex-col gap-y-6 mx-auto border px-9 rounded-xl shadow-md py-8 mt-3 w-[600px]  max-md:w-[400px] h-full '>
+                <h1 className='text-center font-bold uppercase'>Add New Menu </h1>
                 <div className='flex flex-col items-center gap-y-4'>
                     <Image src={photoUrl || '/main-logo.png'} width={100} height={100} alt='photo holder' />
                     <div className='flex gap-x-3 items-stretch'>
@@ -96,7 +99,7 @@ const MenuItemsPage = () => {
                 </div>
                 <div className='flex gap-x-5 justify-between  font-bold uppercase  mt-3 '>
                     <label htmlFor="description" className='text-wrap'>Description</label>
-                    <input type="text" id='description' className='flex bg-slate-300 px-2 py-1 w-[60%] rounded-full' value={description} onChange={e => setDescription(e.target.value)} />
+                    <input type="text" id='description' className='flex bg-slate-300 px-2 py-1 w-[60%] rounded-full ' value={description} onChange={e => setDescription(e.target.value)} />
                 </div>
                 <div className='flex gap-x-5 justify-between  font-bold uppercase  mt-3 items-center'>
                     <label htmlFor="base-price" className='text-wrap'>base price</label>
@@ -107,7 +110,9 @@ const MenuItemsPage = () => {
                         <div key={categ?._id} className='flex items-center  py-5 hover:bg-slate-100 justify-around'>
                             <label htmlFor={categ?._id}>{categ?.name}
                             </label>
-                            <input type="checkbox" id={categ?.id} className='flex' onChange={e => setSelectedCategory(categ?.name)} checked={categories.find((item) => item.name == categ.name)} />
+                            <input type="checkbox" id={categ?.id} className='flex' onChange={e => setSelectedCategory(categ?.name)} checked={categories?.find((item) => item.name == categ.name && index)}
+
+                            />
                         </div>
                     ))}
                 </div>
@@ -115,6 +120,10 @@ const MenuItemsPage = () => {
                 <button className='bg-sekunder hover:bg-slate-200 w-full mt-3 '>Submit</button>
 
             </form>
+            {/* ----------------------- */}
+            <div className='flex flex-col justify-center md:w-[50%] bg-blue-400 min-h-screen'>
+
+            </div>
         </div>
     )
 }
