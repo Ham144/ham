@@ -12,7 +12,31 @@ const MenuItemsPage = () => {
     const [newPhoto, setNewPhoto] = useState("")
     const [categories, setCategories] = useState([])
     const [getCategories, setGetCategories] = useState([])
+    // ------------------------------------show created menus
+    const [createdMenus, setCreatedMenus] = useState([])
 
+
+    function fetchingMenus() {
+        const getMenuPromise = (async (resolve, reject) => {
+            try {
+                const response = await fetch("/api/menuitems")
+                const data = await response.json()
+                console.log(data)
+                if (response.ok) {
+                    return resolve(data)
+                } else return reject()
+            } catch (error) {
+                console.log(error)
+                return reject(error)
+            }
+        })
+        toast.promise(getMenuPromise, {
+            error: "failed fetching menus info",
+            success: "menus is extracted from database",
+            loading: "waiting for the lucky one"
+        });
+
+    }
 
     async function fetchingCategories() {
         const response = await fetch("/api/categories")
@@ -26,6 +50,7 @@ const MenuItemsPage = () => {
 
     useEffect(() => {
         fetchingCategories()
+        fetchingMenus()
     }, [])
 
     async function handleNewItem(ev) {
@@ -49,12 +74,15 @@ const MenuItemsPage = () => {
                 setDescription("")
                 setBasePrice("")
                 setPhotoUrl("")
+                fetchingMenus()
             }
 
         } catch (error) {
             console.log(error)
         }
     }
+
+
 
     function setSelectedCategory(categ) {
         const found = categories.findIndex((item) => categ == item)
@@ -121,7 +149,7 @@ const MenuItemsPage = () => {
 
             </form>
             {/* ----------------------- */}
-            <div className='flex flex-col justify-center md:w-[50%] bg-blue-400 min-h-screen'>
+            <div className='flex flex-col justify-center md:w-[50%]  min-h-screen'>
 
             </div>
         </div>
