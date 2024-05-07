@@ -37,11 +37,16 @@ const MenuItemsPage = () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    menuItem, description, basePrice, photoUrl
+                    menuItem, description, basePrice, photoUrl, categories
                 })
             })
             if (response.ok) {
-                console.log("berhasil mengirim menuitems")
+                toast.success("Item added successfully")
+                setMenuItem("")
+                setDescription("")
+                setBasePrice("")
+                setPhotoUrl("")
+                setCategories([])
             }
 
         } catch (error) {
@@ -50,7 +55,7 @@ const MenuItemsPage = () => {
     }
 
     function setSelectedCategory(categ) {
-        const found = categories?.findIndex(categ)
+        const found = categories.findIndex((item) => categ == item)
         const temp = categories
         if (found != -1) {
             temp?.splice(found, 1)
@@ -58,9 +63,18 @@ const MenuItemsPage = () => {
         }
         else {
             temp.push(categ)
-            toast.success("added to " + categ + " categorie")
+            toast.success("added to " + categ + " category")
         }
         setCategories(temp)
+    }
+
+    function handleCheck(name) {
+        const found = categories.findIndex((item) => {
+            return item.name == name
+        })
+        if (found != -1) {
+            return true
+        } else return false
     }
 
 
@@ -93,7 +107,7 @@ const MenuItemsPage = () => {
                         <div key={categ?._id} className='flex items-center  py-5 hover:bg-slate-100 justify-around'>
                             <label htmlFor={categ?._id}>{categ?.name}
                             </label>
-                            <input type="checkbox" id={categ?.id} className='flex' onChange={e => setSelectedCategory(categ?.name)} checked={categories.includes(categ.name)} />
+                            <input type="checkbox" id={categ?.id} className='flex' onChange={e => setSelectedCategory(categ?.name)} checked={categories.find((item) => item.name == categ.name)} />
                         </div>
                     ))}
                 </div>

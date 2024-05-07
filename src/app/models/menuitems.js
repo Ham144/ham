@@ -22,7 +22,7 @@ const MenuItemsSchema = new Schema({
     },
     categories: {
         type: [String],
-        required: false
+        required: true
     }
 })
 
