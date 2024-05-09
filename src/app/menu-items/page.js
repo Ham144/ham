@@ -139,7 +139,7 @@ const MenuItemsPage = () => {
                     {
                         createdMenus && createdMenus.length > 0 ?
                             createdMenus?.map((menu) => (
-                                <MenuCard key={menu._id} menuItem={menu?.menuItem} description={menu?.description} basePrice={menu?.basePrice} photoUrl={menu?.photoUrl} categories={menu?.categories} />
+                                <MenuCard key={menu._id} menuItem={menu?.menuItem} description={menu?.description} basePrice={menu?.basePrice} photoUrl={menu?.photoUrl} categories={menu?.categories} _id={menu?._id} />
                             ))
                             :
                             ""
