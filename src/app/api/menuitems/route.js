@@ -2,11 +2,11 @@ import { MenuItems } from "@/app/models/menuitems"
 import mongoose from "mongoose"
 
 export async function PUT(req) {
-    const { menuItem, description, basePrice, photoUrl, categories } = await req.json()
+    const { menuItem, description, basePrice, photoUrl, categories, _id } = await req.json()
     mongoose.connect(process.env.MONGO_URL)
     const found = await MenuItems.findOne({ menuItem })
     if (found) {
-        const response = await MenuItems.findOneAndUpdate({ menuItem }, {
+        const response = await MenuItems.findOneAndUpdate({ _id }, {
             menuItem, description, basePrice, photoUrl, categories
         })
     }
