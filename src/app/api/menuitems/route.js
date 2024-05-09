@@ -24,3 +24,10 @@ export async function GET() {
     if (!data || (await data).length <= 0) return Response.json({ status: 404, msg: "item is 0" })
     return Response.json(data)
 }
+
+export async function DELETE(req) {
+    const { _id } = await req.json()
+    mongoose.connect(process.env.MONGO_URL)
+    const response = await MenuItems.findByIdAndDelete(_id)
+    return Response.json({ ok: true })
+}
