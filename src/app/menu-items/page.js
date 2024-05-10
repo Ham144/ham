@@ -132,7 +132,7 @@ const MenuItemsPage = () => {
                     ))}
                 </div>
 
-                <button className='bg-sekunder hover:bg-slate-200 w-full mt-3 '>Submit</button>
+                <button className='bg-sekunder hover:bg-slate-200 w-full mt-3 '>Add Menu</button>
 
             </form>
             {/* ----------------------- */}
