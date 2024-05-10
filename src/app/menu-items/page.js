@@ -20,13 +20,16 @@ const MenuItemsPage = () => {
     function fetchingMenus() {
         const getMenuPromise = fetch("/api/menuitems")
             .then(response => response.json())
-            .then(data => setCreatedMenus(data))
+            .then(data => {
+                setCreatedMenus(data)
+            })
             .catch(err => console.log(err))
         toast.promise(getMenuPromise, {
             error: "failed fetching menus info",
             success: "menus is extracted from database",
             loading: "waiting for the lucky one"
         });
+
 
     }
 
@@ -139,7 +142,7 @@ const MenuItemsPage = () => {
                     {
                         createdMenus && createdMenus.length > 0 ?
                             createdMenus?.map((menu) => (
-                                <MenuCard key={menu._id} menuItem={menu?.menuItem} description={menu?.description} basePrice={menu?.basePrice} photoUrl={menu?.photoUrl} categories={menu?.categories} _id={menu?._id} />
+                                <MenuCard key={menu._id} menuItem={menu?.menuItem} description={menu?.description} basePrice={menu?.basePrice} photoUrl={menu?.photoUrl} categories={menu?.categories} _id={menu?._id} fetchingMenus={fetchingMenus} />
                             ))
                             :
                             ""

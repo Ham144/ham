@@ -6,7 +6,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { MdOutlineCancelScheduleSend } from "react-icons/md";
 
 
-const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id }) => {
+const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id, fetchingMenus }) => {
 
     const [deleted, setDeleted] = useState(false)
 
@@ -66,18 +66,16 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id 
         toast.dismiss("canceled edit")
     }
 
-    useEffect(() => {
-
-    }, [deleted, _id])
 
     async function handleDelete() {
         const response = fetch("/api/menuitems", {
             method: "DELETE",
             body: JSON.stringify({ _id })
         })
-        if (response.ok) {
+        if (response) {
             toast.success("deleted success!")
             setDeleted(true)
+            fetchingMenus()
         }
     }
 
