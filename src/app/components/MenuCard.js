@@ -84,7 +84,7 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id,
 
             <div className='flex  gap-x-3 gap-y-2 py-2 px-3 mt-3  border w-full' style={inEdit ? { border: "2px dashed black", backgroundColor: "#f7b86f" } : null}>
                 <div className='flex flex-col items-center w-[20%] h-[200px] object-contain justify-center'>
-                    <Image width={100} height={100} src={photoUrl || "/main-logo.png"} alt='photoUrl' className='w-full ' />
+                    <Image width={100} height={100} src={editedPhotoUrl || "/main-logo.png"} alt='photoUrl' className='w-full ' />
                     <input type="text" className={`absolute w-20 mt-2 translate-y-[80px] p-1 ${inEdit ? "" :
                         "hidden "} `} placeholder='Photo url' value={editedPhotoUrl || ""} onChange={e => setEditedPhotoUrl(e.target.value)} />
                 </div>

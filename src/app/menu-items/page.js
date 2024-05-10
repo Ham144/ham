@@ -138,7 +138,7 @@ const MenuItemsPage = () => {
             {/* ----------------------- */}
             <div className='flex flex-col my-4 md:w-[50%]  min-h-screen'>
                 <h1 className='text-center uppercase flex justify-center font-bold'>All menu List</h1>
-                <div className='flex flex-col'>
+                <div className='flex flex-col-reverse'>
                     {
                         createdMenus && createdMenus.length > 0 ?
                             createdMenus?.map((menu) => (
