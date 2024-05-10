@@ -39,7 +39,7 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id,
 
     useEffect(() => {
         compare()
-    }, [editedMenuItem, editedDescription, editedBasePrice, editedPhotoUrl, editedCategories.length])
+    }, [editedMenuItem, editedDescription, editedBasePrice, editedPhotoUrl, editedCategories.length, compare])
 
     function editMenu(getId) {
         setInEdit(true)
@@ -49,6 +49,7 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id,
     async function save() {
         setInEdit(false)
         if (!someChanged) {
+            toast("tidak ada perbedaan")
             return false
         }
         const response = await fetch("/api/menuitems", {
@@ -72,15 +73,10 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id,
             setBasePrice(editedBasePrice)
             setPhotoUrl(editedPhotoUrl)
 
-            compare()
         }
         else {
             toast("sorry, edit menu failed")
         }
-        console.log(editedMenuItem, getmenuitem)
-        console.log(editedDescription, getdescription)
-        console.log(editedBasePrice, getbasePrice)
-        console.log(editedPhotoUrl, getphotoUrl)
 
     }
 
@@ -119,11 +115,12 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id,
                 </div>
                 <div className='flex flex-col justify-around items-start gap-y-3 '>
                     <input type="text" value={editedMenuItem} onChange={e => setEditedMenuItem(e.target.value)} className={`${inEdit ? "" : ""} px-1`} disabled={!inEdit} />
-                    <input type="text" value={editedDescription} onChange={e => setEditedDescription(e.target.value)} className={`flex  white-space:wrap overflow-wrap break-word`}
+                    <input type="input" value={editedDescription} onChange={e => setEditedDescription(e.target.value)} className={`flex w-[200%] h-full text-wrap`}
                         disabled={!inEdit} />
+
                     <div>
-                        price : <input type="text" value={editedBasePrice} onChange={e => setEditedBasePrice(e.target.value)} className={`w-12 p-1  text-center`} disabled={!inEdit} />
-                        <span className='ml-2'>$</span>
+                        price : <input type="text" value={editedBasePrice} onChange={e => setEditedBasePrice(e.target.value)} className={`w-12 p-1  text-center font-extrabold text-2xl `} disabled={!inEdit} />
+                        <span className='ml-[-10px] font-bold'>$</span>
                     </div>
                     <div className='flex gap-2'>
                         {categories?.map((categ) => (

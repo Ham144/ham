@@ -105,7 +105,7 @@ const MenuItemsPage = () => {
                     <Image src={photoUrl || '/main-logo.png'} width={100} height={100} alt='photo holder' />
                     <div className='flex gap-x-3 items-stretch'>
                         <input type="text" className='flex px-2 bg-slate-100 ' placeholder='paste link photo here' value={newPhoto} onChange={e => setNewPhoto(e.target.value)} />
-                        <button type='button' className='bg-primer' onClick={e => setPhotoUrl(prev => prev = newPhoto)}>set photo</button>
+                        <button type='button' className='bg-primer' onClick={e => setPhotoUrl(prev => prev = newPhoto)}>save  photo</button>
                     </div>
                 </div>
                 <div className='flex gap-x-5 justify-between  font-bold uppercase  mt-3 items-center'>
