@@ -114,7 +114,7 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id,
                         "hidden "} `} placeholder='Photo url' value={editedPhotoUrl || ""} onChange={e => setEditedPhotoUrl(e.target.value)} />
                 </div>
                 <div className='flex flex-col justify-around items-start gap-y-3 w-[80%]'>
-                    <input type="text" value={editedMenuItem} onChange={e => setEditedMenuItem(e.target.value)} className={`${inEdit ? "" : ""} px-1`} disabled={!inEdit} />
+                    <input type="text" value={editedMenuItem} onChange={e => setEditedMenuItem(e.target.value)} className={`font-bold underline ${inEdit ? "" : ""} px-1 `} disabled={!inEdit} />
                     {
                         inEdit ?
                             <input type="text" value={editedDescription} onChange={e => setEditedDescription(e.target.value)} className={`flex w-full h-full text-wrap`}
