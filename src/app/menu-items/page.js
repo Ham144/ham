@@ -67,7 +67,7 @@ const MenuItemsPage = () => {
                 setMenuItem("")
                 setNewPhoto("")
                 setDescription("")
-                setBasePrice("")
+                setBasePrice(0)
                 setPhotoUrl("")
                 fetchingMenus()
             }
