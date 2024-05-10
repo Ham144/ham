@@ -107,16 +107,23 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id,
     return (
         <div className={`${deleted ? "hidden" : "flex"} justify-between w-full bg-slate-200 shadow-md mt-3 items-center`} >
 
-            <div className='flex  gap-x-3 gap-y-2 py-2 px-3 mt-3  border w-full' style={inEdit ? { border: "2px dashed black", backgroundColor: "#f7b86f" } : null}>
-                <div className='flex flex-col items-center w-[20%] h-[200px] object-contain justify-center'>
-                    <Image width={100} height={100} src={editedPhotoUrl || "/main-logo.png"} alt='photoUrl' className='w-full ' />
-                    <input type="text" className={`absolute w-20 mt-2 translate-y-[80px] p-1 ${inEdit ? "" :
+            <div className='flex   gap-x-3 gap-y-2 py-2 px-3 mt-3 w-full border ' style={inEdit ? { border: "2px dashed black", backgroundColor: "#f7b86f" } : null}>
+                <div className='flex flex-col items-center  '>
+                    <Image width={200} height={200} src={editedPhotoUrl || "/main-logo.png"} alt='photoUrl' className='w-[180px] h-full object-cover flex ' />
+                    <input type="text" className={`flex w-20 mt-2 p-1 ${inEdit ? "" :
                         "hidden "} `} placeholder='Photo url' value={editedPhotoUrl || ""} onChange={e => setEditedPhotoUrl(e.target.value)} />
                 </div>
-                <div className='flex flex-col justify-around items-start gap-y-3 '>
+                <div className='flex flex-col justify-around items-start gap-y-3 w-[80%]'>
                     <input type="text" value={editedMenuItem} onChange={e => setEditedMenuItem(e.target.value)} className={`${inEdit ? "" : ""} px-1`} disabled={!inEdit} />
-                    <input type="input" value={editedDescription} onChange={e => setEditedDescription(e.target.value)} className={`flex w-[200%] h-full text-wrap`}
-                        disabled={!inEdit} />
+                    {
+                        inEdit ?
+                            <input type="text" value={editedDescription} onChange={e => setEditedDescription(e.target.value)} className={`flex w-full h-full text-wrap`}
+                            />
+                            : <p className='flex text-wrap  w-[80%]'>
+                                {editedDescription}
+                            </p>
+                    }
+
 
                     <div>
                         price : <input type="text" value={editedBasePrice} onChange={e => setEditedBasePrice(e.target.value)} className={`w-12 p-1  text-center font-extrabold text-2xl `} disabled={!inEdit} />
