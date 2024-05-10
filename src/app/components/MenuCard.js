@@ -46,14 +46,43 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id,
 
     }
 
-    // async function save() {
-    //     setInEdit(false)
-    //     const response = await fetch("/api/menuitems", {
-    //         method: "PUT",
-    //         headers: { "Content-Type": "Application/json" },
-    //         body: JSON.stringify()
-    //     })
-    // }
+    async function save() {
+        setInEdit(false)
+        if (!someChanged) {
+            return false
+        }
+        const response = await fetch("/api/menuitems", {
+            method: "PUT",
+            headers: { "Content-Type": "Application/json" },
+            body: JSON.stringify({
+                _id,
+                menuItem: editedMenuItem,
+                description: editedDescription,
+                basePrice: editedBasePrice,
+                photoUrl: editedPhotoUrl,
+                //array categories later
+            })
+        })
+        if (response.ok) {
+            const data = await response.json()
+            console.log(data)
+            toast.success("one or some menus has changed")
+            setMenuItem(editedMenuItem)
+            setDescription(editedDescription)
+            setBasePrice(editedBasePrice)
+            setPhotoUrl(editedPhotoUrl)
+
+            compare()
+        }
+        else {
+            toast("sorry, edit menu failed")
+        }
+        console.log(editedMenuItem, getmenuitem)
+        console.log(editedDescription, getdescription)
+        console.log(editedBasePrice, getbasePrice)
+        console.log(editedPhotoUrl, getphotoUrl)
+
+    }
 
 
     function cancel() {
@@ -117,7 +146,7 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id,
                     <FaEdit size={20} />
                     Edit
                 </div>
-                <div className={`border hover:bg-blue-200 p-1 text-center flex flex-col items-center  w-20 cursor-pointer ${someChanged && "bg-green-300"}`} >
+                <div className={`border hover:bg-blue-200 p-1 text-center flex flex-col items-center  w-20 cursor-pointer ${someChanged && "bg-green-300"}`} onClick={save} >
                     <FaRegSave size={20} />
                     save
                 </div>

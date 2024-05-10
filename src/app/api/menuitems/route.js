@@ -4,11 +4,12 @@ import mongoose from "mongoose"
 export async function PUT(req) {
     const { menuItem, description, basePrice, photoUrl, categories, _id } = await req.json()
     mongoose.connect(process.env.MONGO_URL)
-    const found = await MenuItems.findOne({ menuItem })
+    const found = await MenuItems.findOne({ _id })
     if (found) {
-        const response = await MenuItems.findOneAndUpdate({ _id }, {
-            menuItem, description, basePrice, photoUrl, categories
+        const response = await MenuItems.findByIdAndUpdate({ _id }, {
+            menuItem, description, basePrice, photoUrl
         })
+        return Response.json({ ok: true, message: "sukses mengedit" })
     }
     const response = await MenuItems.create({
         menuItem, description, basePrice, photoUrl, categories
