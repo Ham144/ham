@@ -31,7 +31,7 @@ export async function PATCH(req) {
     try {
         await UserInfo.findOneAndUpdate({ email }, {
             isAdmin
-        })
+        }, { upsert: true })
     } catch (error) {
         throw new Error(error)
         return Response.json({ status: 404, ok: false })

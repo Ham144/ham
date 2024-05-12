@@ -23,7 +23,6 @@ const UsersPage = () => {
             error: "something wrong with exracting data"
         })
     }
-    console.log(users)
 
     async function updateAdmin(email, isAdmin) {
         const updatedIsadmin = !isAdmin
@@ -59,6 +58,10 @@ const UsersPage = () => {
             getAllUsers()
             toast.success("success deleted")
         }
+    }
+
+    function handleEdit() {
+
     }
 
     useEffect(() => {
