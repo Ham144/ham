@@ -9,17 +9,16 @@ const UsersPage = () => {
     const [users, setUsers] = useState([])
 
     const getAllUsers = async () => {
-        const usersPromise = (async (resolve, reject) => {
-            const response = await fetch("/api/profile")
-            const data = await response.json()
-            console.log(data);
-        })
+        const usersPromise = fetch("/api/users")
+            .then(res => res.json())
+            .then(data => console.log(data))
 
         await toast.promise(usersPromise, {
             loading: "getting all users data",
             success: "all users extracted",
             error: "something wrong with exracting data"
         })
+        console.log(users)
     }
 
     useEffect(() => {
@@ -30,7 +29,7 @@ const UsersPage = () => {
         <div className='px-4'>
             <ProfileBar isAdmin={true} />
             <div>{
-                users
+
             }</div>
 
         </div>
