@@ -18,7 +18,6 @@ const UsersPage = () => {
             success: "all users extracted",
             error: "something wrong with exracting data"
         })
-        console.log(users)
     }
 
     useEffect(() => {
