@@ -23,7 +23,7 @@ export async function POST(req) {
 
 
 
-    return Response.json({ ...response, ...responseInfo })
+    return Response.json({ ...responseInfo, ...response })
 }
 
 export async function GET() {
