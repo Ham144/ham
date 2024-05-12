@@ -60,7 +60,7 @@ const UsersPage = () => {
         }
     }
 
-    function handleEdit() {
+    function handleEdit(_id, name, email,) {
 
     }
 

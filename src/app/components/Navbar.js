@@ -28,7 +28,7 @@ const Navbar = () => {
                 <Link className={`font-semibold ${path === "/contact" ? "bg-sekunder max-md:border-none max-md:border-t-2" : ""} border-b-black hover:font-extrabold hover:border-b-2 duration-150`} href={"/contact"}>Contact</Link>
             </div >
             <div className='flex items-center gap-x-5'>
-                <button className='rounded-full  bg-yellow-400' onClick={() => session?.status === "authenticated" ? router.push("/profile") : router.push("/login")}>
+                <button className='rounded-full  bg-yellow-400' onClick={() => session?.status === "authenticated" ? router.push("/profile/0") : router.push("/login")}>
                     <Image src="/profile.png" alt="profile" width={40} height={40} />
                 </button>
                 {session?.status !== "authenticated" ?

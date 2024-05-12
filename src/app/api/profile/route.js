@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth"
 import { User } from "@/app/models/user"
 import { authOption } from "../auth/[...nextauth]/route"
 import { UserInfo } from "@/app/models/userInfo"
+import { useParams } from "react-router-dom"
 
 export async function POST(req) {
     const {
@@ -26,7 +27,10 @@ export async function POST(req) {
     return Response.json({ ...responseInfo, ...response })
 }
 
-export async function GET() {
+export async function GET(req) {
+    const { _id } = req.searchParams();
+    console.log(_id);
+
     mongoose.connect(process.env.MONGO_URL)
     const session = await getServerSession(authOption)
     const _user = await User.findOne({ email: session?.user?.email })

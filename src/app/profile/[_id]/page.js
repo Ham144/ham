@@ -5,13 +5,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import toast, { Toast } from 'react-hot-toast'
-import ProfileBar from '../components/ProfileBar'
+import ProfileBar from '@/app/components/ProfileBar'
+import { useParams } from 'next/navigation'
 
 const Profilepage = () => {
     let session = useSession()
+    const { _id } = useParams()
 
     const [zoomin, setZoomin] = useState(false)
 
+    const [image, setImage] = useState("")
     const [name, setName] = useState("")
     const [email, setEmail] = useState("") //ilegal change
     const [phone, setPhone] = useState("")
@@ -23,8 +26,11 @@ const Profilepage = () => {
 
 
     async function handleRefresh() {
-        const response = await fetch("/api/profile")
+        const endpoint = (_id == 0 ? "/api/profile" : `/api/profile/${_id}`)
+        const response = await fetch(endpoint)
         const data = await response.json()
+
+        setImage(prev => prev = data?.image)
         setName(prev => prev = data?.name)
         setEmail(prev => prev = data?.email)
         setPhone(prev => prev = data?.phone)
@@ -103,7 +109,7 @@ const Profilepage = () => {
         <section className='flex flex-col  w-full px-4 '>
             <ProfileBar isAdmin={isAdmin} />
             <div className='flex flex-col md:w-[50%] w-full mt-6 border-t-8  border-yellow-500 mx-auto py-5 px-12  bg-slate-100 min-h-[500px] rounded-b-md shadow-md gap-x-5 max-md:flex-col  justify-center   items-center'  >
-                <Image onClick={() => setZoomin(() => setZoomin(!zoomin))} style={zoomin ? { position: "absolute", width: "1680px", height: "1000px", borderRadius: "0", objectFit: "contain", border: "none", padding: "15%", backgroundColor: "rgba(23,23,23,0.3)", zIndex: "20", alignSelf: "center", cursor: "zoom-out" } : ""} className='w-[30%] h-[50%]  rounded-full border-4 border-yellow-500 cursor-zoom-in' src={session?.data?.user?.image || "/profile.png"} alt='profile pic' width={1000} height={1000} />
+                <Image onClick={() => setZoomin(() => setZoomin(!zoomin))} style={zoomin ? { position: "absolute", width: "1680px", height: "1000px", borderRadius: "0", objectFit: "contain", border: "none", padding: "15%", backgroundColor: "rgba(23,23,23,0.3)", zIndex: "20", alignSelf: "center", cursor: "zoom-out" } : ""} className='w-[30%] h-[50%]  rounded-full border-4 border-yellow-500 cursor-zoom-in' src={image || "/profile.png"} alt='profile pic' width={1000} height={1000} />
                 <div className='mt-[-10px] '>
                     <label htmlFor="change">
                         <input type="file" id='change' onChange={handleChangePicture} className='hidden' />
