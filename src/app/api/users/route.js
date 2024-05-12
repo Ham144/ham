@@ -8,14 +8,14 @@ import { authOption } from "../auth/[...nextauth]/route";
 export async function GET() {
     mongoose.connect(process.env.MONGO_URL)
     const combined = []
-    const _user = await User.find().lean()
     const userInfo = await UserInfo.find().lean()
+    const _user = await User.find().lean()
     _user.map((user) => {
         const found = userInfo.findIndex(info => {
             return info.email == user.email
         })
         if (found !== -1) {
-            combined.push({ ...user, ...userInfo[found] })
+            combined.push({ ...userInfo[found], ...user })
         }
         else {
             combined.push(user)
@@ -47,6 +47,7 @@ export async function DELETE(req) {
     const isMainAdmin = (session?.user?.email === "24434muhammad.yafizham@gmail.com")
     const isLoggedin = (session?.user?.email === email)
 
+    console.log(isLoggedin, isMainAdmin)
     if (isLoggedin || isMainAdmin) {
         return Response.json({ ok: false, status: 401, message: "You cant delete this user because this is yourself or its the main admin" })
     }

@@ -22,8 +22,8 @@ const UsersPage = () => {
             success: "all users extracted",
             error: "something wrong with exracting data"
         })
-        console.log(users)
     }
+    console.log(users)
 
     async function updateAdmin(email, isAdmin) {
         const updatedIsadmin = !isAdmin
@@ -53,8 +53,7 @@ const UsersPage = () => {
         })
         const data = await response.json()
         if (data.status == 401) {
-            toast.error(data.message)
-
+            console.log(data.message)
         }
         else if (data.ok == true) {
             getAllUsers()
