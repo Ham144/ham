@@ -45,16 +45,18 @@ const UsersPage = () => {
     }
 
     async function handleDelete(email) {
-        const res = await fetch("/api/users", {
+        const response = await fetch("/api/users", {
             method: "DELETE",
             body: JSON.stringify({
                 email
             })
         })
-        if (res.status === 401) {
-            console.log(res.message)
+        const data = await response.json()
+        if (data.status == 401) {
+            toast.error(data.message)
+
         }
-        else if (res.ok) {
+        else if (data.ok == true) {
             getAllUsers()
             toast.success("success deleted")
         }

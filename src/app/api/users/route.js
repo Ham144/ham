@@ -44,10 +44,9 @@ export async function DELETE(req) {
     const { email } = await req.json()
     mongoose.connect(process.env.MONGO_URL)
     const session = await getServerSession(authOption)
-    const isMainAdmin = (session?.user?.email === "24434muhamamd.yafizham@gmail.com")
+    const isMainAdmin = (session?.user?.email === "24434muhammad.yafizham@gmail.com")
     const isLoggedin = (session?.user?.email === email)
 
-    console.log(session?.user?.email, "24434muhamamd.yafizham@gamil.com")
     if (isLoggedin || isMainAdmin) {
         return Response.json({ ok: false, status: 401, message: "You cant delete this user because this is yourself or its the main admin" })
     }
