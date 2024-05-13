@@ -26,7 +26,7 @@ const Profilepage = () => {
 
 
     async function handleRefresh() {
-        const endpoint = (_id == 0 ? "/api/profile" : `/api/profile/${_id}`)
+        const endpoint = "/api/profile"
         const response = await fetch(endpoint)
         const data = await response.json()
 

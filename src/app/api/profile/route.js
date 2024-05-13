@@ -27,9 +27,9 @@ export async function POST(req) {
     return Response.json({ ...responseInfo, ...response })
 }
 
-export async function GET(req) {
-    const { _id } = req.searchParams();
-    console.log(_id);
+export async function GET() {
+    // const { _id } = req.searchParams();
+    // console.log(_id);
 
     mongoose.connect(process.env.MONGO_URL)
     const session = await getServerSession(authOption)
