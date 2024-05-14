@@ -61,6 +61,7 @@ const UsersPage = () => {
     }
 
     function handleEdit(_id, name, email,) {
+        console.log(_id, name, email)
 
     }
 
@@ -96,7 +97,7 @@ const UsersPage = () => {
                                 </div>
                             </div>
                             <div className='flex flex-col justify-center '>
-                                <button className='bg-sekunder hover:bg-slate-200'>edit</button>
+                                <button className='bg-sekunder hover:bg-slate-200' onClick={() => handleEdit(u._id, u.name, u.email)}>edit</button>
                                 <button className='bg-sekunder text-red-50 hover:bg-slate-200' onClick={() => handleDelete(u.email)}>delete</button>
                             </div>
                         </div>

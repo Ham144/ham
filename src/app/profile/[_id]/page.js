@@ -26,9 +26,10 @@ const Profilepage = () => {
 
 
     async function handleRefresh() {
-        const endpoint = "/api/profile"
-        const response = await fetch(endpoint)
-        const data = await response.json()
+        const endpoint = useParams()
+        console.log(endpoint)
+        // const response = await fetch(endpoint)
+        // const data = await response.json()
 
         setImage(prev => prev = data?.image)
         setName(prev => prev = data?.name)
