@@ -25,7 +25,7 @@ const Profilepage = () => {
     const [isAdmin, setIsAdmin] = useState(null)
 
 
-    async function handleRefresh() {
+    async function HandleRefresh() {
         const endpoint = useParams()
         console.log(endpoint)
         // const response = await fetch(endpoint)
@@ -42,7 +42,7 @@ const Profilepage = () => {
         setIsAdmin(prev => prev = data?.isAdmin)
     }
     useEffect(() => {
-        handleRefresh()
+        HandleRefresh()
     }, [])
 
 
@@ -118,7 +118,7 @@ const Profilepage = () => {
                     </label>
                 </div>
                 <form onSubmit={handleSave} className='flex flex-col w-full gap-y-5 h-[120%] mb-10'>
-                    <button type='button' onClick={handleRefresh} className='shadow-md active:shadow-none px-6 py-2'>Refresh</button>
+                    <button type='button' onClick={HandleRefresh} className='shadow-md active:shadow-none px-6 py-2'>Refresh</button>
                     <div className='flex justify-between items-center'>
                         <label htmlFor="name" className='text-primer'>Name </label>
                         <input type="text" id='name' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={name} onChange={e => setName(e.target.value)} />
