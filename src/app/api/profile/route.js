@@ -27,16 +27,17 @@ export async function POST(req) {
     return Response.json({ ...responseInfo, ...response })
 }
 
-export async function GET() {
-    const { _id } = req.searchParams();
-    console.log(_id);
+export async function GET(req) {
+    const url = req.path
 
-    mongoose.connect(process.env.MONGO_URL)
-    const session = await getServerSession(authOption)
-    const _user = await User.findOne({ email: session?.user?.email })
-        .lean()
-    const userInfo = await UserInfo.findOne({ email: session?.user?.email })
-        .lean()
+    console.log(url);
 
-    return Response.json({ ..._user, ...userInfo });
+    // mongoose.connect(process.env.MONGO_URL)
+    // const session = await getServerSession(authOption)
+    // const _user = await User.findOne({ email: session?.user?.email })
+    //     .lean()
+    // const userInfo = await UserInfo.findOne({ email: session?.user?.email })
+    //     .lean()
+
+    // return Response.json({ ..._user, ...userInfo });
 }

@@ -6,7 +6,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import toast, { Toast } from 'react-hot-toast'
 import ProfileBar from '@/app/components/ProfileBar'
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 
 const Profilepage = () => {
     let session = useSession()
@@ -25,11 +25,18 @@ const Profilepage = () => {
     const [isAdmin, setIsAdmin] = useState(null)
 
 
-    async function HandleRefresh() {
-        const endpoint = useParams()
+    async function handleRefresh() {
+        let endpoint = ""
+        if (_id == 0) {
+            endpoint = "/api/profile"
+        }
+        else {
+            endpoint`/api/profile/${_id}`
+        }
         console.log(endpoint)
-        // const response = await fetch(endpoint)
-        // const data = await response.json()
+
+        const response = await fetch(endpoint)
+        const data = await response.json()
 
         setImage(prev => prev = data?.image)
         setName(prev => prev = data?.name)
@@ -42,7 +49,7 @@ const Profilepage = () => {
         setIsAdmin(prev => prev = data?.isAdmin)
     }
     useEffect(() => {
-        HandleRefresh()
+        handleRefresh()
     }, [])
 
 
@@ -118,7 +125,7 @@ const Profilepage = () => {
                     </label>
                 </div>
                 <form onSubmit={handleSave} className='flex flex-col w-full gap-y-5 h-[120%] mb-10'>
-                    <button type='button' onClick={HandleRefresh} className='shadow-md active:shadow-none px-6 py-2'>Refresh</button>
+                    <button type='button' onClick={handleRefresh} className='shadow-md active:shadow-none px-6 py-2'>Refresh</button>
                     <div className='flex justify-between items-center'>
                         <label htmlFor="name" className='text-primer'>Name </label>
                         <input type="text" id='name' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={name} onChange={e => setName(e.target.value)} />
