@@ -5,9 +5,13 @@ import useProfile from '../components/UseProfile'
 import toast from 'react-hot-toast'
 import { FaExternalLinkAlt } from 'react-icons/fa'
 import Spinner from '../components/Spinner'
+import { useRouter } from 'next/navigation'
+
 
 const UsersPage = () => {
     const [users, setUsers] = useState([])
+    const router = useRouter()
+
 
     const getAllUsers = async () => {
         const usersPromise = fetch("/api/users")
@@ -61,7 +65,7 @@ const UsersPage = () => {
     }
 
     function handleEdit(_id, name, email,) {
-        console.log(_id, name, email)
+        return router.push(`/profile/${_id}`)
 
     }
 

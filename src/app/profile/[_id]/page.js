@@ -31,12 +31,12 @@ const Profilepage = () => {
             endpoint = "/api/profile"
         }
         else {
-            endpoint`/api/profile/${_id}`
+            endpoint = `/api/profile/${_id}`
         }
-        console.log(endpoint)
 
         const response = await fetch(endpoint)
         const data = await response.json()
+
 
         setImage(prev => prev = data?.image)
         setName(prev => prev = data?.name)
