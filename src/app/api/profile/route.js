@@ -3,7 +3,6 @@ import { getServerSession } from "next-auth"
 import { User } from "@/app/models/user"
 import { authOption } from "../auth/[...nextauth]/route"
 import { UserInfo } from "@/app/models/userInfo"
-import { useParams } from "react-router-dom"
 
 export async function POST(req) {
     const {
@@ -28,19 +27,15 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
-    const url = new URL(req.url)
-    const _id = url.searchParams.get('_id')
+    const url = req.useParams()
+    console.log(url);
 
+    mongoose.connect(process.env.MONGO_URL)
+    const session = await getServerSession(authOption)
+    const _user = await User.findOne({ email: session?.user?.email })
+        .lean()
+    const userInfo = await UserInfo.findOne({ email: session?.user?.email })
+        .lean()
 
-    console.log(_id);
-    return Response.json(_id)
-
-    // mongoose.connect(process.env.MONGO_URL)
-    // const session = await getServerSession(authOption)
-    // const _user = await User.findOne({ email: session?.user?.email })
-    //     .lean()
-    // const userInfo = await UserInfo.findOne({ email: session?.user?.email })
-    //     .lean()
-
-    // return Response.json({ ..._user, ...userInfo });
+    return Response.json({ ..._user, ...userInfo });
 }

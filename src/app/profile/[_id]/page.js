@@ -31,7 +31,7 @@ const Profilepage = () => {
             endpoint = "/api/profile"
         }
         else {
-            endpoint = `/api/profile/${_id}`
+            endpoint = `/api/profile?_id=${_id}`
         }
 
         const response = await fetch(endpoint)
