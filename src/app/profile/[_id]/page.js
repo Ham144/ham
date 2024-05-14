@@ -22,11 +22,15 @@ const Profilepage = () => {
     const [country, setCountry] = useState("")
     const [postalCode, setPostalCode] = useState("")
     const [specificAddress, setSpecificAddress] = useState("")
-    const [isAdmin, setIsAdmin] = useState(null)
+    const [isAdmin, setIsAdmin] = useState(false)
 
 
     async function handleRefresh() {
         let endpoint = ""
+        //ngecek apakah dia admin dari getserversession
+        await fetch("/api/isAdmin").then(res => res.json())
+            .then(data => setIsAdmin(data.isAdmin))
+            .catch(err => console.log(err))
         if (_id == 0) {
             endpoint = "/api/profile"
         }
@@ -34,19 +38,26 @@ const Profilepage = () => {
             endpoint = `/api/profile?_id=${_id}`
         }
 
-        const response = await fetch(endpoint)
-        const data = await response.json()
+        try {
+            const response = await fetch(endpoint)
+            if (!response.ok) {
+                toast.error("not found such user")
+                return
+            }
+            const data = await response.json()
 
+            setImage(prev => prev = data?.image)
+            setName(prev => prev = data?.name)
+            setEmail(prev => prev = data?.email)
+            setPhone(prev => prev = data?.phone)
+            setCity(prev => prev = data?.city)
+            setPostalCode(prev => prev = data?.postalCode)
+            setCountry(prev => prev = data?.country)
+            setSpecificAddress(prev => prev = data?.specificAddress)
+        } catch (error) {
+            console.log(error)
+        }
 
-        setImage(prev => prev = data?.image)
-        setName(prev => prev = data?.name)
-        setEmail(prev => prev = data?.email)
-        setPhone(prev => prev = data?.phone)
-        setCity(prev => prev = data?.city)
-        setPostalCode(prev => prev = data?.postalCode)
-        setCountry(prev => prev = data?.country)
-        setSpecificAddress(prev => prev = data?.specificAddress)
-        setIsAdmin(prev => prev = data?.isAdmin)
     }
     useEffect(() => {
         handleRefresh()
@@ -67,8 +78,9 @@ const Profilepage = () => {
                     })
                 })
                 const data = await response.json()
-                if (response.ok) {
+                if (data.ok) {
                     resolve()
+                    console.log(data.message)
                 }
                 else {
                     reject()
@@ -76,7 +88,7 @@ const Profilepage = () => {
             })
             await toast.promise(profilePromise, {
                 loading: "loading..",
-                success: "success!!",
+                success: "success submited!!",
                 error: "saving failed :("
             })
 
