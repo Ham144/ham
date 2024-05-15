@@ -22,8 +22,8 @@ export async function PUT(req) {
 export async function GET() {
     mongoose.connect(process.env.MONGO_URL)
     const data = await MenuItems.find()
-    if (!data || (await data).length <= 0) return Response.json({ status: 404, msg: "item is 0" })
-    return Response.json(data)
+    if (!data || (await data).length <= 0) return Response.json({ ok: false, status: 404, msg: "item is 0" })
+    return Response.json(data, { ok: true })
 }
 
 export async function DELETE(req) {
