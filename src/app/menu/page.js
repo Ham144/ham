@@ -51,7 +51,7 @@ export default function MenuPage() {
 
 
     return (
-        <section className="menu flex flex-col min-h-screen mb-7">
+        <section className="menu flex flex-col min-h-screen mb-12">
             <div className="search flex w-full justify-center items-center mt-7">
                 <input type="text" className="md:w-[50%] max-md:w-[90%] flex px-4 py-2 bg-gradient-radial from-orange-100 to-red-50 shadow-lg outline-dashed  cursor-text rounded-3xl  font-bold italic items-center" onChange={e => setSearchString(e.target.value)} value={searchString} onKeyDown={e => e.key === "Enter" && handleSearch()} />
                 {
