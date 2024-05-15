@@ -5,6 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { FaDeleteLeft, FaFilter } from "react-icons/fa6";
 import CategoryFilter from "../components/CategoryFilter";
 import NasiGoreng from "../components/NasiGoreng";
+import Spinner from "../components/Spinner";
 
 
 export default function MenuPage() {
@@ -69,8 +70,16 @@ export default function MenuPage() {
                 </div>
             </div>
 
-            <div>
-                <NasiGoreng />
+            <div className="flex">
+                {data.length > 0 ?
+                    data.map((nasigoreng) => (
+                        <NasiGoreng key={nasigoreng._id} data={nasigoreng} />
+                    ))
+                    : <Spinner />}
+
+                <p className='bottom-5 text-3xl flex self-center font-extralight '>
+                    END OF CONTENT
+                </p>
             </div>
 
         </section>
