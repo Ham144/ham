@@ -70,17 +70,27 @@ export default function MenuPage() {
                 </div>
             </div>
 
-            <div className="flex">
-                {data.length > 0 ?
-                    data.map((nasigoreng) => (
-                        <NasiGoreng key={nasigoreng._id} data={nasigoreng} />
-                    ))
-                    : <Spinner />}
+            {data.length > 0 ?
+                <div className='flex flex-col  items-center ' >
+                    <div className='flex flex-col font-bold items-center'>
+                        <section id="Projects"
+                            className="mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center  justify-center  gap-y-20 gap-x-14 mt-10 mb-5 items-center">
+                            {
+                                data && data.length > 0 && data.map((item) => <NasiGoreng key={item._id} props={item} />)
+                            }
 
-                <p className='bottom-5 text-3xl flex self-center font-extralight '>
-                    END OF CONTENT
-                </p>
-            </div>
+                        </section>
+                    </div>
+                    <p className='bottom-5 text-3xl flex self-center font-extralight '>
+                        END OF CONTENT
+                    </p>
+                </div>
+                :
+                <div className="flex justify-center translate-y-12 min-h-screen">
+
+                    <Spinner />
+                </div>
+            }
 
         </section>
     )
