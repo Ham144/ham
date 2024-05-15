@@ -7,7 +7,7 @@ const ProfileBar = ({ isAdmin }) => {
     const path = usePathname()
     return (
         <div className={`${isAdmin ? "" : "hidden"}  fixed flex flex-col items-start translate-x-[-7px]  max-md:translate-x-[-39px]
-        
+        mt-3 
         md:gap-y-3
         `}>
             <Link href={"http://localhost:3000/profile/0"} className={`${path === "profile/0" ? "buble-menu-selected" : "buble-menu"}`}>Profile</Link>

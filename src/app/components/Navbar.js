@@ -15,17 +15,20 @@ const Navbar = () => {
     // console.log(session)
 
     return (
-        <nav className='flex justify-between items-center md:px-5 px-1 py-4 w-full  border-b-2 '>
+        <nav className='flex fixed justify-between items-center md:px-5 px-1 py-4 w-full md:backdrop-blur-md shadow-md z-10 max-md:px-2 
+    bg-gradient-to-l from-gray-200 via-orange-200 to-stone-100
+
+        '>
             <div >
                 <Image className='hover:animate-bounce' src={"/main-logo.png"} alt='logo' width={70} height={70} />
             </div>
-            <div className='md:flex  max-md:mx-auto max-md:fixed max-md:flex max-md:justify-around max-md:w-screen max-md:border-t-2 max-md:pt-4 max-md:duration-500 max-md:rounded-xl max-md:bg-red-500 max-md:py-3 max-md:bottom-0  md:items-center md:justify-between md:gap-x-5  
-            z-20
+            <div className='md:flex  max-md:mx-auto max-md:fixed max-md:flex max-md:justify-around  max-md:border-t-2 max-md:pt-4 max-md:duration-500 max-md:rounded-xl max-md:bg-yellow-500 max-md:text-white max-md:py-3 max-md:bottom-0  md:items-center md:justify-between md:gap-x-5  
+            z-20 max-md:w-full max-md:translate-x-[-7px]
             '>
-                <Link className={`font-semibold ${path === "/" ? "bg-sekunder max-md:border-none max-md:border-t-2" : ""} border-b-black hover:font-extrabold hover:border-b-2 duration-150`} href={"/"}>Home</Link>
-                <Link className={`font-semibold ${path === "/menu" ? "bg-sekunder max-md:border-none max-md:border-t-2" : ""} border-b-black hover:font-extrabold hover:border-b-2 duration-150`} href={"/menu"}>Menu</Link>
-                <Link className={`font-semibold ${path === "/about" ? "bg-sekunder max-md:border-none max-md:border-t-2 " : ""} border-b-black hover:font-extrabold hover:border-b-2 duration-150`} href={"/about"}>About</Link>
-                <Link className={`font-semibold ${path === "/contact" ? "bg-sekunder max-md:border-none max-md:border-t-2" : ""} border-b-black hover:font-extrabold hover:border-b-2 duration-150`} href={"/contact"}>Contact</Link>
+                <Link className={`font-semibold ${path === "/" ? " max-md:border-none max-md:border-t-2" : ""} border-b-black hover:font-extrabold hover:border-b-2 duration-150`} href={"/"}>Home</Link>
+                <Link className={`font-semibold ${path === "/menu" ? "max-md:border-none max-md:border-t-2" : ""} border-b-black hover:font-extrabold hover:border-b-2 duration-150`} href={"/menu"}>Menu</Link>
+                <Link className={`font-semibold ${path === "/about" ? " max-md:border-none max-md:border-t-2 " : ""} border-b-black hover:font-extrabold hover:border-b-2 duration-150`} href={"/about"}>About</Link>
+                <Link className={`font-semibold ${path === "/contact" ? "max-md:border-none max-md:border-t-2" : ""} border-b-black hover:font-extrabold hover:border-b-2 duration-150`} href={"/contact"}>Contact</Link>
             </div >
             <div className='flex items-center gap-x-5'>
                 <button className='rounded-full  bg-yellow-400' onClick={() => session?.status === "authenticated" ? router.push("/profile/0") : router.push("/login")}>

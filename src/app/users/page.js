@@ -74,9 +74,9 @@ const UsersPage = () => {
     }, [])
 
     return (
-        <div className='flex px-4 '>
+        <div className='flex px-4 overflow-hidden '>
             <ProfileBar isAdmin={true} />
-            <div className='flex flex-col-reverse justify-center mx-auto 
+            <div className='flex flex-col-reverse h-full mx-auto 
             md:w-[50%] max-md:translate-x-7 mb-12 '>{
                     users.length > 0 ? users.map((u) => (
                         <div key={u._id} className='flex  border px-4 py-2 rounded-md mt-3 '>
@@ -100,7 +100,7 @@ const UsersPage = () => {
                                     <label htmlFor={u._id}>{u?.isAdmin ? "uncheck to make this user no longer be admin" : "Check to make this user admin"} </label>
                                 </div>
                             </div>
-                            <div className='flex flex-col justify-center '>
+                            <div className='flex flex-col justify-center max-md:translate-y-[-30px] '>
                                 <button className='bg-sekunder hover:bg-slate-200' onClick={() => handleEdit(u._id, u.name, u.email)}>edit</button>
                                 <button className='bg-sekunder text-red-50 hover:bg-slate-200' onClick={() => handleDelete(u.email)}>delete</button>
                             </div>

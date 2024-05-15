@@ -21,7 +21,14 @@ export default function RootLayout({ children }) {
           <GlobalProvider>
             <Navbar />
             <Toaster />
-            {children}
+            <div className="flex w-full h-[100px] ">
+              {/* ini untuk menjaga semua page tidak mepet keatas dan tidak tertutup fixed navbar */}
+            </div>
+            <div className="
+                bg-gradient-to-br from-amber-50 via-amber-50 to-red-100
+            ">
+              {children}
+            </div>
             <Footer />
           </GlobalProvider>
         </SessionContext>
