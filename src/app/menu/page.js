@@ -65,7 +65,6 @@ export default function MenuPage() {
 
     useEffect(() => {
         getInitialShow()
-        getCategories()
     }, [])
 
 
