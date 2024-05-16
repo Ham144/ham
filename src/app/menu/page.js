@@ -11,7 +11,12 @@ import Spinner from "../components/Spinner";
 export default function MenuPage() {
     const [data, setData] = useState([]);
     const [searchString, setSearchString] = useState("testing");
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState([
+        { spicy: true }, { chinese: true }, { traditional: true }, { france: true },
+        { italian: true }, { japanese: true }, { mexican: true }, { thai: true }
+    ]);
+
+    const colors = ["cyan-blue", "green-blue", "purple-pink", "pink-orange", "teal-lime", "red-yellow"];
 
 
     function handleClear() {
@@ -62,7 +67,9 @@ export default function MenuPage() {
             </div>
             <div className="filters flex  justify-center px-2 mt-5 ">
                 <div className="  flex flex-col items-center">
-                    <CategoryFilter />
+                    {
+                        categories.length > 0 && categories.map((cat) => <CategoryFilter key={cat} category={cat} />)
+                    }
                     <button type="submit" className="bg-gradient-radial from-red-50  via-orange-200 h-8 md:w-[120%] w-full flex justify-center items-center to-violet-100 cursor-pointer rounded-full" onClick={handleSearch}>
                         <FaFilter className="text-orange-400 text-2xl" />
                         <span className="font-light px-4">Filter</span>
