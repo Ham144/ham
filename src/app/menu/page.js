@@ -35,9 +35,10 @@ export default function MenuPage() {
         }
     }
 
-    function getCategories() {
+    function getFalseCategories() {
         fetch("/api/categories").then(res => res.json()).then(data => {
             if (data) {
+                console.log(data)
                 const temp = []
                 data.map((category) => {
                     temp.push({ [category.name]: false })
@@ -63,8 +64,13 @@ export default function MenuPage() {
 
     }
 
+    function handleClicked() {
+        console.log("clicked");
+    }
+
     useEffect(() => {
         getInitialShow()
+        getFalseCategories()
     }, [])
 
 
@@ -81,7 +87,9 @@ export default function MenuPage() {
                 <div className="  flex flex-col items-center">
                     <div className="flex items-center">
                         {
-                            categories.length > 0 && categories.map((cat, index) => <CategoryFilter key={cat} isChecked={cat[Object.keys(cat)[0]]} color={index < colors.length ? colors[index] : colors[Math.floor(Math.random() * colors.length)]} />)
+                            categories.length > 0 && categories.map((cat, index) => <CategoryFilter key={cat} isChecked={cat[Object.keys(cat)[0]]} color={index < colors.length ? colors[index] : colors[Math.floor(Math.random() * colors.length)]}
+                                handleClicked={handleClicked} category={Object.keys(cat)[0]}
+                            />)
                         }
                     </div>
                     <button type="submit" className="bg-gradient-radial from-red-50  via-orange-200 h-8 md:w-[120%] w-full flex justify-center items-center to-violet-100 cursor-pointer rounded-full" onClick={handleSearch}>
