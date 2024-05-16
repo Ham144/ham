@@ -11,10 +11,7 @@ import Spinner from "../components/Spinner";
 export default function MenuPage() {
     const [data, setData] = useState([]);
     const [searchString, setSearchString] = useState("testing");
-    const [categories, setCategories] = useState([
-        { spicy: true }, { chinese: true }, { traditional: true }, { france: true },
-        { italian: true }, { japanese: true }, { mexican: true }, { thai: true }
-    ]);
+    const [categories, setCategories] = useState([])
 
     const colors = ["cyan-blue", "green-blue", "purple-pink", "pink-orange", "teal-lime", "red-yellow"];
 
@@ -38,6 +35,21 @@ export default function MenuPage() {
         }
     }
 
+    function getCategories() {
+        fetch("/api/categories").then(res => res.json()).then(data => {
+            if (data) {
+                const temp = []
+                data.map((category) => {
+                    temp.push({ [category.name]: false })
+                })
+                setCategories(temp)
+            }
+            else {
+                toast.error("data null");
+            }
+        })
+    }
+
     function getInitialShow() {
         fetch("/api/menuitems").then(res => res.json()).then(data => {
             if (data) {
@@ -53,6 +65,7 @@ export default function MenuPage() {
 
     useEffect(() => {
         getInitialShow()
+        getCategories()
     }, [])
 
 
@@ -67,9 +80,11 @@ export default function MenuPage() {
             </div>
             <div className="filters flex  justify-center px-2 mt-5 ">
                 <div className="  flex flex-col items-center">
-                    {
-                        categories.length > 0 && categories.map((cat) => <CategoryFilter key={cat} category={cat} />)
-                    }
+                    <div className="flex items-center">
+                        {
+                            categories.length > 0 && categories.map((cat, index) => <CategoryFilter key={cat} isChecked={cat[Object.keys(cat)[0]]} color={index < colors.length ? colors[index] : colors[Math.floor(Math.random() * colors.length)]} />)
+                        }
+                    </div>
                     <button type="submit" className="bg-gradient-radial from-red-50  via-orange-200 h-8 md:w-[120%] w-full flex justify-center items-center to-violet-100 cursor-pointer rounded-full" onClick={handleSearch}>
                         <FaFilter className="text-orange-400 text-2xl" />
                         <span className="font-light px-4">Filter</span>
