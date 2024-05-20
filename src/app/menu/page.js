@@ -65,7 +65,7 @@ export default function MenuPage() {
     }
 
     function handleClicked() {
-        console.log("clicked");
+        alert("add to be filtered")
     }
 
     useEffect(() => {
