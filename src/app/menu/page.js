@@ -64,8 +64,8 @@ export default function MenuPage() {
 
     }
 
-    function handleClicked() {
-        alert("add to be filtered")
+    function handleClicked(cat) {
+        console.log(cat)
     }
 
     useEffect(() => {
@@ -87,8 +87,8 @@ export default function MenuPage() {
                 <div className="  flex flex-col items-center">
                     <div className="flex items-center">
                         {
-                            categories.length > 0 && categories.map((cat, index) => <CategoryFilter key={cat} isChecked={cat[Object.keys(cat)[0]]} color={index < colors.length ? colors[index] : colors[Math.floor(Math.random() * colors.length)]}
-                                handleClicked={handleClicked} category={Object.keys(cat)[0]}
+                            categories.length > 0 && categories.map((cat, index) => <CategoryFilter key={Math.random()} isChecked={cat[Object.keys(cat)[0]]} color={index < colors.length ? colors[index] : colors[Math.floor(Math.random() * colors.length)]}
+                                handleClicked={() => handleClicked()} category={Object.keys(cat)[0]}
                             />)
                         }
                     </div>
