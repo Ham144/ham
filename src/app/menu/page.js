@@ -10,7 +10,7 @@ import Spinner from "../components/Spinner";
 
 export default function MenuPage() {
     const [data, setData] = useState([]);
-    const [searchString, setSearchString] = useState("testing");
+    const [searchString, setSearchString] = useState("");
     const [categories, setCategories] = useState([])
 
     const colors = ["cyan-blue", "green-blue", "purple-pink", "pink-orange", "teal-lime", "red-yellow"];
@@ -65,8 +65,19 @@ export default function MenuPage() {
     }
 
     function handleClicked(cat) {
-        console.log(cat)
+        const temp = [];
+        categories.map((category) => {
+            if (Object.keys(category)[0] === cat) {
+                temp.push({ [cat]: !category[cat] })
+            }
+            else {
+                temp.push(category)
+            }
+        })
+
+        setCategories(temp)
     }
+    console.log(categories)
 
     useEffect(() => {
         getInitialShow()
@@ -88,7 +99,7 @@ export default function MenuPage() {
                     <div className="flex items-center">
                         {
                             categories.length > 0 && categories.map((cat, index) => <CategoryFilter key={Math.random()} isChecked={cat[Object.keys(cat)[0]]} color={index < colors.length ? colors[index] : colors[Math.floor(Math.random() * colors.length)]}
-                                handleClicked={() => handleClicked()} category={Object.keys(cat)[0]}
+                                handleClicked={handleClicked} category={Object.keys(cat)[0]}
                             />)
                         }
                     </div>
