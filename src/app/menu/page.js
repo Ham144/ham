@@ -29,9 +29,12 @@ export default function MenuPage() {
             body: JSON.stringify({ categories }),
         });
         const data = await response.json();
-        if (response.ok) {
+        if (data.ok == true) {
             toast.success("Found!!");
-            setData(data);
+            setData(data.data);
+        }
+        else {
+            toast.error(`${searchString}, ${data.msg}`);
         }
     }
 

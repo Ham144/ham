@@ -5,10 +5,16 @@ export async function POST(req) {
     const url = req.url
     const body = await req.json()
 
+    const trueCategories = body.categories
+        .filter(cat => Object.values(cat)[0]) //yg true aja
+        .map(cat => Object.keys(cat)[0]);
+
     const searchString = url.split('=')[1]
     const searchQueries = searchString.split('%20')
     console.log(searchQueries)
     let founds;
+
+
 
     mongoose.connect(process.env.MONGO_URL)
     //regex untuk search
@@ -17,12 +23,11 @@ export async function POST(req) {
     })
 
     //regex untuk filter
-    const regexFilterCategories = body.categories.map(term => ({
-        categories: { $regex: term, $options: 'i' }
-    }));
+    const regexFilterCategories = trueCategories.map((term) => {
+        return { categories: { $regex: term, $options: 'i' } }
+    })
 
-    if (body.categories.find(item => body.categories[item] == true)) {
-        console.log("masuk sini jika ada yg true")
+    if (regexFilterCategories.length > 0) {
         founds = await MenuItems.find({
             $and: [
                 { $or: regexSearchQueries },
@@ -31,13 +36,12 @@ export async function POST(req) {
         });
     }
     else {
-        console.log("langsung masuk sini jika filter false semua")
         founds = await MenuItems.find({ $or: regexSearchQueries });
     }
 
 
-    if (founds.length) return Response.json(founds);
-    else console.log("not found");
+    if (founds.length) return Response.json({ ok: true, data: founds });
+    else return Response.json({ ok: false, status: 404, msg: "item is 0" });
 }
 
 

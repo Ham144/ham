@@ -6,6 +6,10 @@ import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import React, { useContext, useEffect } from 'react'
 import { GlobalContext } from './SessionContext'
+import { BsCart } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
+import { GrFavorite } from "react-icons/gr";
+
 
 const Navbar = () => {
     const path = usePathname()
@@ -32,8 +36,32 @@ const Navbar = () => {
             </div >
             <div className='flex items-center gap-x-5'>
                 <button className='rounded-full  bg-yellow-400' onClick={() => session?.status === "authenticated" ? router.push("/profile/0") : router.push("/login")}>
-                    <Image src="/profile.png" alt="profile" width={40} height={40} />
+                    <div className='flex  self-end justify-center'>
+                        <CgProfile size={25} />
+                    </div>
                 </button>
+                {
+                    session?.status === "authenticated" ?
+                        (
+                            <div className='flex gap-x-4'>
+                                <div onClick={() => router.push("/cart")}><BsCart size={26} />
+                                    <span className='absolute bottom-6 cursor-pointer translate-x-[-5px] bg-yellow-200 font-bold px-1 py-0 rounded-full  '>
+                                        {2}
+                                    </span>
+                                </div>
+                                <div onClick={() => router.push("/cart")}><GrFavorite size={26} />
+                                    <span className='absolute bottom-6 cursor-pointer translate-x-[-5px] bg-yellow-200 font-bold px-1 py-0 rounded-full  '>
+                                        {16}
+                                    </span>
+
+                                </div>
+                            </div>
+                        ) :
+                        (
+                            <div></div>
+                        )
+                }
+
                 {session?.status !== "authenticated" ?
                     <div className='flex gap-x-5'>
                         <button onClick={() => router.push("/login")} className='bg-sekunder' >Login</button>
