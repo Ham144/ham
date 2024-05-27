@@ -57,7 +57,7 @@ export default function MenuPage() {
     function getInitialShow() {
         fetch("/api/menuitems").then(res => res.json()).then(data => {
             if (data) {
-                console.log(data);
+                // console.log(data);
                 setData(data);
             }
             else {
@@ -80,7 +80,7 @@ export default function MenuPage() {
 
         setCategories(temp)
     }
-    console.log(categories)
+    // console.log(categories)
 
     useEffect(() => {
         getInitialShow()

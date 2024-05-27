@@ -1,5 +1,7 @@
+import { useSession } from 'next-auth/react';
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast';
 import { FaShippingFast } from 'react-icons/fa'
 import { FaCartPlus } from "react-icons/fa";
 
@@ -7,11 +9,38 @@ import { FaCartPlus } from "react-icons/fa";
 const NasiGoreng = ({ props }) => {
     const [hover, setHover] = useState(false)
 
+    const [userInfos, setUserInfos] = useState()
+    function fetchingUserInfos() {
+        fetch("/api/profile").then(res => res.json()).then(data => setUserInfos(data))
+        return
+    }
+
+    useEffect(() => {
+        fetchingUserInfos()
+    }, [])
+
     const [menuItem, setMenuItem] = useState(props?.menuItem)
     const [description, setDescription] = useState(props?.description)
     const [basePrice, setBasePrice] = useState(props?.basePrice)
     const [photoUrl, setPhotoUrl] = useState(props?.photoUrl)
     const [categories, setCategories] = useState(props?.categories)
+    const [menuItemId, setMenuItemId] = useState(props?._id)
+
+    async function addedToCart(menuItemId, name, quantity, price, image, addedDate, checked, userInfos_id) {
+        const response = await fetch("/api/addedtocart", {
+            method: "POST",
+            headers: { "Content-Type": "Application/json" },
+            body: JSON.stringify({ menuItemId, name, quantity, price, image, addedDate, checked, userInfos_id }),
+        })
+        const data = await response.json()
+        if (data.ok) {
+            toast.success(data.msg)
+        }
+        else {
+            toast(data.msg)
+        }
+    }
+
 
     return (
 
@@ -31,7 +60,7 @@ const NasiGoreng = ({ props }) => {
                             <p className="text-sm text-gray-600 cursor-auto ml-2">${Number(basePrice) + 45}</p>
                         </del>
                         <div className='relative justify-center right-[-150px] bottom-7 gap-4 flex flex-col'>
-                            <FaCartPlus size={30} className='hover:scale-y-125' />
+                            <FaCartPlus size={30} className='hover:scale-y-125' onClick={() => addedToCart(menuItemId, menuItem, 1, basePrice, photoUrl, new Date().toLocaleDateString(), true, userInfos._id)} />
                             <FaShippingFast size={30} className='hover:scale-110' />
                         </div>
                     </div>
