@@ -41,7 +41,6 @@ export default function MenuPage() {
     function getFalseCategories() {
         fetch("/api/categories").then(res => res.json()).then(data => {
             if (data) {
-                console.log(data)
                 const temp = []
                 data.map((category) => {
                     temp.push({ [category.name]: false })
