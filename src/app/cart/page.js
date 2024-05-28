@@ -1,13 +1,8 @@
 "use client"
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { GrFavorite } from "react-icons/gr";
-import { IoIosRemoveCircleOutline } from "react-icons/io";
 import CartItem from "../components/CartItem";
 import Spinner from "../components/Spinner";
-import useProfile from "../components/UseProfile";
-import toast from "react-hot-toast";
 
 
 export default function CartPage() {
@@ -16,29 +11,43 @@ export default function CartPage() {
     const [user, setUser] = useState()
     const [data, setData] = useState()
 
-    function fetchingAddedtocart() {
-        console.log(user._id);
-        fetch("/api/addedtocart?userInfos_id=" + user._id)
+
+    function fetchingUser() {
+        fetch("/api/profile").then(res => res.json()).then(data => setUser(data))
+    }
+
+
+    function fetchingAddedtocart() {//mengextrak data yg ada di cart berdasar user._id
+        fetch("/api/addedtocart?userInfos_id=" + user._id) //kirim id query userInfos kesini untuk get yg session akun aja
             .then(res => res.json())
             .then(data => setData(data))
     }
 
-    function fetchingUserInfos() {
-        fetch("/api/profile").then(res => res.json()).then(data => setUser(data))
+    async function setTotalItemToSession() {
+        //set jumlah produk dan data-data yg sering digunakan ulang sessionStorage
+        const totalQuantty = await data.reduce((total, item) => total + item.quantity, 0)
+        console.log(totalQuantty)
+        sessionStorage.setItem("totalQuantity", totalQuantty)
     }
 
+
     useEffect(() => {
-        fetchingUserInfos()
-        fetchingAddedtocart()
-    }, [])
-
-
+        if (user == undefined) {
+            fetchingUser()
+        }
+        else if (data == undefined) {
+            fetchingAddedtocart()
+        }
+        else {
+            setTotalItemToSession()
+        }
+    }, [user, data,])
 
     return (
         <div className="flex flex-col max-w-3xl mx-auto p-6 space-y-4 sm:p-10 dark:bg-gray-50 dark:text-gray-800 min-h-screen">
             <h2 className="text-xl font-semibold">Your cart</h2>
             {data?.length > 0 ?
-                data.map((item) => (
+                data?.map((item) => (
                     <CartItem key={item.id} {...item} />
                 ))
                 : <Spinner />

@@ -24,6 +24,7 @@
 		"web-vitals": "^2.1.4"
 	},
 	"devDependencies": {
+		"daisyui": "^4.11.1",
 		"eslint": "^8",
 		"eslint-config-next": "14.2.2",
 		"postcss": "^8",

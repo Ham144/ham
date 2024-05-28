@@ -1,7 +1,7 @@
 import { AddedToCart } from "@/app/models/addedtocart"
 import { UserInfo } from "@/app/models/userInfo";
 import mongoose from "mongoose"
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, userAgentFromString } from "next/server";
 
 export async function POST(req) {
     mongoose.connect(process.env.MONGO_URL)
@@ -40,13 +40,16 @@ export async function POST(req) {
 }
 
 
-export async function GET(req, res) {
-    const { userInfos_id } = await NextRequest.json()
-    console.log(userInfos_id);
+export async function GET(req) {
+    const searchParams = req.nextUrl.searchParams
+    const userInfos_id = searchParams.get("userInfos_id")
 
-    console.log(userInfos_id);
     mongoose.connect(process.env.MONGO_URL)
-    const data = await AddedToCart.find({})
+
+
+    const data = await AddedToCart.find({ userInfos_id })
     if (!data || (await data).length <= 0) return Response.json({ ok: false, status: 404, msg: "You don't have any item yet" })
+
+
     return Response.json(data, { ok: true })
 }

@@ -16,8 +16,6 @@ const Navbar = () => {
     const router = useRouter()
     const session = useSession() //data return authentication semua disini
 
-    // console.log(session)
-
     return (
         <nav className='flex fixed justify-between items-center md:px-5 px-1 py-4 w-full md:backdrop-blur-md shadow-md z-10 max-md:px-2 
     bg-gradient-to-l from-gray-200 via-orange-200 to-stone-100
@@ -46,7 +44,7 @@ const Navbar = () => {
                             <div className='flex gap-x-4'>
                                 <div onClick={() => router.push("/cart")}><BsCart size={26} />
                                     <span className='absolute bottom-6 cursor-pointer translate-x-[-5px] bg-yellow-200 font-bold px-1 py-0 rounded-full  '>
-                                        {2}
+                                        {sessionStorage.getItem("totalQuantity")}
                                     </span>
                                 </div>
                                 <div onClick={() => router.push("/cart")}><GrFavorite size={26} />

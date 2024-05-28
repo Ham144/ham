@@ -1,14 +1,16 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useInsertionEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { FaShippingFast } from 'react-icons/fa'
 import { FaCartPlus } from "react-icons/fa";
+import CartPage from '../cart/page';
 
 
 const NasiGoreng = ({ props }) => {
     const [hover, setHover] = useState(false)
 
+    const [data, setData] = useState()
     const [userInfos, setUserInfos] = useState()
     function fetchingUserInfos() {
         fetch("/api/profile").then(res => res.json()).then(data => setUserInfos(data))
@@ -35,11 +37,31 @@ const NasiGoreng = ({ props }) => {
         const data = await response.json()
         if (data.ok) {
             toast.success(data.msg)
+            setTotalItemToSession()
         }
         else {
             toast(data.msg)
         }
     }
+
+    async function setTotalItemToSession() {
+        if (data == undefined) {
+            fetch("/api/addedtocart").then(res => res.json()).then(data => setData(data))
+        }
+        else {
+            //set jumlah produk dan data-data yg sering digunakan ulang sessionStorage
+            // const totalQuantty = await data.reduce((total, item) => total + item.quantity, 0)
+            // console.log(totalQuantty)
+            // sessionStorage.setItem("totalQuantity", totalQuantty)
+            console.log(data)
+        }
+    }
+
+
+    useEffect(() => {
+        setTotalItemToSession()
+    }, [data])
+
 
 
     return (
