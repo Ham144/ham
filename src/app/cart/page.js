@@ -38,5 +38,5 @@ export default function CartPage() {
     )
 }
 
-//todo: addedtocart model menerima id,name,quantity,price,image, dari model Menuitem, tambahan addedDate, cheked=true
+//todo:
 //todo: 

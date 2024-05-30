@@ -11,17 +11,20 @@ export default function Home() {
   const [imagesrc, setimagesrc] = useState(images[1])
   const [topSale, setTopSale] = useState([])
 
-  function fetchingTopSale() {
-    let temp = []
-    const arr = []
-    fetch("/api/menuitems").then(res => res.json()).then(data => temp = data)
-    for (let i = 0; i < 3; i++) {
-      arr.push(temp[Math.random() * temp.length | 0])
-    }
-    setTopSale(arr)
 
+  async function fetchingTopSale() {
+    const temp = []
+    const res = await fetch("/api/menuitems")
+    if (res.ok) {
+      const data = await res.json()
+      for (let i = 0; i < 3; i++) {
+        temp.push(data[Math.random() * data.length | 0])
+      }
+    }
+    setTopSale(temp)
   }
 
+  console.log(topSale)
   useEffect(() => {
     fetchingTopSale()
   }, [])
@@ -45,7 +48,7 @@ export default function Home() {
               <div className="dropdown">
                 <label tabIndex={0} className="btn m-1">Do not click this</label>
                 <div tabIndex={0} className="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-orange-400 text-primary-content">
-                  <div className="card-body">
+                  <div className="card-body ">
                     <h3 className="card-title">Browse Menu ?</h3>
                     <button className="btn" onClick={() => router.push("/menu")}>
                       why not
@@ -61,26 +64,32 @@ export default function Home() {
         </div>
       </div>
       {/* Navbar & Hero End */}
-      <div className="flex flex-col">
+      <div className="flex flex-wrap w-[52%] pb-20 mx-auto">
 
         {
           topSale.length > 0 ?
             topSale.map((item) => (
-              <div className="card card-side bg-base-100 shadow-xl" key={item?._id}>
-                {/* <figure><Image src={item.photo_url} alt="Movie" /></figure> */}
-                <div className="card-body">
-                  <h2 className="card-title">New movie is released!</h2>
-                  <p>Click the button to watch on Jetflix app.</p>
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Watch</button>
+              <div className="card mt-2 px-4 card-side bg-base-100 hover:bg-base-200 shadow-xl mb-5 w-full h-44" key={item?._id}>
+                <figure><Image src={item?.photoUrl} className="w-full  bg-cover" width={`200`} height={`200`} alt="Movie" /></figure>
+                <div className="card-body w-[60%] h-full flex justify-center">
+                  <h2 className="card-title uppercase">{item?.menuItem}</h2>
+                  <div className="dropdown">
+                    <label tabIndex={0} className="btn m-1">Description</label>
+                    <div tabIndex={0} className="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-primary text-primary-content">
+                      <div className="card-body">
+                        <h3 className="card-title">Description</h3>
+                        <p>{item?.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-actions justify-end ">
+                    <button className="btn bg-orange-400 " onClick={() => { router.push("/menu") }}>Look</button>
                   </div>
                 </div>
               </div>
             ))
             : <span className="loading loading-spinner loading-lg"></span>
         }
-
-
       </div>
     </>
 

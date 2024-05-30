@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
-import React, { useContext, useEffect } from 'react'
+import React, { memo, useContext, useEffect } from 'react'
 import { GlobalContext } from './SessionContext'
 import { BsCart } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
@@ -78,4 +78,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default memo(Navbar) 
