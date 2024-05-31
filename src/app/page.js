@@ -37,7 +37,7 @@ export default function Home() {
           <div className="row align-items-center g-5 ">
             <div className="col-lg-6 text-center  text-lg-start ">
               <div>
-                <div className="badge text-white my-4 gap-2 py-4 glass">
+                <div className="badge text-white my-4 gap-2 py-8 glass md:w-[50%]  px-1">
                   Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu
                   diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet
                   lorem sit clita duo justo magna dolore erat amet
