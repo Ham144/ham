@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import "../../public/styling/style.css"
-
+import { Suspense } from "react";
+const TopSale = lazy(() => import('./components/TopSale'));
 
 export default function Home() {
   const router = useRouter();
@@ -24,7 +25,6 @@ export default function Home() {
     setTopSale(temp)
   }
 
-  console.log(topSale)
   useEffect(() => {
     fetchingTopSale()
   }, [])
@@ -63,34 +63,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {/* Navbar & Hero End */}
-      <div className="flex flex-wrap w-[52%] pb-20 mx-auto">
+      {
+        <Suspense fallback={
+          <span className="loading loading-ring loading-lg text-center mx-auto flex flex-1"></span>
+        }>
+          <TopSale topSale={topSale} />
+        </Suspense>
 
-        {
-          topSale.length > 0 ?
-            topSale.map((item) => (
-              <div className="card mt-2 px-4 card-side bg-base-100 hover:bg-base-200 shadow-xl mb-5 w-full h-44" key={item?._id}>
-                <figure><Image src={item?.photoUrl} className="w-full  bg-cover" width={`200`} height={`200`} alt="Movie" /></figure>
-                <div className="card-body w-[60%] h-full flex justify-center">
-                  <h2 className="card-title uppercase">{item?.menuItem}</h2>
-                  <div className="dropdown">
-                    <label tabIndex={0} className="btn m-1">Description</label>
-                    <div tabIndex={0} className="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-primary text-primary-content">
-                      <div className="card-body">
-                        <h3 className="card-title">Description</h3>
-                        <p>{item?.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="card-actions justify-end ">
-                    <button className="btn bg-orange-400 " onClick={() => { router.push("/menu") }}>Look</button>
-                  </div>
-                </div>
-              </div>
-            ))
-            : <span className="loading loading-spinner loading-lg"></span>
-        }
-      </div>
+      }
+
     </>
 
   )

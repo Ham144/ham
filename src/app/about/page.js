@@ -9,7 +9,7 @@ export default function AboutPage() {
                         What is this website purposed for?
                     </div>
                     <div className="collapse-content">
-                        <p>Selling a variety of Fried rice from different countries, because i believe that majority of people like the taste of it</p>
+                        <p>Selling a variety of Fried rice from different countries, because i believe that majority of people likes the taste of it</p>
                     </div>
                 </div>
 
@@ -69,9 +69,31 @@ export default function AboutPage() {
                         How many hours you code perday?
                     </div>
                     <div className="collapse-content">
-                        <p>Around 6 hrs in average, but sometimes i don&apos;t code at all for one day if got no free time</p>
+                        <p>Around 6 hrs a day, but sometimes i don&apos;t code at all for one day if got no free time</p>
                     </div>
                 </div>
+
+                <div className="collapse collapse-arrow join-item border border-base-300 hover:bg-slate-300">
+                    <input type="radio" name="my-accordion-4" checked="checked" />
+                    <div className="collapse-title text-xl font-medium ">
+                        Whats stack you had to make this done?
+                    </div>
+                    <div className="collapse-content">
+                        <p>As i make about page, the dependencies and tech I used are: Tailwind, Mongoose, Nextjs, MongoDB, React, NextAuth, Daisy, react icons, postcss, bun and yea maybe thats all</p>
+                    </div>
+                </div>
+
+                <div className="collapse collapse-arrow join-item border border-base-300 hover:bg-slate-300">
+                    <input type="radio" name="my-accordion-4" checked="checked" />
+                    <div className="collapse-title text-xl font-medium ">
+                        Why did you build this website?
+                    </div>
+                    <div className="collapse-content">
+                        <p>To showcase my skills, to practice my coding skills, to get job soon because i really need job.</p>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     )

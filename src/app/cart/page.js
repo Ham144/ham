@@ -4,30 +4,121 @@ import { useEffect, useState } from "react";
 import CartItem from "../components/CartItem";
 import Spinner from "../components/Spinner";
 import useUserinfosProduct from "../components/hooks/useUserinfosProduct";
+import toast from "react-hot-toast";
 
 
 export default function CartPage() {
     const route = useRouter()
 
-    const { user, data } = useUserinfosProduct()
+    let { user, data, setRefresh } = useUserinfosProduct()
+    const [itemCheckedTotal, setItemCheckedTotal] = useState(null)
+
+    async function resetCheked(checked, _id) {
+        const response = await fetch("/api/addedtocart", {
+            method: "PATCH",
+            body: JSON.stringify({ checked, _id, userInfos_id: user?._id }),
+        })
+        if (response.ok) {
+            const data = await response.json();
+            if (data.ok) {
+                setRefresh(prev => prev = !prev)
+            }
+            else {
+                toast.error("patched failed")
+            }
+        }
+    }
+
+    function CalculateTotal() {
+        const filtered = data?.filter((item) => {
+            return item?.checked == true
+        })
+
+        setItemCheckedTotal(filtered?.reduce((acc, item) => acc + (item.quantity * item?.price), 0))
+        return (
+            <>
+                <tbody className="text-center ">
+                    {
+                        filtered?.length > 0 ? filtered?.map((item, i) => (
+                            <tr key={item?._id}>
+                                <th>{i + 1}</th>
+                                <td className="text-start">{item?.name}</td>
+                                <td>{item?.price}</td>
+                                <td className="text-start">x{item?.quantity} = <span className="font-bold">${item.price * item.quantity}</span></td>
+                            </tr>
+                        )) : <div className="flex flex-col gap-4 w-full mx-auto">
+                            <div className="flex gap-4 items-center">
+                                <div className="skeleton w-16 h-12 mx-auto rounded-full shrink-0"></div>
+                                <div className="flex flex-col gap-4">
+                                    <div className="skeleton h-2 w-20"></div>
+                                    <div className="skeleton h-2 w-28"></div>
+                                </div>
+                            </div>
+                            <div className="skeleton h-32 w-full"></div>
+                        </div>
+                    }
+                </tbody >
+            </>
+        )
+    }
+
+    function CartItems() {
+        return (<div>
+            {data?.length > 0 ?
+                data?.map((item) => (
+                    <CartItem key={item.id} resetCheked={resetCheked} item={item} />
+                ))
+                : <Spinner />
+            }
+        </div>)
+    }
+
+    function toastLatestTotalPay() {
+        toast.success("Your total : $" + itemCheckedTotal)
+    }
+
+    useEffect(() => {
+        CartItems()
+        CalculateTotal()
+
+        if (data?.length > 0) {
+            toastLatestTotalPay()
+        }
+    }, [data?.checked, data?.length, itemCheckedTotal])
 
     return (
         <div className="flex flex-col max-w-3xl mx-auto p-6 space-y-4 sm:p-10 dark:bg-gray-50 dark:text-gray-800 min-h-screen">
             <h2 className="text-xl font-semibold">Your cart</h2>
-            {data?.length > 0 ?
-                data?.map((item) => (
-                    <CartItem key={item.id} {...item} />
-                ))
-                : <Spinner />
-            }
-            <div className="space-y-1 text-right">
-                <p>Total amount:
-                    <span className="font-semibold">357 €</span>
-                </p>
+            <CartItems />
+            <div className="space-y-1 text-right" >
+                <label htmlFor="my_modal_7" className="btn" >Total: ${itemCheckedTotal} (click for detail)</label>
+                <input type="checkbox" id="my_modal_7" className="modal-toggle" />
+                <div className="modal" role="dialog">
+                    <div className="modal-box">
+                        <h3 className="text-lg font-bold">Total Detail :</h3>
+                        <div className="overflow-x-auto">
+                            <i>note: check item in cart to include</i>
+                            <table className="table">
+                                {/* head */}
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <CalculateTotal />
+                            </table>
+                            <div className="font-bold text-center text-2xl mx-auto">Total: ${itemCheckedTotal}</div>
+                        </div>
+                    </div>
+                    <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
+                </div>
 
             </div>
             <div className="flex justify-end space-x-4 ">
-                <button type="button" className="hover:font-bold hover:border-4 duration-150 px-6 py-2 border rounded-md dark:border-violet-600" onClick={() => window.history.back()}>Back
+                <button type="button" className="hover:font-bold hover:border-4 duration-150 px-6 py-2 border rounded-md dark:border-violet-600" onClick={() => route.push("/menu")}>Back
                     <span className="sr-only sm:not-sr-only">to shop</span>
                 </button>
                 <button type="button" className="px-6 py-2 border hover:font-bold hover:border-4 duration-150 rounded-md dark:bg-violet-600 dark:text-gray-50 dark:border-violet-600" onClick={() => route.push("/checkout")}>

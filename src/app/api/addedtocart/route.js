@@ -53,3 +53,20 @@ export async function GET(req) {
 
     return Response.json(data, { ok: true })
 }
+
+export async function PATCH(req) {
+    const body = await req.json()
+    const { checked, _id, userInfos_id } = body;
+    // console.log(body)
+
+    mongoose.connect(process.env.MONGO_URL)
+    const data = await AddedToCart.findOneAndUpdate({ menuItemId: _id, userInfos_id }, { checked })
+    if (!data || data == null) {
+        console.log(data)
+        return Response.json({ ok: false, msg: "data not found" })
+    }
+    else {
+        console.log(data.checked)
+        return Response.json({ ok: true, msg: "update success" });
+    }
+}

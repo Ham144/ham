@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"
 
-const useUserinfosProduct = (refresh) => {
+const useUserinfosProduct = () => {
 
-    const [user, setUser] = useState()
-    const [data, setData] = useState()
+    let [user, setUser] = useState()
+    let [data, setData] = useState()
+
+    let [refresh, setRefresh] = useState(false) //value ini digunakan untuk refetch
 
 
     function fetchingUser() {
@@ -19,9 +21,14 @@ const useUserinfosProduct = (refresh) => {
 
     async function setTotalItemToSession() {
         //set jumlah produk dan data-data yg sering digunakan ulang sessionStorage
-        const totalQuantty = await data.reduce((total, item) => total + item.quantity, 0)
+        const totalQuantty = await data?.reduce((total, item) => total + item.quantity, 0)
         console.log(totalQuantty)
-        sessionStorage.setItem("totalQuantity", totalQuantty)
+        if (totalQuantty != undefined) {
+            sessionStorage.setItem("totalQuantity", totalQuantty)
+        }
+        else {
+            return
+        }
     }
 
 
@@ -29,15 +36,13 @@ const useUserinfosProduct = (refresh) => {
         if (user == undefined) {
             fetchingUser()
         }
-        else if (data == undefined) {
-            fetchingAddedtocart()
-        }
         else {
+            fetchingAddedtocart()
             setTotalItemToSession()
         }
-    }, [user, data, setTotalItemToSession])
+    }, [user, refresh])
 
-    return { user, data, setTotalItemToSession }
+    return { user, data, setRefresh }
 }
 
 export default useUserinfosProduct;

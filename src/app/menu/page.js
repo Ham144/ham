@@ -128,9 +128,15 @@ export default function MenuPage() {
                     </p>
                 </div>
                 :
-                <div className="flex justify-center translate-y-12 min-h-screen">
-
-                    <Spinner />
+                <div className="grid md:grid-cols-4 grid-cols-1 mx-auto gap-5 ">
+                    {Array.from({ length: 8 }).map((_, index) => (
+                        <div key={index} className="flex flex-col gap-4 w-52">
+                            <div className="skeleton h-32 w-full"></div>
+                            <div className="skeleton h-4 w-28"></div>
+                            <div className="skeleton h-4 w-full"></div>
+                            <div className="skeleton h-4 w-full"></div>
+                        </div>
+                    ))}
                 </div>
             }
 

@@ -1,10 +1,36 @@
 import Image from 'next/image'
-import React from 'react'
-import { GrFavorite } from 'react-icons/gr'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
+import toast from 'react-hot-toast'
 import { IoIosRemoveCircleOutline } from 'react-icons/io'
 
-const CartItem = (item) => {
-    const { addedDate, checked, image, menuItemId, name, price, quantity } = item
+
+const CartItem = (props) => {
+    const { ...item } = props.item
+    const resetCheked = props.resetCheked
+
+    const { addedDate, checked, image, menuItemId, name, price, quantity, isFavorite } = item
+    const [isFavorited, setIsFavorited] = useState(isFavorite)
+
+    async function setFavorited(_id, isFavorite) {
+        const response = await fetch(`/api/isfavorite`, {
+            method: 'POST',
+            body: JSON.stringify({ _id, isFavorite },
+            )
+        })
+        if (response.ok) {
+            const data = await response.json()
+            if (data.ok) {
+                toast.success(data.msg)
+                setIsFavorited(!isFavorited)
+            } else {
+                toast.error(data.msg)
+            }
+        } else {
+            toast.error("i dont even ttry")
+        }
+
+    }
 
     return (
         <ul className="flex flex-col divide-y dark:divide-gray-300">
@@ -28,8 +54,8 @@ const CartItem = (item) => {
                                 <span>Remove</span>
                             </button>
                             <button type="button" className="hover:font-bold hover:text-yellow-500 flex items-center px-2 py-1 space-x-1">
-                                <GrFavorite size={26} />
-                                <span>Add to favorites</span>
+                                <input type="checkbox" id='favorited' className="toggle bg-yellow-500" checked={isFavorited} onChange={() => setFavorited(menuItemId, !isFavorited)} />
+                                <label htmlFor="favorited">Favorite</label>
                             </button>
                         </div>
                         <div className='flex flex-col text-sm align-middle font-bold text-wrap'>
@@ -37,8 +63,8 @@ const CartItem = (item) => {
                             <div>menu item id : {menuItemId}</div>
                         </div>
                     </div>
-                    <div className="flex flex-col w-14 items-center justify-center ">
-                        <input type="checkbox" className="w-full h-full" checked={checked} />
+                    <div className="flex flex-col w-14 items-center justify-center h-full ">
+                        <input type="checkbox" className="checkbox checkbox-warning  " checked={checked} onChange={() => resetCheked(!checked, menuItemId)} title='unchecked to exclude and vice versta' />
                     </div>
                 </div>
             </li>

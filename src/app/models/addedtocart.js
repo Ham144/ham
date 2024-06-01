@@ -28,6 +28,10 @@ const AddedToCartSchema = Schema({
     userInfos_id: {
         type: String,
         required: true
+    },
+    isFavorite: {
+        type: Boolean,
+        default: false
     }
 })
 
