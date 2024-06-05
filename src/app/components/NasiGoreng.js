@@ -1,11 +1,12 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image'
-import React, { useEffect, useInsertionEffect, useLayoutEffect, useState } from 'react'
+import React, { useContext, useEffect, useInsertionEffect, useLayoutEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { FaShippingFast } from 'react-icons/fa'
 import { FaCartPlus } from "react-icons/fa";
 import CartPage from '../cart/page';
 import useUserinfosProduct from './hooks/useUserinfosProduct';
+import { CartContext } from './CartContext';
 
 
 const NasiGoreng = ({ props }) => {
@@ -14,7 +15,8 @@ const NasiGoreng = ({ props }) => {
     const [data, setData] = useState()
     const [userInfos, setUserInfos] = useState()
     const [refresh, setRefresh] = useState(0)
-    const { setTotalItemToSession } = useUserinfosProduct(refresh)
+    const { totalProduct } = useContext(CartContext)
+
 
     function fetchingUserInfos() {
         fetch("/api/profile").then(res => res.json()).then(data => setUserInfos(data))

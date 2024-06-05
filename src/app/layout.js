@@ -3,8 +3,9 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SessionContext from "./components/SessionContext";
-import GlobalProvider from "./components/GlobalContext";
 import { Toaster } from "react-hot-toast";
+import GlobalProvider from "./ProviderWrapper";
+import { CartContext } from "./components/CartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
