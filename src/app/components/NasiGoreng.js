@@ -4,8 +4,6 @@ import React, { useContext, useEffect, useInsertionEffect, useLayoutEffect, useS
 import toast from 'react-hot-toast';
 import { FaShippingFast } from 'react-icons/fa'
 import { FaCartPlus } from "react-icons/fa";
-import CartPage from '../cart/page';
-import useUserinfosProduct from './hooks/useUserinfosProduct';
 import { CartContext } from './CartContext';
 
 
@@ -15,7 +13,7 @@ const NasiGoreng = ({ props }) => {
     const [data, setData] = useState()
     const [userInfos, setUserInfos] = useState()
     const [refresh, setRefresh] = useState(0)
-    const { totalProduct } = useContext(CartContext)
+    const { setTotalProductinCart } = useContext(CartContext)
 
 
     function fetchingUserInfos() {
@@ -45,7 +43,7 @@ const NasiGoreng = ({ props }) => {
         const data = await response.json()
         if (data.ok) {
             toast.success(data.msg)
-            setTotalItemToSession()
+            setTotalProductinCart(prev => prev + 1)
         }
         else {
             toast(data.msg)

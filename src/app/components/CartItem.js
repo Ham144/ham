@@ -1,8 +1,10 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
+import { useContext } from 'react'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { IoIosRemoveCircleOutline } from 'react-icons/io'
+import { CartContext } from './CartContext'
 
 
 const CartItem = (props) => {
@@ -11,6 +13,7 @@ const CartItem = (props) => {
 
     const { addedDate, checked, image, menuItemId, name, price, quantity, isFavorite } = item
     const [isFavorited, setIsFavorited] = useState(isFavorite)
+    const { setFavoritesTotal } = useContext(CartContext)
 
     async function setFavorited(_id, isFavorite) {
         const response = await fetch(`/api/isfavorite`, {
@@ -54,7 +57,10 @@ const CartItem = (props) => {
                                 <span>Remove</span>
                             </button>
                             <button type="button" className="hover:font-bold hover:text-yellow-500 flex items-center px-2 py-1 space-x-1">
-                                <input type="checkbox" id='favorited' className="toggle bg-yellow-500" checked={isFavorited} onChange={() => setFavorited(menuItemId, !isFavorited)} />
+                                <input type="checkbox" id='favorited' className="toggle bg-yellow-500" checked={isFavorited} onChange={(e) => {
+                                    setFavorited(menuItemId, !isFavorited)
+                                    e.target.checked === false ? setFavoritesTotal(prev => prev - 1) : setFavoritesTotal(prev => prev + 1)
+                                }} />
                                 <label htmlFor="favorited">Favorite</label>
                             </button>
                         </div>

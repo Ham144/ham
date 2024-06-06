@@ -10,6 +10,8 @@ import { BsCart } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { GrFavorite } from "react-icons/gr";
 import useUserinfosProduct from './hooks/useUserinfosProduct'
+import { CartContext } from './CartContext'
+import toast from 'react-hot-toast'
 
 
 const Navbar = () => {
@@ -17,15 +19,15 @@ const Navbar = () => {
     const router = useRouter()
     const session = useSession() //data return authentication semua disini
 
+    const { totalProductinCart, favoriteTotal } = useContext(CartContext)
+
     const { user, data, refresh } = useUserinfosProduct()
+
+
 
     function getFavoritedTotal() {
         const total = data?.filter((item) => item.favorited === true).length
         return total
-    }
-
-    function getAddedToCartTotal() {
-        return data.length
     }
 
     return (
@@ -54,14 +56,14 @@ const Navbar = () => {
                     session?.status === "authenticated" ?
                         (
                             <div className='flex gap-x-4'>
-                                <div onClick={() => router.push("/cart")}><BsCart size={26} />
+                                <div className='cursor-pointer' onClick={() => router.push("/cart")}><BsCart size={26} />
                                     <span title='the amount of item in total cheked and unchecked' className='absolute bottom-6 cursor-pointer translate-x-[-5px] bg-yellow-200 font-bold px-1 py-0 rounded-full  '>
-                                        {sessionStorage.getItem("totalQuantity")}
+                                        {totalProductinCart}
                                     </span>
                                 </div>
-                                <div onClick={() => router.push("/favorites")}><GrFavorite size={26} />
+                                <div className='cursor-pointer' onClick={() => router.push("/favorites")}><GrFavorite size={26} />
                                     <span title='the product you favorited' className='absolute bottom-6 cursor-pointer translate-x-[-5px] bg-yellow-200 font-bold px-1 py-0 rounded-full  '>
-                                        {getFavoritedTotal()}
+                                        {favoriteTotal}
                                     </span>
 
                                 </div>
@@ -90,4 +92,4 @@ const Navbar = () => {
     )
 }
 
-export default memo(Navbar) 
+export default Navbar 

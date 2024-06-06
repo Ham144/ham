@@ -17,7 +17,7 @@ export const authOption = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
         }),
         CredentialsProvider({
-            name: "Credentials",
+            name: "credentials",
             id: "credentials",
 
             credentials: {
@@ -26,17 +26,23 @@ export const authOption = {
                 password: { label: "Password", type: "password" },
                 phone: { label: "Phone", type: "text" }
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 const email = credentials?.email
                 const password = credentials?.password
 
+                console.log(email, password)
 
                 mongoose.connect(process.env.MONGO_URL)
                 const user = await User.findOne({ email })
+                console.log(user)
 
-                if (user && user.password === password) {
+                if (user && user?.password === password) {
                     console.log(user) //hanya terprint di vscode
                     return user
+                }
+                else {
+                    console.log("wrong password or email")
+                    return Response.json({ ok: false, status: 401, message: "wrong password or email" })
                 }
 
                 return null

@@ -5,18 +5,25 @@ import Link from 'next/link'
 import React, { useContext, useState } from 'react'
 import { GlobalContext } from '../components/GlobalContext'
 import mongoose from 'mongoose'
+import toast from 'react-hot-toast'
 
 export default function Loginpage() {
 
-    const [email, setEmail] = useState("coba@example.com")
-    const [password, setPassword] = useState("hammbebe")
+    const [email, setEmail] = useState("test232432@example.com")
+    const [password, setPassword] = useState("password")
     const { handleGoogle } = useContext(GlobalContext)
 
     async function handleSubmitLogin(ev) {
         ev.preventDefault()
         try {
             const response = await signIn('credentials', { email, password })
-            console.log(response, "response")
+            const data = await response.json()
+            if (data.ok) {
+                return toast.success("Login Success")
+            }
+            else {
+                return toast.error(data.msg)
+            }
         } catch (error) {
             console.log(error)
         }
@@ -24,8 +31,8 @@ export default function Loginpage() {
 
 
     return (
-        <div>
-            <form onSubmit={handleSubmitLogin} className='flex flex-col justify-center items-center mx-auto shadow-lg w-[400px] bg-sekunder rounded-md  mt-6 gap-y-2 '>
+        <div className='min-h-screen py-5'>
+            <form onSubmit={handleSubmitLogin} className='flex flex-col justify-center items-center mx-auto shadow-lg w-[400px] bg-sekunder rounded-md   gap-y-2 '>
                 <h1 className='text-4xl mb-4 font-serif font-light '>Login</h1>
                 <label className='font-bold' htmlFor="Email">
                     <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' placeholder='Email' type="text" value={email} onChange={(ev) => setEmail(ev.target.value)} />

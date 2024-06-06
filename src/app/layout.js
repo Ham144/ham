@@ -4,8 +4,9 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SessionContext from "./components/SessionContext";
 import { Toaster } from "react-hot-toast";
-import GlobalProvider from "./ProviderWrapper";
 import { CartContext } from "./components/CartContext";
+import GlobalProvider from "./components/GlobalProvider";
+import AuthenticationProvider, { GlobalContext } from "./components/GlobalContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,21 +19,25 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SessionContext>
+
+        <AuthenticationProvider>
           <GlobalProvider>
-            <Navbar />
-            <Toaster />
-            <div className="flex w-full h-[100px] ">
-              {/* ini untuk menjaga semua page tidak mepet keatas dan tidak tertutup fixed navbar */}
-            </div>
-            <div className="
+            <SessionContext>
+              <Navbar />
+              <Toaster />
+              <div className="flex w-full h-[100px] ">
+                {/* ini untuk menjaga semua page tidak mepet keatas dan tidak tertutup fixed navbar */}
+              </div>
+              <div className="
                 bg-gradient-to-br from-amber-50 via-amber-50 to-red-100
-            ">
-              {children}
-            </div>
-            <Footer />
+                ">
+                {children}
+              </div>
+              <Footer />
+            </SessionContext>
           </GlobalProvider>
-        </SessionContext>
+
+        </AuthenticationProvider>
       </body>
     </html>
   );

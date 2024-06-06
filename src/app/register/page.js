@@ -5,13 +5,14 @@ import { redirect } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import React, { useContext, useState } from 'react'
 import { GlobalContext } from '../components/GlobalContext'
+import toast from 'react-hot-toast'
 
 
 const Registerpage = () => {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("test1@example.com")
-    const [password, setPassword] = useState("hammbebe")
-    const [phone, setPhone] = useState("")
+    const [name, setName] = useState("new user")
+    const [email, setEmail] = useState("test232432@example.com")
+    const [password, setPassword] = useState("password")
+    const [phone, setPhone] = useState("0829277868132")
     const router = useRouter()
     const { handleGoogle } = useContext(GlobalContext)
 
@@ -19,20 +20,21 @@ const Registerpage = () => {
         ev.preventDefault()
         const response = await fetch("/api/register", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
             body: JSON.stringify({
                 name, email, password, phone
             })
         })
-        if (response.ok) return router.push("/login")
+        const data = await response.json()
+        if (data.ok) {
+            toast.success(data.msg)
+            return router.push("/login")
+        }
     }
 
     return (
-        <section>
-            <form onSubmit={handleSubmitRegister} className='flex flex-col justify-center items-center mx-auto shadow-lg w-[400px] bg-sekunder rounded-md  mt-6 gap-y-2 '>
-                <h1 className='text-4xl mb-4 font-serif font-light '>Register</h1>
+        <section className='min-h-screen py-5 '>
+            < form onSubmit={handleSubmitRegister} className='flex flex-col justify-center items-center mx-auto shadow-lg w-[400px] bg-sekunder rounded-md  mt-6 gap-y-2 ' >
+                < h1 className='text-4xl mb-4 font-serif font-light ' > Register</ h1>
                 <label className='font-bold' htmlFor="name">
                     <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' placeholder='Name' value={name} onChange={ev => setName(ev.target.value)} autoFocus type="text" />
                 </label>
@@ -56,8 +58,8 @@ const Registerpage = () => {
                     already have an acoount? {" "}
                     <Link className='text-slate-600 ' href={"/login"} >Login page here &raquo;</Link>
                 </div>
-            </form>
-        </section>
+            </form >
+        </section >
     )
 }
 
