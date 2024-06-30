@@ -9,7 +9,7 @@ import toast from 'react-hot-toast'
 
 export default function Loginpage() {
 
-    const [email, setEmail] = useState("test232432@example.com")
+    const [email, setEmail] = useState("helloworld")
     const [password, setPassword] = useState("password")
     const { handleGoogle } = useContext(GlobalContext)
 
@@ -18,14 +18,14 @@ export default function Loginpage() {
         try {
             const response = await signIn('credentials', { email, password })
             const data = await response.json()
-            if (data.ok) {
+            if (data.ok == true) {
                 return toast.success("Login Success")
             }
             else {
-                return toast.error(data.msg)
+                return toast.error(data.message)
             }
         } catch (error) {
-            console.log(error)
+            toast.error(error)
         }
     }
 

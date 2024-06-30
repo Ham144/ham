@@ -21,9 +21,9 @@ const Navbar = () => {
 
     if (session?.status == "authenticated") {
 
-        const { totalProductinCart, favoriteTotal } = useContext(CartContext)
+        var { totalProductinCart, favoriteTotal } = useContext(CartContext)
 
-        const { user, data, refresh } = useUserinfosProduct()
+        var { user, data, refresh } = useUserinfosProduct()
 
 
         function getFavoritedTotal() {

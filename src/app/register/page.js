@@ -10,7 +10,7 @@ import toast from 'react-hot-toast'
 
 const Registerpage = () => {
     const [name, setName] = useState("new user")
-    const [email, setEmail] = useState("test232432@example.com")
+    const [email, setEmail] = useState("helloworld")
     const [password, setPassword] = useState("password")
     const [phone, setPhone] = useState("0829277868132")
     const router = useRouter()
@@ -18,16 +18,23 @@ const Registerpage = () => {
 
     async function handleSubmitRegister(ev) {
         ev.preventDefault()
-        const response = await fetch("/api/register", {
-            method: "POST",
-            body: JSON.stringify({
-                name, email, password, phone
+        try {
+            const response = await fetch("/api/register", {
+                method: "POST",
+                body: JSON.stringify({
+                    name, email, password, phone
+                })
             })
-        })
-        const data = await response.json()
-        if (data.ok) {
-            toast.success(data.msg)
-            return router.push("/login")
+            const data = await response.json()
+            if (data.ok == true) {
+                toast.success(data.msg)
+                return router.push("/login")
+            }
+            else {
+                toast.error(data.msg)
+            }
+        } catch (error) {
+            toast.error(error)
         }
     }
 
