@@ -1,7 +1,10 @@
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const TopSale = ({ topSale }) => {
+    const router = useRouter()
+
     return (
         < div className="flex flex-wrap w-[52%] pb-20 mx-auto" >
             {

@@ -15,7 +15,7 @@ const NasiGoreng = ({ props }) => {
     const [refresh, setRefresh] = useState(0)
     const { setTotalProductinCart } = useContext(CartContext)
 
-
+    const session = useSession()
     function fetchingUserInfos() {
         fetch("/api/profile").then(res => res.json()).then(data => setUserInfos(data))
         return
@@ -23,7 +23,9 @@ const NasiGoreng = ({ props }) => {
 
 
     useLayoutEffect(() => {
-        fetchingUserInfos()
+        if (session.status == "authenticated") {
+            fetchingUserInfos()
+        }
     }, [])
 
 

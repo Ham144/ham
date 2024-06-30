@@ -1,6 +1,12 @@
+import { useSession } from "next-auth/react"
 import { useState, useEffect, useContext } from "react"
 
 const useUserinfosProduct = () => {
+
+    const session = useSession()
+    if (session.status == "unauthenticated") {
+        return console.log("need to login")
+    }
 
     let [user, setUser] = useState()
     let [data, setData] = useState()
@@ -42,7 +48,10 @@ const useUserinfosProduct = () => {
         }
     }, [user, refresh])
 
-    return { user, data, setRefresh }
+
+    return {
+        user, data, setRefresh
+    }
 }
 
 export default useUserinfosProduct;
