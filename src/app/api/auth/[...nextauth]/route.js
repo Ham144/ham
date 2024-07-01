@@ -21,7 +21,7 @@ export const authOption = {
             id: "credentials",
 
             credentials: {
-                email: { label: "Email", type: "text", placeholder: "example@gmail.com" },
+                email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials, req) {
@@ -36,14 +36,8 @@ export const authOption = {
                 console.log(user.password)
                 if (user && user?.password == password) {
                     console.log(user) //hanya terprint di vscode
-                    const User = {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        phone: user.phone,
-                    }
-                    console.log(User)
-                    return User
+                    console.log(user)
+                    return user
                 }
                 else {
                     console.log("wrong password or email")

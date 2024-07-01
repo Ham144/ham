@@ -20,6 +20,7 @@ const Navbar = () => {
     const session = useSession() //data return authentication semua disini
 
     if (session?.status == "authenticated") {
+        console.log(session?.status)
 
         var { totalProductinCart, favoriteTotal } = useContext(CartContext)
 
@@ -31,6 +32,7 @@ const Navbar = () => {
             return total
         }
     }
+
     else
 
         return (
