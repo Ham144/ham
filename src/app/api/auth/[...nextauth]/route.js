@@ -35,13 +35,13 @@ export const authOption = {
 
                 console.log(user.password)
                 if (user && user?.password == password) {
-                    console.log(user) //hanya terprint di vscode
                     console.log(user)
                     return user
                 }
                 else {
                     console.log("wrong password or email")
-                    return Response.json({ ok: false, status: 401, message: "wrong password or email" })
+                    Response.json({ ok: false, status: 401, message: "wrong password or email" })
+                    throw new Error("wrong password or email")
                 }
 
                 return null

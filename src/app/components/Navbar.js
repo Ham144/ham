@@ -19,6 +19,7 @@ const Navbar = () => {
     const router = useRouter()
     const session = useSession() //data return authentication semua disini
 
+    console.log(session.status)
     if (session?.status == "authenticated") {
         console.log(session?.status)
 

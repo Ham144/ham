@@ -20,8 +20,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
 
-        <SessionContext>
-          <AuthenticationProvider>
+        <AuthenticationProvider>
+          <SessionContext>
             <GlobalProvider>
               <Navbar />
               <Toaster />
@@ -36,8 +36,8 @@ export default function RootLayout({ children }) {
               <Footer />
             </GlobalProvider>
 
-          </AuthenticationProvider>
-        </SessionContext>
+          </SessionContext>
+        </AuthenticationProvider>
       </body>
     </html>
   );
