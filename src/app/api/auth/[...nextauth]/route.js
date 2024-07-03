@@ -17,20 +17,20 @@ export const authOption = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
         }),
         CredentialsProvider({
-            name: "Credentials",
+            name: "credentials",
             id: "credentials",
 
             credentials: {
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 const email = credentials?.email
                 const password = credentials?.password
 
                 console.log(email, password)
 
-                mongoose.connect(process.env.MONGO_URL)
+                await mongoose.connect(process.env.MONGO_URL)
                 const user = await User.findOne({ email })
 
                 console.log(user.password)

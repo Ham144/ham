@@ -17,18 +17,18 @@ export default function Loginpage() {
     async function handleSubmitLogin(ev) {
         ev.preventDefault()
         try {
+            console.log(email, password);
             const response = await signIn('credentials', { email, password })
             const data = await response.json()
             if (data.ok == true) {
                 return toast.success("Login Success")
             }
             else {
+                console.log("right here error")
                 return toast.error(data.message)
             }
         } catch (error) {
-            toast.error(error)
-
-
+            console.log("rigth here error", error)
         }
     }
 
