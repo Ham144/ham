@@ -65,9 +65,12 @@ export default function Home() {
       </div>
       {
         <Suspense fallback={
-          <span className="loading loading-ring loading-lg text-center mx-auto flex flex-1"></span>
+          <span className="loading loading-ring loading-lg text-center mx-auto flex  flex-1"></span>
         }>
-          <TopSale topSale={topSale} />
+          <div>
+
+            <TopSale topSale={topSale} />
+          </div>
         </Suspense>
 
       }

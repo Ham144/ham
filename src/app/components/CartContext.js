@@ -35,13 +35,13 @@ export default function CartProvider({ children }) {
             fetcingFavorites()
         }
         else if (session.status == "authenticated") {
-            setFavoritesTotal(favorites.length)
+            setFavoritesTotal(favorites.length || 0)
         }
     }, [user, favorites])
 
     if (user) {
         fetch("/api/addedtocart?userInfos_id=" + user?._id).then(res => res.json()).then(data =>
-            setTotalProductinCart(data.reduce((total, item) => total + item.quantity, 0))
+            setTotalProductinCart(data?.reduce((total, item) => total + item.quantity, 0))
         )
     }
 

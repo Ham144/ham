@@ -16,7 +16,8 @@ export default function FavoritesPage() {
                 Favorites <FaHeart className="text-yellow-100" />
             </h1>
             <div className="grid grid-cols-2 mx-auto gap-6 ">
-                {favorites?.length > 0 ?
+                {!favorites && <div className="text-center font-bold textarea-md absolute mx-auto">No Favorited item yet</div>}
+                {favorites &&
                     favorites.map((item, index) => (
                         <div key={index} className="card w-full h-[500px] mx-auto glass">
                             <figure>
@@ -31,13 +32,6 @@ export default function FavoritesPage() {
                             </div>
                         </div>
                     ))
-                    :
-                    <div className="flex flex-col gap-4 w-52">
-                        <div className="skeleton h-32 w-full"></div>
-                        <div className="skeleton h-4 w-28"></div>
-                        <div className="skeleton h-4 w-full"></div>
-                        <div className="skeleton h-4 w-full"></div>
-                    </div>
                 }
             </div>
         </div>

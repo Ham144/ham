@@ -1,17 +1,21 @@
 "use client"
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CartItem from "../components/CartItem";
 import Spinner from "../components/Spinner";
 import useUserinfosProduct from "../components/hooks/useUserinfosProduct";
 import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 
 export default function CartPage() {
     const route = useRouter()
 
     let { user, data, setRefresh } = useUserinfosProduct()
-    const [itemCheckedTotal, setItemCheckedTotal] = useState(null)
+    const [itemCheckedTotal, setItemCheckedTotal] = useState()
+
+    const session = useSession()
 
     async function resetCheked(checked, _id) {
         const response = await fetch("/api/addedtocart", {
@@ -37,6 +41,7 @@ export default function CartPage() {
         setItemCheckedTotal(filtered?.reduce((acc, item) => acc + (item.quantity * item?.price), 0))
         return (
             <>
+
                 <tbody className="text-center ">
                     {
                         filtered?.length > 0 ? filtered?.map((item, i) => (
@@ -62,15 +67,17 @@ export default function CartPage() {
         )
     }
 
+
     function CartItems() {
-        return (<div>
-            {data?.length > 0 ?
+        return (<>
+            {data?.length == 0 ? <><p className="text-center">Your cart is empty</p></> : null}
+            {!data ?
+                <Spinner /> :
                 data?.map((item) => (
                     <CartItem key={item.id} resetCheked={resetCheked} item={item} />
                 ))
-                : <Spinner />
             }
-        </div>)
+        </>)
     }
 
     function toastLatestTotalPay() {
@@ -89,7 +96,9 @@ export default function CartPage() {
     return (
         <div className="flex flex-col max-w-3xl mx-auto p-6 space-y-4 sm:p-10 dark:bg-gray-50 dark:text-gray-800 min-h-screen">
             <h2 className="text-xl font-semibold">Your cart</h2>
-            <CartItems />
+
+            {session.status == "authenticated" ? <CartItems />
+                : <>Please Login first <Link href={"/login"} className="btn glass">Login</Link></>}
             <div className="space-y-1 text-right" >
                 <label htmlFor="my_modal_7" className="btn" >Total: ${itemCheckedTotal} (click for detail)</label>
                 <input type="checkbox" id="my_modal_7" className="modal-toggle" />
@@ -129,5 +138,5 @@ export default function CartPage() {
     )
 }
 
-//todo:
-//todo: 
+//TODO: Fix cart and favorites with redux
+//TODO: fix sigin Google to be login with another account

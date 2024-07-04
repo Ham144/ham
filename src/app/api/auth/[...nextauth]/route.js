@@ -24,7 +24,7 @@ export const authOption = {
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
             },
-            async authorize(credentials) {
+            async authorize(credentials, req) {
                 const email = credentials?.email
                 const password = credentials?.password
 
@@ -44,14 +44,29 @@ export const authOption = {
                     throw new Error("wrong password or email")
                 }
 
-                return null
+                return true
             }
         })
         // ...add more providers here
     ],
-    pages: {
-        signIn: "/login"
-    }
+    callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            if (account.provider === "google") {
+                // Check if the Google account email already exists in your database
+                const existingUser = await User.findOne({ email: profile.email });
+
+                if (existingUser) {
+                    // If the user exists, allow sign in
+                    return true;
+                } else {
+                    // If the user does not exist, you can decide whether to allow sign up or not
+                    // Returning false denies the sign in
+                    return false;
+                }
+            }
+            return true;
+        },
+    },
 }
 
 

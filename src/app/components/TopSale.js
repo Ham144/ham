@@ -6,7 +6,8 @@ const TopSale = ({ topSale }) => {
     const router = useRouter()
 
     return (
-        < div className="flex flex-wrap w-[52%] pb-20 mx-auto" >
+
+        < div className="flex flex-wrap w-[52%] pb-20 mx-auto mt-4  "  >
             {
                 topSale?.length > 0 &&
                 topSale.map((item) => (
