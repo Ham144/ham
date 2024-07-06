@@ -7,6 +7,7 @@ import React, { useContext, useState } from 'react'
 import { GlobalContext } from '../components/GlobalContext'
 import mongoose from 'mongoose'
 import toast from 'react-hot-toast'
+import { redirect } from 'next/navigation'
 
 export default function Loginpage() {
 
@@ -15,6 +16,10 @@ export default function Loginpage() {
     const { handleGoogle } = useContext(GlobalContext)
     const [loginInProgress, setloginInProgress] = useState(false)
 
+    const { data: session, status } = useSession()
+    if (status == "authenticated") {
+        return redirect("/")
+    }
     async function handleSubmitLogin(ev) {
         ev.preventDefault()
         setloginInProgress(true)

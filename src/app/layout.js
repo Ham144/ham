@@ -22,7 +22,9 @@ export default function RootLayout({ children }) {
 
         <AuthenticationProvider>
           <SessionContext>
+
             <GlobalProvider>
+
               <Navbar />
               <Toaster />
               <div className="flex w-full h-[100px] ">
@@ -35,9 +37,10 @@ export default function RootLayout({ children }) {
               </div>
               <Footer />
             </GlobalProvider>
-
           </SessionContext>
+
         </AuthenticationProvider>
+
       </body>
     </html>
   );

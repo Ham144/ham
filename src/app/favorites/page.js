@@ -4,10 +4,13 @@ import { FaHeart } from "react-icons/fa";
 import useUserinfosProduct from "../components/hooks/useUserinfosProduct";
 import Image from "next/image";
 import { CartContext } from "../components/CartContext";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function FavoritesPage() {
 
     const { favorites } = useContext(CartContext)
+    if (useSession().status == "unauthenticated") return redirect("/")
 
 
     return (

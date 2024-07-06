@@ -6,7 +6,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import toast, { Toast } from 'react-hot-toast'
 import ProfileBar from '@/app/components/ProfileBar'
-import { useParams, useSearchParams } from 'next/navigation'
+import { redirect, useParams, useSearchParams } from 'next/navigation'
 
 const Profilepage = () => {
     let session = useSession()
@@ -23,6 +23,8 @@ const Profilepage = () => {
     const [postalCode, setPostalCode] = useState("")
     const [specificAddress, setSpecificAddress] = useState("")
     const [isAdmin, setIsAdmin] = useState(false)
+
+    if (useSession().status == "unauthenticated") return redirect("/")
 
 
     async function handleRefresh() {

@@ -20,14 +20,19 @@ const useUserinfosProduct = () => {
     }
 
 
-    function fetchingAddedtocart() {//mengextrak data yg ada di cart berdasar user._id
+    async function fetchingAddedtocart() {//mengextrak data yg ada di cart berdasar user._id
         console.log(user._id)
         try {
-            fetch("/api/addedtocart?userInfos_id=" + user._id) //kirim id query userInfos kesini untuk get yg session akun aja
-                .then(res => res.json())
-                .then(data => setData(data))
+            const response = await fetch("/api/addedtocart?userInfos_id=" + user._id) //kirim id query userInfos kesini untuk get yg session akun aja
+            if (response.ok) {
+                const data = await response.json()
+                setData(data)
+            }
+            else {
+                setData([])
+            }
         } catch (error) {
-            console.log(error)
+            throw new error("no product added")
         }
     }
 
@@ -55,8 +60,12 @@ const useUserinfosProduct = () => {
                 fetchingUser()
             }
             else {
-                fetchingAddedtocart()
-                setTotalItemToSession()
+                try {
+                    fetchingAddedtocart()
+                    setTotalItemToSession()
+                } catch (error) {
+                    console.log(error)
+                }
             }
         }
         else return

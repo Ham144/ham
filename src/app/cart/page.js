@@ -12,6 +12,8 @@ import Link from "next/link";
 export default function CartPage() {
     const route = useRouter()
 
+    if (useSession().status == "unauthenticated") return redirect("/")
+
     let { user, data, setRefresh } = useUserinfosProduct()
     const [itemCheckedTotal, setItemCheckedTotal] = useState()
 
@@ -107,18 +109,18 @@ export default function CartPage() {
                         <h3 className="text-lg font-bold">Total Detail :</h3>
                         <div className="overflow-x-auto">
                             <i>note: check item in cart to include</i>
-                            <table className="table">
+                            <div className="table">
                                 {/* head */}
-                                <thead>
+                                <div>
                                     <tr>
                                         <th></th>
                                         <th>Product</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
                                     </tr>
-                                </thead>
+                                </div>
                                 <CalculateTotal />
-                            </table>
+                            </div>
                             <div className="font-bold text-center text-2xl mx-auto">Total: ${itemCheckedTotal}</div>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import React, { useContext, useState } from 'react'
 import { GlobalContext } from '../components/GlobalContext'
 import toast from 'react-hot-toast'
+import { useSession } from 'next-auth/react'
 
 
 const Registerpage = () => {
@@ -15,6 +16,8 @@ const Registerpage = () => {
     const [phone, setPhone] = useState("0829277868132")
     const router = useRouter()
     const { handleGoogle } = useContext(GlobalContext)
+
+    if (useSession().status == "authenticated") return redirect("/")
 
     async function handleSubmitRegister(ev) {
         ev.preventDefault()
