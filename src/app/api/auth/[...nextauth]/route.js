@@ -3,7 +3,7 @@ import mongoose, { createConnection } from "mongoose"
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { MongoDBAdapter } from "@auth/mongodb-adapter"
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "@/libs/mongoConnect";
 
 if (!mongoose.connection.readyState) {
@@ -55,7 +55,7 @@ export const authOption = {
                     console.log(error)
                 }
 
-                return null
+                return true
             },
         }
         )
