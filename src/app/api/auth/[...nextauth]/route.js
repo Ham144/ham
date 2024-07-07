@@ -32,31 +32,22 @@ export const authOption = {
             id: "credentials",
 
             credentials: {
-                email: { label: "Email", type: "email" },
+                email: { label: "Email", type: "email", placeholder: "email" },
                 password: { label: "Password", type: "password" },
             },
-            async authorize(credentials) {
-                const { email, password } = credentials;
-                await mongoose.connect(process.env.MONGO_URL)
-                const user = await User.findOne({ email })
+            async authorize(credentials, req) {
+                const email = credentials?.email;
+                const password = credentials?.password;
 
-                try {
-                    if (user && user?.password == password) {
-                        console.log(user)
-                        return user
-                    }
-                    else {
-                        console.log("wrong password or email")
-                        Response.json({ ok: false, status: 401, message: "wrong password or email" })
-                        throw new Error("wrong password or email")
+                mongoose.connect(process.env.MONGO_URL);
+                const user = await User.findOne({ email });
 
-                    }
-                } catch (error) {
-                    console.log(error)
+                if (password === user.password) {
+                    return user;
                 }
 
-                return true
-            },
+                return null
+            }
         }
         )
 

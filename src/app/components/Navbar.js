@@ -37,9 +37,6 @@ const Navbar = () => {
     if (session?.status == "authenticated") {
         console.log(session?.status)
 
-
-
-
     }
     function getFavoritedTotal() {
         const total = data?.filter((item) => item.favorited === true).length

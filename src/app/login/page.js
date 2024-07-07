@@ -25,20 +25,14 @@ export default function Loginpage() {
         setloginInProgress(true)
         try {
             console.log(email, password);
-            const response = await signIn('credentials', { email, password })
-            const data = await response.json()
-            if (data.ok == true) {
-                return toast.success("Login Success")
-            }
-            else {
-                console.log("right here else")
-                return toast.error(data.message)
-            }
+            await signIn("credentials", { email, password, callbackUrl: "/" });
+
         } catch (error) {
             console.log("rigth here error", error)
         }
         setloginInProgress(false)
     }
+
 
 
     return (
