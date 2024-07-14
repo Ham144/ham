@@ -1,5 +1,5 @@
 import { User } from "@/app/models/user"
-import mongoose, { createConnection } from "mongoose"
+import mongoose from "mongoose"
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -43,9 +43,9 @@ export const authOption = {
                 const user = await User.findOne({ email });
 
                 if (password === user.password) {
+                    console.log(user)
                     return user;
                 }
-
                 return null
             }
         }
