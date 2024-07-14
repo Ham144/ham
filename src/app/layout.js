@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SessionContext from "./components/SessionContext";
 import { Toaster } from "react-hot-toast";
-import { CartContext } from "./components/CartContext";
 import GlobalProvider from "./components/GlobalProvider";
 import AuthenticationProvider, { GlobalContext } from "./components/GlobalContext";
 

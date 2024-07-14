@@ -1,11 +1,11 @@
-import { User } from "@/app/models/user"
-import mongoose from "mongoose"
-import NextAuth from "next-auth"
+import { User } from "@/app/models/user";
+import mongoose from "mongoose";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "@/libs/mongoConnect";
-import bcrypt from "bcryptjs"
+import bcrypt from "bcryptjs";
 
 if (!mongoose.connection.readyState) {
     mongoose.connect(process.env.MONGO_URL, {
@@ -26,12 +26,10 @@ export const authOption = {
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             allowDangerousEmailAccountLinking: true, // penting, kalau ga gini ga bisa login pake akun lain
-
         }),
         CredentialsProvider({
             name: "Credentials",
             id: "credentials",
-
             credentials: {
                 email: { label: "Email", type: "email", placeholder: "email" },
                 password: { label: "Password", type: "password" },
@@ -42,20 +40,26 @@ export const authOption = {
 
                 mongoose.connect(process.env.MONGO_URL);
                 const user = await User.findOne({ email });
+                if (!user) {
+                    console.log("User not found");
+                    return null;
+                }
+
                 const passwordMatched = bcrypt.compareSync(password, user.password);
                 if (passwordMatched) {
-                    console.log(user)
+                    console.log(user);
                     return user;
+                } else {
+                    console.log("Invalid password");
+                    return null;
                 }
-                return null
             }
-        }
-        )
-
+        })
         // ...add more providers here
     ],
     callbacks: {
         async signIn({ user, account, profile }) {
+            console.log("SignIn callback - user:", user, "account:", account, "profile:", profile);
             if (account.provider === "google") {
                 const existingUser = await User.findOne({ email: profile.email });
                 console.log("Google SignIn:", existingUser ? "User exists" : "User does not exist");
@@ -68,7 +72,7 @@ export const authOption = {
                         email: profile?.email,
                     });
 
-                    mongoose.connect(process.env.MONGO_URL)
+                    mongoose.connect(process.env.MONGO_URL);
                     await newUser.save();
                     return true;
                 }
@@ -76,19 +80,22 @@ export const authOption = {
             return true;
         },
         async session({ session, token }) {
+            console.log("Session callback - session:", session, "token:", token);
             if (token?.sub) {
-                mongoose.connect(process.env.MONGO_URL)
                 const user = await User.findById(token.sub);
-                session.user = {
-                    id: user._id,
-                    email: user.email,
-                    name: user.name,
-                    image: user.image,
-                };
+                if (user) {
+                    session.user = {
+                        id: user._id,
+                        email: user.email,
+                        name: user.name,
+                        image: user.image,
+                    };
+                }
             }
             return session;
         },
         async jwt({ token, user }) {
+            console.log("JWT callback - token:", token, "user:", user);
             if (user) {
                 token.sub = user.id;
             }
@@ -105,10 +112,7 @@ export const authOption = {
         signOut: '/auth/signout',
         error: '/auth/error',
     },
-}
+};
 
-
-const handler = NextAuth(authOption)
-export { handler as GET, handler as POST }
-
-// TODO: perbaiki sign in melalui credentials email password
+const handler = NextAuth(authOption);
+export { handler as GET, handler as POST };
