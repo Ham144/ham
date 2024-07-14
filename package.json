@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@auth/mongodb-adapter": "^3.0.0",
+		"bcryptjs": "^2.4.3",
 		"i": "^0.3.7",
 		"mdb-react-ui-kit": "8.0.0",
 		"mongodb": "^6.5.0",

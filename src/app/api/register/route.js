@@ -1,13 +1,17 @@
 import { User } from "@/app/models/user"
 import mongoose from "mongoose"
+import bcrypt from "bcryptjs"
 
 export async function POST(req) {
     const body = await req.json()
-    console.log({ body });
     mongoose.connect(process.env.MONGO_URL)
     let createdUser;
     try {
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(body.password, salt);
+        body.password = hash
         createdUser = await User.create(body)
+        // console.log(body.password)
     } catch (error) {
         console.log("Registration failed, similar email found.")
     }

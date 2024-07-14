@@ -11,8 +11,8 @@ import { redirect } from 'next/navigation'
 
 export default function Loginpage() {
 
-    const [email, setEmail] = useState("helloworld")
-    const [password, setPassword] = useState("password")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const { handleGoogle } = useContext(GlobalContext)
     const [loginInProgress, setloginInProgress] = useState(false)
 
@@ -24,7 +24,6 @@ export default function Loginpage() {
         ev.preventDefault()
         setloginInProgress(true)
         try {
-            console.log(email, password);
             await signIn("credentials", { email, password, callbackUrl: "/" });
 
         } catch (error) {

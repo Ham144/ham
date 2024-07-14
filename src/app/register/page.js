@@ -10,10 +10,10 @@ import { useSession } from 'next-auth/react'
 
 
 const Registerpage = () => {
-    const [name, setName] = useState("new user")
-    const [email, setEmail] = useState("helloworld")
-    const [password, setPassword] = useState("password")
-    const [phone, setPhone] = useState("0829277868132")
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [phone, setPhone] = useState("")
     const router = useRouter()
     const { handleGoogle } = useContext(GlobalContext)
 
