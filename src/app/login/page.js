@@ -11,31 +11,23 @@ import { redirect } from 'next/navigation'
 
 export default function Loginpage() {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const { handleGoogle } = useContext(GlobalContext)
+    const [email, setEmail] = useState("email@gmail.com")
+    const [password, setPassword] = useState("password")
+    const { handleGoogle, handleCredentials } = useContext(GlobalContext)
     const [loginInProgress, setloginInProgress] = useState(false)
 
     const { data: session, status } = useSession()
     if (status == "authenticated") {
         return redirect("/")
     }
-    async function handleSubmitLogin(ev) {
-        ev.preventDefault()
-        setloginInProgress(true)
-        try {
-            await signIn("credentials", { email, password, callbackUrl: "/" });
 
-        } catch (error) {
-            console.log("rigth here error", error)
-        }
-        setloginInProgress(false)
+    async function handleSubmitLogin(e) {
+        await handleSubmitLogin(e, setloginInProgress, email, password, signIn)
     }
 
-
-
     return (
-        <div className='min-h-screen py-5'>
+        <div className='min-h-screen py-5 flex flex-col items-center'>
+            <div className="badge badge-info mb-4 text-center mx-auto ">Login with google only currently</div>
             <form onSubmit={handleSubmitLogin} className='flex flex-col justify-center items-center mx-auto shadow-lg w-[400px] bg-sekunder rounded-md   gap-y-2 '>
                 <h1 className='text-4xl mb-4 font-serif font-light '>Login</h1>
                 <label className='font-bold' htmlFor="Email">
@@ -44,7 +36,7 @@ export default function Loginpage() {
                 <label className='font-bold' htmlFor="Password">
                     <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' type="text" placeholder='Password' value={password} onChange={(ev) => setPassword(ev.target.value)} disabled={loginInProgress} />
                 </label>
-                <button type='submit' disabled={loginInProgress} className='bg-primer bg-white text-black w-full'>
+                <button type='submit' disabled={true} className='bg-primer bg-white text-black w-full'>
                     Login
                 </button>
                 <p className='text-center text-slate-500'>-Or Login with-</p>

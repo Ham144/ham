@@ -8,10 +8,8 @@ import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-
 export default function CartPage() {
     const route = useRouter()
-
     if (useSession().status == "unauthenticated") return redirect("/")
 
     let { user, data, setRefresh } = useUserinfosProduct()
@@ -86,6 +84,7 @@ export default function CartPage() {
         toast.success("Your total : $" + itemCheckedTotal)
     }
 
+
     useEffect(() => {
         CartItems()
         CalculateTotal()
@@ -109,17 +108,17 @@ export default function CartPage() {
                         <h3 className="text-lg font-bold">Total Detail :</h3>
                         <div className="overflow-x-auto">
                             <i>note: check item in cart to include</i>
-                            <div className="table">
+                            <div className="table flex-1 ">
                                 {/* head */}
-                                <div>
-                                    <tr>
-                                        <th></th>
+                                <tbody className="flex flex-col flex-1 w-full">
+                                    <tr className="flex flex-row bg-orange-50 flex-1 w-[100%] ">
+                                        <th>number</th>
                                         <th>Product</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
                                     </tr>
-                                </div>
-                                <CalculateTotal />
+                                    <CalculateTotal />
+                                </tbody>
                             </div>
                             <div className="font-bold text-center text-2xl mx-auto">Total: ${itemCheckedTotal}</div>
                         </div>

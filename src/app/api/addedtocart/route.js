@@ -45,12 +45,9 @@ export async function GET(req) {
     const userInfos_id = searchParams.get("userInfos_id")
 
     await mongoose.connect(process.env.MONGO_URL)
-    console.log(userInfos_id)
 
     const data = await AddedToCart.find({ userInfos_id })
-    console.log(data)
     if (!data || (await data).length <= 0) return Response.json({ ok: ture, status: 200, msg: "You don't have any item yet" })
-
 
     return Response.json(data, { ok: true })
 }

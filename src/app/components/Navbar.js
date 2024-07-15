@@ -12,16 +12,15 @@ import { GrFavorite } from "react-icons/gr";
 import useUserinfosProduct from './hooks/useUserinfosProduct'
 import { CartContext } from './CartContext'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
 
 
 const Navbar = () => {
     const session = useSession() //data return authentication semua disini
-
-
+    const totalProductinCart = useSelector((state) => state.cart.cartLength)
     const path = usePathname()
     const router = useRouter()
     const { user, data, refresh } = useUserinfosProduct()
-    const { totalProductinCart, favoriteTotal } = useContext(CartContext)
 
 
     const cleanProps = (props, disallowed = ['bis_skin_checked']) => {
@@ -75,7 +74,7 @@ const Navbar = () => {
                                 </div>
                                 <div className='cursor-pointer' onClick={() => router.push("/favorites")}><GrFavorite size={26} />
                                     <span title='the product you favorited' className='absolute bottom-6 cursor-pointer translate-x-[-5px] bg-yellow-200 font-bold px-1 py-0 rounded-full  '>
-                                        {favoriteTotal}
+                                        {totalProductinCart}
                                     </span>
 
                                 </div>

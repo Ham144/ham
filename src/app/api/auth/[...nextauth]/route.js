@@ -22,14 +22,10 @@ export const authOption = {
     secret: process.env.SECRET,
     adapter: MongoDBAdapter(clientPromise),
     providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            allowDangerousEmailAccountLinking: true, // penting, kalau ga gini ga bisa login pake akun lain
-        }),
         CredentialsProvider({
             name: "Credentials",
             id: "credentials",
+
             credentials: {
                 email: { label: "Email", type: "email", placeholder: "email" },
                 password: { label: "Password", type: "password" },
@@ -51,10 +47,17 @@ export const authOption = {
                     return user;
                 } else {
                     console.log("Invalid password");
-                    return null;
+                    throw new Error("Invalid password");
                 }
+                return null;
             }
-        })
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            allowDangerousEmailAccountLinking: true, // penting, kalau ga gini ga bisa login pake akun lain
+        }),
+
         // ...add more providers here
     ],
     callbacks: {
@@ -67,17 +70,14 @@ export const authOption = {
                 if (existingUser) {
                     return true;
                 } else {
-                    const newUser = new User({
-                        name: profile?.name,
-                        email: profile?.email,
-                    });
-
-                    mongoose.connect(process.env.MONGO_URL);
-                    await newUser.save();
-                    return true;
+                    return false;
                 }
             }
-            return true;
+            if (account.provider === "credentials") {
+                console.log("Credentials SignIn:", user ? "User exists" : "User does not exist");
+                this.session.user = profile;
+                return true;
+            }
         },
         async session({ session, token }) {
             console.log("Session callback - session:", session, "token:", token);
@@ -85,10 +85,10 @@ export const authOption = {
                 const user = await User.findById(token.sub);
                 if (user) {
                     session.user = {
-                        id: user._id,
+                        id: user?._id,
                         email: user.email,
-                        name: user.name,
-                        image: user.image,
+                        name: user?.name,
+                        image: user?.image,
                     };
                 }
             }
