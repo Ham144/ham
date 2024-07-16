@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SessionContext from "./components/SessionContext";
 import { Toaster } from "react-hot-toast";
-import GlobalProvider from "./components/GlobalProvider";
 import AuthenticationProvider, { GlobalContext } from "./components/GlobalContext";
 import Providers from "./components/Providers";
 
@@ -20,25 +19,25 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
 
-        <Providers>
-          <AuthenticationProvider>
-            <SessionContext>
-              <GlobalProvider>
-                <Navbar />
-                <Toaster />
-                <div className="flex w-full h-[100px] ">
-                  {/* ini untuk menjaga semua page tidak mepet keatas dan tidak tertutup fixed navbar */}
-                </div>
-                <div className="
+        {/* <GlobalProvider> */}
+        <AuthenticationProvider>
+          <SessionContext>
+            <Providers>
+              <Navbar />
+              <Toaster />
+              <div className="flex w-full h-[100px] ">
+                {/* ini untuk menjaga semua page tidak mepet keatas dan tidak tertutup fixed navbar */}
+              </div>
+              <div className="
                 bg-gradient-to-br from-amber-50 via-amber-50 to-red-100
                 ">
-                  {children}
-                </div>
-                <Footer />
-              </GlobalProvider>
-            </SessionContext>
-          </AuthenticationProvider>
-        </Providers>
+                {children}
+              </div>
+              <Footer />
+            </Providers>
+          </SessionContext>
+        </AuthenticationProvider>
+        {/* </GlobalProvider> */}
 
       </body>
     </html >

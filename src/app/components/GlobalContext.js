@@ -1,14 +1,10 @@
 "use client"
-import { getCartLength } from '@/features/cart/cartSlice'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import React, { createContext } from 'react'
-import { useDispatch } from 'react-redux'
 
 export const GlobalContext = createContext(null)
 
 const AuthenticationProvider = ({ children }) => {
-
-    const dispatch = useDispatch()
     async function handleGoogle() {
         await signIn("google", { callbackUrl: "/" })
     }
@@ -23,13 +19,14 @@ const AuthenticationProvider = ({ children }) => {
         setloginInProgress(false)
     }
 
-    dispatch(getCartLength())
 
     return (
-        <GlobalContext.Provider value={{ handleGoogle, handleCredentials: handleSubmitLogin }}>
+        <GlobalContext.Provider value={{ handleGoogle, handleCredentials: handleSubmitLogin, }}>
             {children}
         </GlobalContext.Provider>
     )
 }
 
 export default AuthenticationProvider
+
+//todo: buat redux untuk jumlah barang di addedtocart dan favorites

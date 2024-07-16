@@ -4,17 +4,18 @@ import { useContext } from 'react'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { IoIosRemoveCircleOutline } from 'react-icons/io'
-import { CartContext } from './CartContext'
+// import { CartContext } from './CartContext'
+import { getFavoriteLength } from '@/features/cart/cartSlice'
+import { useDispatch } from 'react-redux'
 
 
 const CartItem = (props) => {
     const { ...item } = props.item
     const resetCheked = props.resetCheked
 
-    const { addedDate, checked, image, menuItemId, name, price, quantity, isFavorite } = item
+    const { addedDate, checked, image, menuItemId, name, price, quantity, isFavorite, user_id } = item
     const [isFavorited, setIsFavorited] = useState(isFavorite)
-    const { setFavoritesTotal } = useContext(CartContext)
-
+    const dispatch = useDispatch()
     async function setFavorited(_id, isFavorite) {
         const response = await fetch(`/api/isfavorite`, {
             method: 'POST',
@@ -26,14 +27,15 @@ const CartItem = (props) => {
             if (data.ok) {
                 toast.success(data.msg)
                 setIsFavorited(!isFavorited)
+                dispatch(getFavoriteLength(user_id))
             } else {
                 toast.error(data.msg)
             }
         } else {
             toast.error("i dont even ttry")
         }
-
     }
+
 
     return (
         <ul className="flex flex-col divide-y dark:divide-gray-300">

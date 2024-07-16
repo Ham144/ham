@@ -7,15 +7,20 @@ import useUserinfosProduct from "../components/hooks/useUserinfosProduct";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { getCartLength, getFavoriteLength } from "@/features/cart/cartSlice";
 
 export default function CartPage() {
     const route = useRouter()
-    if (useSession().status == "unauthenticated") return redirect("/")
+    const session = useSession()
+    const dispatch = useDispatch()
+    session?.status == "unauthenticated" && redirect("/")
 
     let { user, data, setRefresh } = useUserinfosProduct()
     const [itemCheckedTotal, setItemCheckedTotal] = useState()
 
-    const session = useSession()
+    dispatch(getCartLength(user?._id))
+    dispatch(getFavoriteLength(user?._id))
 
     async function resetCheked(checked, _id) {
         const response = await fetch("/api/addedtocart", {
@@ -32,6 +37,7 @@ export default function CartPage() {
             }
         }
     }
+
 
     function CalculateTotal() {
         const filtered = data?.filter((item) => {
@@ -74,7 +80,7 @@ export default function CartPage() {
             {!data ?
                 <Spinner /> :
                 data?.map((item) => (
-                    <CartItem key={item.id} resetCheked={resetCheked} item={item} />
+                    <CartItem key={item.id} resetCheked={resetCheked} item={item} user_id={user?._id} />
                 ))
             }
         </>)
@@ -139,5 +145,3 @@ export default function CartPage() {
     )
 }
 
-//TODO: Fix cart and favorites with redux
-//TODO: fix sigin Google to be login with another account

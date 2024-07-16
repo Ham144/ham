@@ -2,26 +2,21 @@
 import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { redirect, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
-import React, { memo, useContext, useEffect } from 'react'
-import { GlobalContext } from './SessionContext'
+import React from 'react'
 import { BsCart } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { GrFavorite } from "react-icons/gr";
-import useUserinfosProduct from './hooks/useUserinfosProduct'
-import { CartContext } from './CartContext'
-import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 
 
 const Navbar = () => {
     const session = useSession() //data return authentication semua disini
     const totalProductinCart = useSelector((state) => state.cart.cartLength)
+    const totalFavorites = useSelector((state) => state.cart.favoriteLength)
     const path = usePathname()
     const router = useRouter()
-    const { user, data, refresh } = useUserinfosProduct()
-
 
     const cleanProps = (props, disallowed = ['bis_skin_checked']) => {
         return Object.keys(props)
@@ -33,13 +28,6 @@ const Navbar = () => {
     };
 
     console.log(session.status)
-    if (session?.status == "authenticated") {
-        console.log(session?.status)
-    }
-    function getFavoritedTotal() {
-        const total = data?.filter((item) => item.favorited === true).length
-        return total
-    }
 
     return (
         <nav className='flex fixed justify-between items-center md:px-5 px-1 py-4 w-full md:backdrop-blur-md shadow-md z-10 max-md:px-2 
@@ -74,7 +62,7 @@ const Navbar = () => {
                                 </div>
                                 <div className='cursor-pointer' onClick={() => router.push("/favorites")}><GrFavorite size={26} />
                                     <span title='the product you favorited' className='absolute bottom-6 cursor-pointer translate-x-[-5px] bg-yellow-200 font-bold px-1 py-0 rounded-full  '>
-                                        {totalProductinCart}
+                                        {totalFavorites}
                                     </span>
 
                                 </div>

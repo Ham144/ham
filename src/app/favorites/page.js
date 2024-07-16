@@ -1,18 +1,16 @@
 "use client"
-import { useContext, useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
-import useUserinfosProduct from "../components/hooks/useUserinfosProduct";
 import Image from "next/image";
-import { CartContext } from "../components/CartContext";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import useUserinfosProduct from "../components/hooks/useUserinfosProduct";
+import axios from "axios";
 
 export default function FavoritesPage() {
 
-    const { favorites } = useContext(CartContext)
     if (useSession().status == "unauthenticated") return redirect("/")
-
-
+    const { data, user } = useUserinfosProduct()
+    const favorites = data?.filter(item => item.isFavorite)
     return (
         <div className="w-full min-h-screen flex flex-col items-center mx-auto">
             <h1 className="text-3xl p-4 gap-3 flex items-center italic text-primer font-light">
@@ -22,15 +20,34 @@ export default function FavoritesPage() {
                 {!favorites && <div className="text-center font-bold textarea-md absolute mx-auto">No Favorited item yet</div>}
                 {favorites &&
                     favorites.map((item, index) => (
+
+
                         <div key={index} className="card w-full h-[500px] mx-auto glass">
-                            <figure>
+                            <figure className="rounded mt-3 pt-4">
                                 <Image src={item.image} alt={item.name} width={400} height={200} />
                             </figure>
                             <div className="card-body">
-                                <h2 className="card-title">Quantity : {item.quantity}</h2>
+                                <h1 className="card-title bg-orange-200 p-3 rounded-sm">Product Name : {item.name}</h1>
+                                <h2 className="card-title">Quantity in cart : {item.quantity}</h2>
+                                <h3 className="card-title">Base Price : {item.price}</h3>
+                                <h3 className="card-title">in Cart Since : {item.addedDate}</h3>
                                 <p className="truncate">IDProduct-{item.menuItemId}</p>
-                                <div className="card-actions justify-end">
+                                <div className="card-actions justify-between">
                                     <button className="btn btn-primary">Look</button>
+                                    <label onClick={async () => {
+                                        try {
+                                            await axios.get("/api/isfavorite", {
+                                                _id: item?.menuItemId,
+                                                isFavorite: !item?.isFavorite,
+                                                userInfos_id: item?.userInfos_id
+                                            })
+
+                                        } catch (error) {
+                                            console.log(error)
+                                        }
+                                    }} className="label cursor-pointer">favorited:  <span className="label-text">{item.isFavorite}</span>
+                                        <input type="checkbox" className="toggle" checked={item.isFavorite} />
+                                    </label>
                                 </div>
                             </div>
                         </div>

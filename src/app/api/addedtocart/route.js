@@ -43,11 +43,12 @@ export async function POST(req) {
 export async function GET(req) {
     const searchParams = req.nextUrl.searchParams
     const userInfos_id = searchParams.get("userInfos_id")
+    if (!searchParams) return Response.json({ ok: false, msg: "perlu searchparams yg berkey userInfos_id" })
 
     await mongoose.connect(process.env.MONGO_URL)
 
     const data = await AddedToCart.find({ userInfos_id })
-    if (!data || (await data).length <= 0) return Response.json({ ok: ture, status: 200, msg: "You don't have any item yet" })
+    if (!data || (await data).length <= 0) return Response.json({ ok: true, status: 200, msg: "You don't have any item yet" })
 
     return Response.json(data, { ok: true })
 }

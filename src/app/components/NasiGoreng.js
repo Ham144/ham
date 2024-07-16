@@ -1,31 +1,30 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image'
-import React, { useContext, useEffect, useInsertionEffect, useLayoutEffect, useState } from 'react'
+import React, { useContext, useLayoutEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { FaShippingFast } from 'react-icons/fa'
 import { FaCartPlus } from "react-icons/fa";
-import { CartContext } from './CartContext';
+import useUserinfosProduct from './hooks/useUserinfosProduct';
+import { getCartLength } from '@/features/cart/cartSlice';
+import { useDispatch } from 'react-redux';
 
 
 const NasiGoreng = ({ props }) => {
     const [hover, setHover] = useState(false)
-
-    const [data, setData] = useState()
+    const { user } = useUserinfosProduct()
     const [userInfos, setUserInfos] = useState()
-    const [refresh, setRefresh] = useState(0)
-    const { setTotalProductinCart } = useContext(CartContext)
 
     const session = useSession()
+    const dispatch = useDispatch()
     function fetchingUserInfos() {
         fetch("/api/profile").then(res => res.json()).then(data => setUserInfos(data))
         return
     }
 
 
+    dispatch(getCartLength(user?._id))
     useLayoutEffect(() => {
-        if (session.status == "authenticated") {
-            fetchingUserInfos()
-        }
+        fetchingUserInfos()
     }, [])
 
 
@@ -45,7 +44,6 @@ const NasiGoreng = ({ props }) => {
         const data = await response.json()
         if (data.ok) {
             toast.success(data.msg)
-            setTotalProductinCart(prev => prev + 1)
         }
         else {
             toast(data.msg)
