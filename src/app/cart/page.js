@@ -80,7 +80,7 @@ export default function CartPage() {
             {!data ?
                 <Spinner /> :
                 data?.map((item) => (
-                    <CartItem key={item.id} resetCheked={resetCheked} item={item} user_id={user?._id} />
+                    <CartItem key={item.id} resetCheked={resetCheked} item={item} user_id={user._id} />
                 ))
             }
         </>)

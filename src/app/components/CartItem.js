@@ -5,21 +5,24 @@ import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { IoIosRemoveCircleOutline } from 'react-icons/io'
 // import { CartContext } from './CartContext'
-import { getFavoriteLength } from '@/features/cart/cartSlice'
+import { deleteOne, getFavoriteLength } from '@/features/cart/cartSlice'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
 
 
 const CartItem = (props) => {
     const { ...item } = props.item
+    const { user_id } = props
     const resetCheked = props.resetCheked
 
-    const { addedDate, checked, image, menuItemId, name, price, quantity, isFavorite, user_id } = item
+    const { addedDate, checked, image, menuItemId, name, price, quantity, isFavorite, } = item
     const [isFavorited, setIsFavorited] = useState(isFavorite)
     const dispatch = useDispatch()
     async function setFavorited(_id, isFavorite) {
+        console.log(_id, isFavorite, user_id);
         const response = await fetch(`/api/isfavorite`, {
             method: 'POST',
-            body: JSON.stringify({ _id, isFavorite },
+            body: JSON.stringify({ _id, isFavorite, userInfos_id: user_id },
             )
         })
         if (response.ok) {
@@ -35,7 +38,6 @@ const CartItem = (props) => {
             toast.error("i dont even ttry")
         }
     }
-
 
     return (
         <ul className="flex flex-col divide-y dark:divide-gray-300">
@@ -54,15 +56,15 @@ const CartItem = (props) => {
                             </div>
                         </div>
                         <div className="flex text-sm divide-x">
-                            <button type="button" className="hover:font-bold hover:text-red-500 flex items-center px-2 py-1 pl-0 space-x-1">
+                            <button type="button" className="hover:font-bold hover:text-red-500 flex items-center px-2 py-1 pl-0 space-x-1" onClick={async () => {
+                                const data = await axios.delete(`/api/addedtocart`, { menuItemId, userInfos_id: user_id })
+                                if (data.ok) return toast.success(data.msg)
+                            }}>
                                 <IoIosRemoveCircleOutline size={26} />
                                 <span>Remove</span>
                             </button>
                             <button type="button" className="hover:font-bold hover:text-yellow-500 flex items-center px-2 py-1 space-x-1">
-                                <input type="checkbox" id='favorited' className="toggle bg-yellow-500" checked={isFavorited} onChange={(e) => {
-                                    setFavorited(menuItemId, !isFavorited)
-                                    e.target.checked === false ? setFavoritesTotal(prev => prev - 1) : setFavoritesTotal(prev => prev + 1)
-                                }} />
+                                <input type="checkbox" id='favorited' className="toggle bg-yellow-500" checked={isFavorited} onChange={(e) => setFavorited(menuItemId, e.target.checked)} />
                                 <label htmlFor="favorited">Favorite</label>
                             </button>
                         </div>

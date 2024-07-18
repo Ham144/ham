@@ -69,3 +69,12 @@ export async function PATCH(req) {
         return Response.json({ ok: true, msg: "update success" });
     }
 }
+
+export async function DELETE(req) {
+    const { _id, userInfos_id } = await req.json()
+    if (!_id || !userInfos_id) return Response.json({ ok: false, msg: "ada field yg kosong" })
+    console.log(_id, userInfos_id)
+    mongoose.connect(process.env.MONGO_URL)
+    await AddedToCart.findOneAndDelete({ menuItemId: _id, userInfos_id })
+    return Response.json({ ok: true, msg: "delete success" })
+}

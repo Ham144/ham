@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const { createSlice, createAsyncThunk, current } = require("@reduxjs/toolkit")
+const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit")
 
 
 const base = "/api/addedtocart"
@@ -28,6 +28,21 @@ export const getFavoriteLength = createAsyncThunk("cart/getFavoriteLength", asyn
     return length;
 })
 
+export const deleteOne = createAsyncThunk("cart/deleteOne", async (_id, userInfos_id) => {
+    const response = await fetch(base, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            _id,
+            userInfos_id
+        })
+    })
+    const data = await response.json()
+    if (data.ok) return true
+})
+
 const cartSlice = createSlice({
     name: "cart",
     initialState,
@@ -42,8 +57,11 @@ const cartSlice = createSlice({
             .addCase(getFavoriteLength.fulfilled, (state, action) => {
                 state.favoriteLength = action.payload
             })
+            .addCase(deleteOne.fulfilled, (state, action) => {
+                state.cartItems = state.cartItems.filter(item => item._id !== action.payload._id)
+                state.cartLength = state.cartLength - 1
+            })
     }
-
 })
 
 export const { } = cartSlice.actions

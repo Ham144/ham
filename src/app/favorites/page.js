@@ -57,12 +57,15 @@ export default function FavoritesPage() {
                                                 userInfos_id: item?.userInfos_id
                                             })
                                             if (data.data.ok) toast.success(data.data.msg)
+                                            window.location.reload()
                                             return fetchingFavorites()
                                         } catch (error) {
                                             console.log(error)
                                         }
                                     }} className="label cursor-pointer">remove from favorite?   <span className="label-text">{item.isFavorite}</span>
-                                        <input type="checkbox" className="toggle" checked={item.isFavorite} />
+                                        <h3 className="text-lg px-2 font-bold font-mono text-red-500 border border-red-400 rounded ml-4 hover:bg-red-100">
+                                            Delete
+                                        </h3>
                                     </label>
                                 </div>
                             </div>
