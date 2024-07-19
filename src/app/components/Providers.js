@@ -1,5 +1,5 @@
 "use client"
-import { getCartLength, getFavoriteLength } from '@/features/cart/cartSlice'
+import { getCartLength, getFavoriteLength, getItemsInCart } from '@/features/cart/cartSlice'
 import { store } from '@/store'
 import React from 'react'
 import { Provider } from 'react-redux'
@@ -14,6 +14,7 @@ const Providers = ({ children }) => {
     if (session.status == "authenticated") {
         store.dispatch(getFavoriteLength(user?._id))
         store.dispatch(getCartLength(user?._id))
+        store.dispatch(getItemsInCart(user?._id))
     }
 
     return (

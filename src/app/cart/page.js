@@ -7,21 +7,22 @@ import useUserinfosProduct from "../components/hooks/useUserinfosProduct";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
-import { getCartLength, getFavoriteLength } from "@/features/cart/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getAddedToCart, getCartLength, getFavoriteLength, getItemsInCart } from "@/features/cart/cartSlice";
 
 export default function CartPage() {
     const route = useRouter()
     const session = useSession()
     const dispatch = useDispatch()
     session?.status == "unauthenticated" && redirect("/")
-
-    let { user, data, setRefresh } = useUserinfosProduct()
+    let { user, setRefresh } = useUserinfosProduct()
     const [itemCheckedTotal, setItemCheckedTotal] = useState()
-
     dispatch(getCartLength(user?._id))
     dispatch(getFavoriteLength(user?._id))
 
+
+
+    let data = useSelector(getAddedToCart)
     async function resetCheked(checked, _id) {
         const response = await fetch("/api/addedtocart", {
             method: "PATCH",
@@ -77,10 +78,10 @@ export default function CartPage() {
     function CartItems() {
         return (<>
             {data?.length == 0 ? <><p className="text-center">Your cart is empty</p></> : null}
-            {!data ?
+            {!data || data == null ?
                 <Spinner /> :
-                data?.map((item) => (
-                    <CartItem key={item.id} resetCheked={resetCheked} item={item} user_id={user._id} />
+                data.map((item) => (
+                    <CartItem key={item?.id} resetCheked={resetCheked} item={item} user_id={user?._id} />
                 ))
             }
         </>)
@@ -98,7 +99,7 @@ export default function CartPage() {
         if (data?.length > 0) {
             toastLatestTotalPay()
         }
-    }, [data?.checked, data?.length, itemCheckedTotal])
+    }, [itemCheckedTotal])
 
     return (
         <div className="flex flex-col max-w-3xl mx-auto p-6 space-y-4 sm:p-10 dark:bg-gray-50 dark:text-gray-800 min-h-screen">

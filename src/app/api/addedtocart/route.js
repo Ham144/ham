@@ -1,7 +1,6 @@
 import { AddedToCart } from "@/app/models/addedtocart"
 import { UserInfo } from "@/app/models/userInfo";
 import mongoose from "mongoose"
-import { NextRequest, NextResponse, userAgentFromString } from "next/server";
 
 export async function POST(req) {
     mongoose.connect(process.env.MONGO_URL)
@@ -55,11 +54,9 @@ export async function GET(req) {
 
 export async function PATCH(req) {
     const body = await req.json()
-    const { checked, _id, userInfos_id } = body;
-    // console.log(body)
-
+    const { checked, _id, userInfos_id, quantity } = body;
     mongoose.connect(process.env.MONGO_URL)
-    const data = await AddedToCart.findOneAndUpdate({ menuItemId: _id, userInfos_id }, { checked })
+    const data = await AddedToCart.findOneAndUpdate({ menuItemId: _id, userInfos_id }, { checked, quantity })
     if (!data || data == null) {
         console.log(data)
         return Response.json({ ok: false, msg: "data not found" })
@@ -71,14 +68,14 @@ export async function PATCH(req) {
 }
 
 export async function DELETE(req) {
-    const { _id, userInfos_id } = await req.json()
-    if (!_id || !userInfos_id) return Response.json({ ok: false, msg: "ada field yg kosong" })
-    mongoose.connect(process.env.MONGO_URL)
+    const { menuItemId, userInfos_id } = await req.json()
+    if (!menuItemId || !userInfos_id) return Response.json({ ok: false, msg: "ada field yg kosong" })
     try {
-        await AddedToCart.findOneAndDelete({ menuItemId: _id, userInfos_id })
+        await mongoose.connect(process.env.MONGO_URL)
+        await AddedToCart.findOneAndDelete({ menuItemId, userInfos_id })
         return Response.json({ ok: true, msg: "delete success" })
     } catch (error) {
-        console.warn(error)
+        console.log(error)
         return Response.json({ ok: false, msg: "something wrong" })
     }
 }

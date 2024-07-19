@@ -21,7 +21,6 @@ const useUserinfosProduct = () => {
 
 
     async function fetchingAddedtocart() {//mengextrak data yg ada di cart berdasar user._id
-        console.log(user._id)
         try {
             const response = await fetch("/api/addedtocart?userInfos_id=" + user._id) //kirim id query userInfos kesini untuk get yg session akun aja
             if (response.ok) {

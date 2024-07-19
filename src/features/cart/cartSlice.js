@@ -8,7 +8,7 @@ const base = "/api/addedtocart"
 const initialState = {
     cartItems: [],
     cartLength: 0,
-    favoriteLength: 0
+    favoriteLength: 0,
 }
 
 
@@ -27,6 +27,31 @@ export const getFavoriteLength = createAsyncThunk("cart/getFavoriteLength", asyn
     const length = await res?.data?.filter(item => item?.isFavorite === true).length
     return length;
 })
+
+export const getItemsInCart = createAsyncThunk("cart/getItemsInCart", async (userInfos_id) => {
+    const res = await axios.get(`${base}?userInfos_id=${userInfos_id}`)
+    return res?.data
+})
+
+export const addPlusMinusQuantity = createAsyncThunk("cart/addorMinusOne", async (menuItemId, userInfos_id, plusMinus) => {
+    if (!userInfos_id || !menuItemId || !plusMinus) throw new Error("field required")
+    console.log("menuItemId:", menuItemId, "userInfos_id:", userInfos_id, "plusMinus:", plusMinus)
+    async function updateQuantity(quantity) {
+        console.log(quantity, userInfos_id, menuItemId)
+        const response = await axios.patch(base, {
+            _id: menuItemId, userInfos_id, quantity
+        })
+        if (response.data.ok) return quantity
+        else console.log("failed update quantity")
+    }
+    if (plusMinus == "plus") {
+        updateQuantity(quantity + 1)
+    }
+    else if (plusMinus == "minus") {
+        updateQuantity(quantity - 1)
+    }
+})
+
 
 export const deleteOne = createAsyncThunk("cart/deleteOne", async (_id, userInfos_id) => {
     const response = await fetch(base, {
@@ -61,8 +86,23 @@ const cartSlice = createSlice({
                 state.cartItems = state.cartItems.filter(item => item._id !== action.payload._id)
                 state.cartLength = state.cartLength - 1
             })
+            .addCase(getItemsInCart.fulfilled, (state, action) => {
+                if (action.payload.length > 1 || action.payload.msg != "You don't have any item yet") {
+                    state.cartItems = action.payload
+                }
+            })
+            .addCase(addPlusMinusQuantity.fulfilled, (state, action) => {
+                const found = state.cartItems.find(item => item._id === action.payload._id)
+                if (found) found.quantity = action.payload.quantity
+            })
     }
 })
+
+export const getAddedToCart = (state => state?.cart.cartItems)
+export const getQuantityofItem = ((state, menuItemId) => {
+    return state?.cart?.cartItems.find(item => item?.menuItemId === menuItemId)?.quantity
+}
+)
 
 export const { } = cartSlice.actions
 export default cartSlice.reducer
