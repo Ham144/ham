@@ -79,6 +79,6 @@ export async function DELETE(req) {
         return Response.json({ ok: true, msg: "delete success" })
     } catch (error) {
         console.warn(error)
-        reutrn Response.json({ ok: false, msg: "something wrong" })
+        return Response.json({ ok: false, msg: "something wrong" })
     }
 }
