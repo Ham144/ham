@@ -39,34 +39,29 @@ export const addPlusMinusQuantity = createAsyncThunk("cart/addorMinusOne", async
         throw new Error("field required")
     }
 
+    async function updateQuantity(newQuantity) {
+        if (newQuantity < 1) return console.log("quantity cannot be less than 1")
+        if (!menuItemId || !userInfos_id || !newQuantity) {
+            throw new Error("field required")
+        }
+
+        const response = await axios.patch(base, {
+            _id: menuItemId, userInfos_id, quantity: newQuantity
+        })
+        if (response.data.ok) {
+            console.log(menuItemId, newQuantity)
+            const result = { menuItemId, newQuantity }
+            return { result }  //harus return begini kalau multiple value
+        }
+        else throw new Error("failed update quantity")
+    }
+
     try {
         if (plusMinus == "plus") {
-            if (!menuItemId || !userInfos_id || !quantity) {
-                console.log("nulll")
-            }
-
-            quantity += 1
-            const response = await axios.patch(base, {
-                data: { menuItemId, userInfos_id, quantity }
-            })
-            if (response.data.ok) {
-                console.log("success update quantity")
-                const result = {
-                    quantity, menuItemId
-                }
-                return result
-            }
-            else throw new Error("failed update quantity")
+            updateQuantity(quantity + 1)
         }
         else if (plusMinus == "minus") {
-
-            quantity -= 1
-
-            const response = await axios.patch(base, {
-                menuItemId, userInfos_id, quantity
-            })
-            if (response.data.ok) console.log("success update quantity")
-            else console.log("failed update quantity")
+            updateQuantity(quantity - 1)
         }
     } catch (error) {
         console.log("error here", error)
@@ -114,9 +109,9 @@ const cartSlice = createSlice({
                 }
             })
             .addCase(addPlusMinusQuantity.fulfilled, (state, action) => {
-                const { quantity, menuItemId } = action.payload.result
+                const { menuItemId, newQuantity } = action?.payload?.result
                 const found = state.cartItems.find(item => item?.menuItemId === menuItemId)
-                if (found) found.quantity = quantity
+                if (found) found.quantity = newQuantity
             })
     }
 })
