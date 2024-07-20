@@ -33,23 +33,45 @@ export const getItemsInCart = createAsyncThunk("cart/getItemsInCart", async (use
     return res?.data
 })
 
-export const addPlusMinusQuantity = createAsyncThunk("cart/addorMinusOne", async (menuItemId, userInfos_id, plusMinus) => {
-    if (!userInfos_id || !menuItemId || !plusMinus) throw new Error("field required")
-    console.log("menuItemId:", menuItemId, "userInfos_id:", userInfos_id, "plusMinus:", plusMinus)
-    async function updateQuantity(quantity) {
-        console.log(quantity, userInfos_id, menuItemId)
-        const response = await axios.patch(base, {
-            _id: menuItemId, userInfos_id, quantity
-        })
-        if (response.data.ok) return quantity
-        else console.log("failed update quantity")
+export const addPlusMinusQuantity = createAsyncThunk("cart/addorMinusOne", async ({ menuItemId, userInfos_id, plusMinus, quantity }) => {
+    if (!userInfos_id || !menuItemId || !plusMinus || !quantity) {
+        console.log(menuItemId, userInfos_id, plusMinus)
+        throw new Error("field required")
     }
-    if (plusMinus == "plus") {
-        updateQuantity(quantity + 1)
+
+    try {
+        if (plusMinus == "plus") {
+            if (!menuItemId || !userInfos_id || !quantity) {
+                console.log("nulll")
+            }
+
+            quantity += 1
+            const response = await axios.patch(base, {
+                data: { menuItemId, userInfos_id, quantity }
+            })
+            if (response.data.ok) {
+                console.log("success update quantity")
+                const result = {
+                    quantity, menuItemId
+                }
+                return result
+            }
+            else throw new Error("failed update quantity")
+        }
+        else if (plusMinus == "minus") {
+
+            quantity -= 1
+
+            const response = await axios.patch(base, {
+                menuItemId, userInfos_id, quantity
+            })
+            if (response.data.ok) console.log("success update quantity")
+            else console.log("failed update quantity")
+        }
+    } catch (error) {
+        console.log("error here", error)
     }
-    else if (plusMinus == "minus") {
-        updateQuantity(quantity - 1)
-    }
+
 })
 
 
@@ -92,8 +114,9 @@ const cartSlice = createSlice({
                 }
             })
             .addCase(addPlusMinusQuantity.fulfilled, (state, action) => {
-                const found = state.cartItems.find(item => item._id === action.payload._id)
-                if (found) found.quantity = action.payload.quantity
+                const { quantity, menuItemId } = action.payload.result
+                const found = state.cartItems.find(item => item?.menuItemId === menuItemId)
+                if (found) found.quantity = quantity
             })
     }
 })

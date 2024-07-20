@@ -41,7 +41,7 @@ const CartItem = (props) => {
 
     function handleQuantity(plusMinus) {
         try {
-            dispatch((addPlusMinusQuantity(menuItemId, user_id, plusMinus)))
+            dispatch((addPlusMinusQuantity({ menuItemId, userInfos_id: user_id, plusMinus, quantity })))
         } catch (error) {
             toast.error(error.message)
         }
