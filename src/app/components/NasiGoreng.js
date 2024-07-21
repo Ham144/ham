@@ -36,6 +36,12 @@ const NasiGoreng = ({ props }) => {
     const [menuItemId, setMenuItemId] = useState(props?._id)
 
     async function addedToCart(menuItemId, name, quantity, price, image, addedDate, checked, userInfos_id) {
+        if (!userInfos_id) {
+            return toast.error("Please login first")
+        }
+        if (![menuItemId, name, quantity, price, image, addedDate].every(i => i != null)) {
+            return toast.error("menuItemId, name, quantity, price, image, addedDate cannot be null")
+        }
         const response = await fetch("/api/addedtocart", {
             method: "POST",
             headers: { "Content-Type": "Application/json" },
@@ -69,7 +75,7 @@ const NasiGoreng = ({ props }) => {
                             <p className="text-sm text-gray-600 cursor-auto ml-2">${Number(basePrice) + 45}</p>
                         </del>
                         <div className='relative justify-center right-[-150px] bottom-7 gap-4 flex flex-col'>
-                            <FaCartPlus size={30} className='hover:scale-y-125' onClick={() => addedToCart(menuItemId, menuItem, 1, basePrice, photoUrl, new Date().toLocaleDateString(), true, userInfos._id)} />
+                            <FaCartPlus size={30} className='hover:scale-y-125' onClick={() => addedToCart(menuItemId, menuItem, 1, basePrice, photoUrl, new Date().toLocaleDateString(), true, userInfos?._id)} />
                             <FaShippingFast size={30} className='hover:scale-110' />
                         </div>
                     </div>

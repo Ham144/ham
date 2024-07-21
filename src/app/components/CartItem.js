@@ -1,25 +1,22 @@
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { IoIosRemoveCircleOutline } from 'react-icons/io'
-import { addPlusMinusQuantity, deleteOne, getFavoriteLength, getQuantityofItem } from '@/features/cart/cartSlice'
+import { addPlusMinusQuantity, changeIsFavorite, deleteOne, getFavoriteLength, getIsChecked, getIsFavorite, getQuantityofItem } from '@/features/cart/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-
+import { changeCheck } from '@/features/cart/cartSlice'
 
 const CartItem = (props) => {
     const { ...item } = props.item
     const { user_id } = props
-    const resetCheked = props.resetCheked
-
-    const { addedDate, checked, image, menuItemId, name, price, quantity, isFavorite, } = item
-    const [isFavorited, setIsFavorited] = useState(isFavorite)
+    const { addedDate, checked, image, menuItemId, name, price, quantity, isFavorite } = item
     const dispatch = useDispatch()
     const quantityOfItem = useSelector((state) => getQuantityofItem(state, menuItemId))
-    console.log(quantityOfItem)
+    const isChecked = useSelector((state) => getIsChecked(state, menuItemId))
+    const isFavorited = useSelector((state) => getIsFavorite(state, menuItemId))
 
     async function setFavorited(_id, isFavorite) {
-        console.log(_id, isFavorite, user_id);
         const response = await fetch(`/api/isfavorite`, {
             method: 'POST',
             body: JSON.stringify({ _id, isFavorite, userInfos_id: user_id },
@@ -29,7 +26,7 @@ const CartItem = (props) => {
             const data = await response.json()
             if (data.ok) {
                 toast.success(data.msg)
-                setIsFavorited(!isFavorited)
+                dispatch(changeIsFavorite({ menuItemId, isFavorite, userInfos_id: user_id }))
                 dispatch(getFavoriteLength(user_id))
             } else {
                 toast.error(data.msg)
@@ -43,9 +40,27 @@ const CartItem = (props) => {
         try {
             dispatch((addPlusMinusQuantity({ menuItemId, userInfos_id: user_id, plusMinus, quantity })))
         } catch (error) {
+            console.log(error)
             toast.error(error.message)
         }
     }
+
+    async function resetCheked(bool, _id) {
+        const response = await fetch("/api/addedtocart", {
+            method: "PATCH",
+            body: JSON.stringify({ checked: bool, _id, userInfos_id: user_id }),
+        })
+        if (response.ok) {
+            const data = await response.json();
+            if (data.ok) {
+                return
+            }
+            else {
+                toast.error("patched failed")
+            }
+        }
+    }
+
 
     return (
         <div >
@@ -67,7 +82,9 @@ const CartItem = (props) => {
                                 </div>
                             </div>
                             <div className='flex space-x-2 flex-1 font-extrabold '>
-                                <button onClick={() => handleQuantity("minus")} className='btn glass border  rounded-lg bg-orange-200 px-7 text-2xl'>-</button>
+                                <button onClick={() => {
+                                    handleQuantity("minus")
+                                }} className='btn glass border  rounded-lg bg-orange-200 px-7 text-2xl'>-</button>
                                 <button onClick={() => handleQuantity("plus")} className='btn glass border  rounded-lg bg-orange-200 px-7 text-2xl'>+</button>
                             </div>
                             <div className="flex text-sm divide-x">
@@ -97,7 +114,15 @@ const CartItem = (props) => {
                             </div>
                         </div>
                         <div className="flex flex-col w-14 items-center justify-center h-full ">
-                            <input type="checkbox" className="checkbox checkbox-warning  " checked={checked} onChange={() => resetCheked(!checked, menuItemId)} title='unchecked to exclude and vice versta' />
+                            <input type="checkbox" className="checkbox checkbox-warning" checked={isChecked} onChange={async () => {
+                                try {
+                                    dispatch(changeCheck({ menuItemId, isChecked: !isChecked }))
+                                    resetCheked(!isChecked, menuItemId)
+                                } catch (error) {
+                                    toast.error(error.message)
+                                }
+
+                            }} title='unchecked to exclude and vice versa' />
                         </div>
                     </div>
                 </li>

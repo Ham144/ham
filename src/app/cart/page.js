@@ -23,21 +23,7 @@ export default function CartPage() {
 
 
     let data = useSelector(getAddedToCart)
-    async function resetCheked(checked, _id) {
-        const response = await fetch("/api/addedtocart", {
-            method: "PATCH",
-            body: JSON.stringify({ checked, _id, userInfos_id: user?._id }),
-        })
-        if (response.ok) {
-            const data = await response.json();
-            if (data.ok) {
-                setRefresh(prev => prev = !prev)
-            }
-            else {
-                toast.error("patched failed")
-            }
-        }
-    }
+
 
 
     function CalculateTotal() {
@@ -81,24 +67,23 @@ export default function CartPage() {
             {!data || data == null ?
                 <Spinner /> :
                 data.map((item) => (
-                    <CartItem key={item?.id} resetCheked={resetCheked} item={item} user_id={user?._id} />
+                    <CartItem key={item?.id} item={item} user_id={user?._id} />
                 ))
             }
         </>)
     }
 
-    function toastLatestTotalPay() {
-        toast.success("Your total : $" + itemCheckedTotal)
-    }
 
 
     useEffect(() => {
         CartItems()
         CalculateTotal()
 
-        if (data?.length > 0) {
-            toastLatestTotalPay()
-        }
+    }, [itemCheckedTotal, data.checked, data])
+
+    useEffect(() => {
+        if (!itemCheckedTotal || itemCheckedTotal == undefined) return
+        toast.success('Your total is : ' + itemCheckedTotal + "$")
     }, [itemCheckedTotal])
 
     return (

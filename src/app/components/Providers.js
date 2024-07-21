@@ -4,8 +4,8 @@ import { store } from '@/store'
 import React from 'react'
 import { Provider } from 'react-redux'
 import useUserinfosProduct from './hooks/useUserinfosProduct'
-import { UserInfo } from '../models/userInfo'
 import { useSession } from 'next-auth/react'
+import { setUserdata } from '@/features/user/userSlice'
 
 const Providers = ({ children }) => {
     const { user } = useUserinfosProduct()
@@ -15,6 +15,7 @@ const Providers = ({ children }) => {
         store.dispatch(getFavoriteLength(user?._id))
         store.dispatch(getCartLength(user?._id))
         store.dispatch(getItemsInCart(user?._id))
+        store.dispatch(setUserdata(user))
     }
 
     return (

@@ -49,19 +49,18 @@ export const addPlusMinusQuantity = createAsyncThunk("cart/addorMinusOne", async
             _id: menuItemId, userInfos_id, quantity: newQuantity
         })
         if (response.data.ok) {
-            console.log(menuItemId, newQuantity)
             const result = { menuItemId, newQuantity }
-            return { result }  //harus return begini kalau multiple value
+            return { result }
         }
         else throw new Error("failed update quantity")
     }
 
     try {
         if (plusMinus == "plus") {
-            updateQuantity(quantity + 1)
+            return await updateQuantity(quantity + 1)
         }
         else if (plusMinus == "minus") {
-            updateQuantity(quantity - 1)
+            return await updateQuantity(quantity - 1)
         }
     } catch (error) {
         console.log("error here", error)
@@ -89,7 +88,14 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-
+        changeCheck: (state, action) => {
+            const found = state.cartItems.find(item => item?.menuItemId === action.payload.menuItemId)
+            found.checked = action.payload.isChecked
+        },
+        changeIsFavorite: (state, action) => {
+            const found = state.cartItems.find(item => item?.menuItemId === action.payload.menuItemId && item?.userInfos_id === action.payload.userInfos_id)
+            found.isFavorite = action.payload.isFavorite
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -109,19 +115,24 @@ const cartSlice = createSlice({
                 }
             })
             .addCase(addPlusMinusQuantity.fulfilled, (state, action) => {
-                const { menuItemId, newQuantity } = action?.payload?.result
-                const found = state.cartItems.find(item => item?.menuItemId === menuItemId)
-                if (found) found.quantity = newQuantity
+                try {
+                    const { menuItemId, newQuantity } = action.payload?.result
+                    const found = state.cartItems.find(item => item?.menuItemId === menuItemId)
+                    if (found) found.quantity = newQuantity
+                } catch (error) {
+                    console.log("no less then one")
+                }
             })
     }
 })
 
 export const getAddedToCart = (state => state?.cart.cartItems)
+export const getIsChecked = ((state, menuItemId) => state.cart.cartItems.find(item => item.menuItemId == menuItemId)?.checked)
 export const getQuantityofItem = ((state, menuItemId) => {
     return state?.cart?.cartItems.find(item => item?.menuItemId === menuItemId)?.quantity
 }
 )
-
-export const { } = cartSlice.actions
+export const getIsFavorite = ((state, menuItemId) => state.cart.cartItems.find(item => item.menuItemId == menuItemId)?.isFavorite)
+export const { changeCheck, changeIsFavorite } = cartSlice.actions
 export default cartSlice.reducer
 
