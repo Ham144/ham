@@ -44,6 +44,3 @@ export async function POST(req) {
     else return Response.json({ ok: false, status: 404, msg: "item is 0" });
 }
 
-
-//note : categories sudah ada body, tinggal di gunakan.,
-//todo: cari berdasarkan array searchQuerries, dan body

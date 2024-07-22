@@ -1,3 +1,5 @@
+"use client"
+import axios from 'axios';
 import React from 'react'
 
 const testimonials = [
@@ -33,17 +35,48 @@ const testimonials = [
 ];
 
 const App = () => {
+
+  function showMenusLength() {
+    const length = axios.get("/api/menuitems").then(res => res.data.length)
+    return length
+  }
+
   return (
     <>
+      <div className='w-full flex flex-1 justify-center items-center px-4 mx-auto gap-5'>
+        <div className='w-[50%] flex flex-col '>
+          <h1 className='text-8xl font-bold font-mono text-wrap'>
+            Do You Like Fried Rice..??
+          </h1>
+          <p className='description opacity-60 text-wrap'>
+            Welcome to Nasi Goreng, your go-to destination for the most delicious and mouth-watering fried rice menus. Whether you're a fan of classic fried rice or adventurous flavors, we've got something for everyone. Explore our extensive collection of menus, tips, and cooking techniques to elevate your fried rice taste level.
+          </p>
+          <div className='flex gap-4 items-center'>
+            <button className='btn rounded-lg bg-orange-400'>Explore Menu</button>
+            <div className="chat chat-start">
+              <div className="chat-image avatar">
+                <div className="w-10 rounded-full">
+                  <img alt="" src="/main-logo.png" />
+                </div>
+              </div>
+              <div className='flex flex-col'>
 
+                <div className="chat-bubble bg-orange-400 text-white">Awesome vary options for you..!!</div>
+                <p>{
+                  showMenusLength()
+                }</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
 
 export default App
 
-//TODO: buat home page
-//buat single product page //
+//buat single product page 
 //buat payment page dan hubungkan juga ke fast buy di menu(Nasigoreng.js) 
 //tambah produk
 //rapikan untuk versi mobile

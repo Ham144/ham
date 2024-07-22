@@ -28,5 +28,3 @@ const AuthenticationProvider = ({ children }) => {
 }
 
 export default AuthenticationProvider
-
-//todo: buat redux untuk jumlah barang di addedtocart dan favorites

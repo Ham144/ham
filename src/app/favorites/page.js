@@ -75,5 +75,3 @@ export default function FavoritesPage() {
     );
 }
 
-//todo : fix cart (remove, quantity decrement and increment)
-//todo: decorate home page dan tambah product dari ai 
