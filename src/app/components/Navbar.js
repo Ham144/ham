@@ -30,10 +30,8 @@ const Navbar = () => {
     console.log(session.status)
 
     return (
-        <nav className='flex fixed justify-between items-center md:px-5 px-1 py-4 w-full md:backdrop-blur-md shadow-md z-10 max-md:px-2 
-    bg-gradient-to-l from-gray-200 via-orange-200 to-stone-100
-
-        ' {...cleanProps}>
+        <nav className='flex fixed justify-between items-center md:px-5 px-1 py-4 w-full md:backdrop-blur-md shadow-md  max-md:px-2 
+    bg-gradient-to-l from-gray-200 via-orange-200 to-stone-100 z-30' {...cleanProps}>
             <div >
                 <Image className='hover:animate-bounce' src={"/main-logo.png"} alt='logo' width={70} height={70} />
             </div>

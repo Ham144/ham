@@ -24,14 +24,14 @@ const WhyChooseUs = () => {
 
     const Reasons = ({ reason }) => {
         return (
-            <div className='flex flex-1 w-[50%]'>
-                <div className="card w-96 bg-base-100 shadow-xl image-full">
-                    <img src="/main-logo.png" alt="Shoes" />
-                    <div className="card-body">
-                        <h2 className="card-title">{reason.title}</h2>
-                        <p>{reason.description}</p>
-                        <div className="card-actions justify-end">
-                            <button className="btn btn-primary">Buy Now</button>
+            <div className='flex flex-1 '>
+                <div className="card w-96 bg-base-100 shadow-xl image-full ">
+                    <img src="/main-logo.png" className='bg-contain ' alt="Shoes" />
+                    <div className="card-body ">
+                        <h2 className="card-title  font-bold text-2xl text-center">{reason.title}</h2>
+                        <p className='text-center drop-shadow-md text-slate-200'>{reason.description}</p>
+                        <div className="card-actions justify-end ">
+                            <button className="btn bg-yellow-600">Buy Now</button>
                         </div>
                     </div>
                 </div>
@@ -40,11 +40,12 @@ const WhyChooseUs = () => {
     }
 
     return (
-        <div className={`flex-1 flex-col mt-12 mx-auto justify-center  items-center w-full`}
+        <div className={`flex flex-1  flex-col mt-12 mx-auto justify-center  items-center`}
         >
             <h2 className='text-2xl text-center font-mono text-orange-500 py-4'>Why Choose Us?</h2>
-            <div className='grid grid-cols-2 w-full flex-1 items-center mx-auto justify-center self-center'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 lg:gap-12   gap-3  items-center mx-auto justify-center self-center'>
                 {reasons.map((item) => (
+
                     <Reasons key={item.title} reason={item} />
                 ))}
             </div>
