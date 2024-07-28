@@ -104,7 +104,6 @@ const App = () => {
 
 export default App
 
-//buat single product page 
-//buat payment page dan hubungkan juga ke fast buy di menu(Nasigoreng.js) 
-//tambah produk
-//rapikan untuk versi mobile
+//TODO: buat payment page dan hubungkan juga ke fast buy di menu(Nasigoreng.js) 
+//TODO: tambah produk
+//TODO: rapikan untuk versi mobile

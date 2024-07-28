@@ -1,20 +1,21 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image'
-import React, { useContext, useLayoutEffect, useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { FaShippingFast } from 'react-icons/fa'
 import { FaCartPlus } from "react-icons/fa";
 import useUserinfosProduct from './hooks/useUserinfosProduct';
 import { getCartLength } from '@/features/cart/cartSlice';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 
 const NasiGoreng = ({ props }) => {
     const [hover, setHover] = useState(false)
     const { user } = useUserinfosProduct()
     const [userInfos, setUserInfos] = useState()
+    const router = useRouter()
 
-    const session = useSession()
     const dispatch = useDispatch()
     function fetchingUserInfos() {
         fetch("/api/profile").then(res => res.json()).then(data => setUserInfos(data))
@@ -28,12 +29,12 @@ const NasiGoreng = ({ props }) => {
     }, [])
 
 
-    const [menuItem, setMenuItem] = useState(props?.menuItem)
-    const [description, setDescription] = useState(props?.description)
-    const [basePrice, setBasePrice] = useState(props?.basePrice)
-    const [photoUrl, setPhotoUrl] = useState(props?.photoUrl)
-    const [categories, setCategories] = useState(props?.categories)
-    const [menuItemId, setMenuItemId] = useState(props?._id)
+    const menuItem = props?.menuItem
+    const description = props?.description
+    const basePrice = props?.basePrice
+    const photoUrl = props?.photoUrl
+    const categories = props?.categories
+    const menuItemId = props?._id
 
     async function addedToCart(menuItemId, name, quantity, price, image, addedDate, checked, userInfos_id) {
         if (!userInfos_id) {
@@ -57,11 +58,15 @@ const NasiGoreng = ({ props }) => {
 
     }
 
+    function handleSingle() {
+        router.push(`/menu/${menuItemId}?menuItem=${menuItem}&description=${description}&basePrice=${basePrice}&photoUrl=${photoUrl}&categories=${categories}`)
+    }
+
     return (
 
 
         <div className={`w-72 ${hover ? "" : "h-[440px]"} bg-gradient-radial from-white to-orange-200 shadow-md rounded-xl duration-1000 hover:scale-105 hover:shadow-xl `} onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-            <a href="#">
+            <div onClick={handleSingle}>
                 <Image className="h-80 w-72 object-cover rounded-t-xl" src={photoUrl} alt="Nasi Goreng" width={300} height={300} />
                 <div className="px-4 py-3 w-72 ">
                     <p className={` font-light italic text-pretty ${hover ? "flex" : "hidden"}`}>{description}</p>
@@ -80,7 +85,7 @@ const NasiGoreng = ({ props }) => {
                         </div>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
     )
 }
