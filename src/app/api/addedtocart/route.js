@@ -8,7 +8,8 @@ export async function POST(req) {
 
 
     if (!menuItemId || !name || !quantity || !price || !image || !addedDate || !checked || !userInfos_id) {
-        return Response.json({ ok: false, msg: "ada field yg kosong" })
+
+        return Response.json({ ok: false, msg: "there are empty field" })
     }
 
     //mendapatkan userInfos

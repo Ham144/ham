@@ -16,6 +16,8 @@ const CartItem = (props) => {
     const isChecked = useSelector((state) => getIsChecked(state, menuItemId))
     const isFavorited = useSelector((state) => getIsFavorite(state, menuItemId))
 
+    const [zoomin, setZoomin] = useState(false)
+
     async function setFavorited(_id, isFavorite) {
         const response = await fetch(`/api/isfavorite`, {
             method: 'POST',
@@ -61,13 +63,24 @@ const CartItem = (props) => {
         }
     }
 
-
     return (
         <div >
-            <ul className="flex flex-col divide-y dark:divide-gray-300" >
+            <ul className="flex flex-col divide-y lg:w-[60%] mx-auto dark:divide-gray-300" >
                 <li className="flex flex-col py-6 sm:flex-row sm:justify-between border p-4">
-                    <div className="flex w-full space-x-2 sm:space-x-4">
-                        <Image className="flex-shrink-0 object-cover w-20 h-20 dark:border- rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500" src={image} alt="Polaroid camera" width={300} height={300} />
+                    <div className="flex w-full space-x-2 sm:space-x-4 ">
+                        {/* <Image className="flex-shrink-0 object-cover w-20 h-20 dark:border- rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500" src={image} alt="Polaroid camera" width={300} height={300} /> */}
+                        <Image onClick={() => setZoomin((prev) => setZoomin(!prev))} title='click  twice to zoom' style={zoomin ? {
+                            position: "fixed",
+                            borderRadius: "21px",
+                            objectFit: "contain",
+                            padding: "15%",
+                            backgroundColor: "rgba(23,23,23,0.3)",
+                            zIndex: "20",
+                            alignSelf: "center",
+                            cursor: "zoom-out",
+                        } : ""} className={!zoomin ? `flex lg:h-56 lg:w-32 w-28 h-30
+                        object-cover cursor-zoom-in` : "lg:left-0 lg:top-[10%] self-center lg:w-full lg:h-[98vh] mx-auto"} src={image} alt='fried frice pic' width={1000} height={1000} />
+
                         <div className="flex flex-col justify-between w-full pb-4">
                             <div className="flex justify-between w-full pb-2 space-x-2">
                                 <div className="space-y-1">

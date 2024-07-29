@@ -87,8 +87,8 @@ export default function CartPage() {
     }, [itemCheckedTotal])
 
     return (
-        <div className="flex flex-col max-w-3xl mx-auto p-6 space-y-4 sm:p-10 dark:bg-gray-50 dark:text-gray-800 min-h-screen">
-            <h2 className="text-xl font-semibold">Your cart</h2>
+        <div className="flex flex-col lg:w-full mx-auto p-6 space-y-4 sm:p-10 dark:bg-gray-50 dark:text-gray-800 min-h-screen">
+            <h2 className="text-xl font-semibold text-center">Your cart</h2>
 
             {session.status == "authenticated" ? <CartItems />
                 : <>Please Login first <Link href={"/login"} className="btn glass">Login</Link></>}
@@ -102,7 +102,7 @@ export default function CartPage() {
                             <i>note: check item in cart to include</i>
                             <div className="table flex-1 ">
                                 {/* head */}
-                                <tbody className="flex flex-col flex-1 w-full">
+                                {<tbody className="flex flex-col flex-1 w-full">
                                     <tr className="flex flex-row bg-orange-50 flex-1 w-[100%] ">
                                         <th>number</th>
                                         <th>Product</th>
@@ -110,7 +110,7 @@ export default function CartPage() {
                                         <th>Quantity</th>
                                     </tr>
                                     <CalculateTotal />
-                                </tbody>
+                                </tbody>}
                             </div>
                             <div className="font-bold text-center text-2xl mx-auto">Total: ${itemCheckedTotal}</div>
                         </div>
