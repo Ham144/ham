@@ -25,14 +25,11 @@ const WhyChooseUs = () => {
     const Reasons = ({ reason }) => {
         return (
             <div className='flex flex-1 '>
-                <div className="card w-96 bg-base-100 shadow-xl image-full ">
+                <div className="card w-96 bg-base-100 shadow-xl text-center image-full ">
                     <img src="/main-logo.png" className='bg-contain ' alt="Shoes" />
                     <div className="card-body ">
                         <h2 className="card-title  font-bold text-2xl text-center">{reason.title}</h2>
                         <p className='text-center drop-shadow-md text-slate-200'>{reason.description}</p>
-                        <div className="card-actions justify-end ">
-                            <button className="btn bg-yellow-600">Buy Now</button>
-                        </div>
                     </div>
                 </div>
             </div>

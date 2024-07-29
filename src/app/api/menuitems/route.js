@@ -21,9 +21,20 @@ export async function PUT(req) {
 //get All created Menu
 export async function GET() {
     mongoose.connect(process.env.MONGO_URL)
+    console.log("hited")
     const data = await MenuItems.find()
     if (!data || (await data).length <= 0) return Response.json({ ok: false, status: 404, msg: "item is 0" })
     return Response.json(data, { ok: true })
+}
+//get single only menu item
+export async function POST(req) {
+    const body = await req.json()
+    const { menuItemId } = body
+    if (!menuItemId) return Response.json({ ok: false, msg: "field required" })
+    mongoose.connect(process.env.MONGO_URL)
+    const found = await MenuItems.findOne({ _id: menuItemId })
+    if (!found) return Response.json({ ok: false, msg: "item not found" })
+    return Response.json({ ok: true, data: found })
 }
 
 export async function DELETE(req) {

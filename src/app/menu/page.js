@@ -5,8 +5,6 @@ import { FaSearch } from "react-icons/fa";
 import { FaDeleteLeft, FaFilter } from "react-icons/fa6";
 import CategoryFilter from "../components/CategoryFilter";
 import NasiGoreng from "../components/NasiGoreng";
-import Spinner from "../components/Spinner";
-
 
 export default function MenuPage() {
     const [data, setData] = useState([]);
@@ -56,7 +54,6 @@ export default function MenuPage() {
     function getInitialShow() {
         fetch("/api/menuitems").then(res => res.json()).then(data => {
             if (data) {
-                // console.log(data);
                 setData(data);
             }
             else {

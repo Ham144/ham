@@ -59,13 +59,13 @@ const NasiGoreng = ({ props }) => {
     }
 
     function handleSingle() {
-        router.push(`/menu/${menuItemId}?menuItem=${menuItem}&description=${description}&basePrice=${basePrice}&photoUrl=${photoUrl}&categories=${categories}`)
+        router.push(`/menu/${menuItemId}`)
     }
 
     return (
 
 
-        <div className={`w-72 ${hover ? "" : "h-[440px]"} bg-gradient-radial from-white to-orange-200 shadow-md rounded-xl duration-1000 hover:scale-105 hover:shadow-xl `} onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+        <div className={`w-72 ${hover ? "" : "h-[440px]"} bg-gradient-radial from-white to-orange-200 shadow-md rounded-xl duration-1000 cursor-pointer hover:scale-105 hover:shadow-xl `} onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
             <div onClick={handleSingle}>
                 <Image className="h-80 w-72 object-cover rounded-t-xl" src={photoUrl} alt="Nasi Goreng" width={300} height={300} />
                 <div className="px-4 py-3 w-72 ">

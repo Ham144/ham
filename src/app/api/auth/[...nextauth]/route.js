@@ -80,7 +80,6 @@ export const authOption = {
             }
         },
         async session({ session, token }) {
-            console.log("Session callback - session:", session, "token:", token);
             if (token?.sub) {
                 const user = await User.findById(token.sub);
                 if (user) {
