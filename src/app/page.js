@@ -54,40 +54,40 @@ const App = () => {
   }, [])
   return (
     <>
-      <div className='flex-col pb-12 md:px-9 px-2 min-h-screen mx-auto '>
+      <div className='flex-col pb-12 md:px-9 px-2 min-h-screen mx-auto max-md:py-4 max-md:w-screen overflow-x-hidden'>
         <div className='md:flex flex-1 mx-auto  items-center md:py-[100px]'>
-          <div className='w-[50%] flex flex-col gap-5 flex-1'>
-            <h1 className='md:text-8xl font-bold font-sans text-gray-700  text-wrap drop-shadow-lg'>
+          <div className='lg:w-[50%] flex flex-col gap-5 flex-1 '>
+            <h1 className='md:text-8xl text-5xl  font-bold font-sans text-gray-700  text-wrap drop-shadow-lg max-md:z-20 max-md:text-center'>
               Do You Like Fried Rice..??
             </h1>
-            <p className='description opacity-60 text-wrap'>
+            <p className='description lg:opacity-60  text-wrap max-md:z-20 '>
               Welcome to Nasi Goreng, your go-to destination for the most delicious and mouth-watering fried rice menus. Whether you're a fan of classic fried rice or adventurous flavors, we've got something for everyone. Explore our extensive collection of menus, tips, and cooking techniques to elevate your fried rice taste level.
             </p>
-            <div className='flex gap-4 items-center'>
-              <div className="chat chat-start ">
-                <div className="chat-image avatar ">
+            <div className='flex gap-4 items-center max-md:flex-col'>
+              <div className="chat chat-start flex max-md:flex-col">
+                <div className="chat-image avatar max-md:hidden">
                   <div className="w-10 rounded-full ">
                     <img alt="" src="/main-logo.png" />
                   </div>
                 </div>
-                <div className='flex items-center gap-5 '>
-                  <div className="chat-bubble bg-orange-400 shadow-md text-white">Awesome vary options for you..!!</div>
-                  <p className='text-2xl badge lg:p-6 bg-orange-400 shadow-md font-extrabold'>{
+                <div className='flex  items-center gap-5 '>
+                  <div className="chat-bubble max-md:w-full  bg-orange-400 shadow-md text-white">Awesome vary options for you..!!</div>
+                  <p className='max-md:py-8 text-2xl badge lg:p-6 bg-orange-400 shadow-md font-extrabold max-md:self-end max-md:w-[40%] max-md:text-sm max-md:flex-col max-md:text-white max-md:rounded-lg max-md:bg-gradient-to-tr max-md:from-orange-500 max-md:to-yellow-300 '>{
                     menuLength
-                  }+ <span className='text-sm px-3 h-'>masterpieces</span></p>
+                  }+ <span className='text-sm px-3 '>masterpieces</span></p>
                 </div>
 
               </div>
-              <button className='btn animate-bounce hover:animate-none rounded-xl shadow-lg flex-1 flex glass bg-orange-400'>Explore Menu 👀</button>
+              <button className='btn lg:animate-bounce hover:animate-none rounded-xl shadow-lg max-md:flex-1 max-md:flex glass bg-orange-500 max-md:w-full'>Explore Menu 👀</button>
 
             </div>
           </div>
-          <div className='w-[50%] flex flex-col mx-auto flex-1'>
-            <Image src={"/home-page.png"} className='scale-x-[-1] drop-shadow-lg pr-0' width={1000} height={1000} />
+          <div className='lg:w-[50%] flex flex-col mx-auto flex-1 max-md:absolute max-md:top-56 max-md:opacity-40 '>
+            <Image src={"/home-page.png"} className='scale-x-[-1] drop-shadow-lg pr-0  max-md:w-screen max-md:mx-auto ' width={1000} height={1000} />
           </div>
         </div>
         <h2 className='text-2xl text-center font-mono text-orange-500 py-4'>Popular</h2>
-        <div className='grid md:grid-cols-3  gap-5 mx-auto items-center w-[95%]'>
+        <div className='grid md:grid-cols-3  gap-5 mx-auto items-center lg:w-[95%] w'>
           {popular && popular.length > 1 ?
             popular.map((item) => (
               <Popular popular={item} />
@@ -105,6 +105,4 @@ const App = () => {
 
 export default App
 
-//TODO: buat payment page dan hubungkan juga ke fast buy di menu(Nasigoreng.js) 
-//TODO: tambah produk
 //TODO: rapikan untuk versi mobile

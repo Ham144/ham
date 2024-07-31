@@ -82,15 +82,15 @@ const CategoriesPage = () => {
 
 
     return (
-        <div className='flex flex-col px-4 min-h-screen mb-20 '>
+        <div className='flex flex-col px-4 min-h-screen  '>
             <ProfileBar isAdmin={data?.isAdmin} />
-            <div className='flex flex-col justify-center items-center  mx-auto'>
+            <div className='flex flex-col justify-center items-center  mx-auto '>
                 <form onSubmit={handleSubmitCategories} className='flex flex-col md:w-[500px] py-5 gap-y-4'>
                     <label htmlFor="category" className=' flex font-bold  w-full '>New Category</label>
                     <input type="text" className='flex rounded-full shadow-sm py-4 border px-3 font-bold grow uppercase ' value={newCategory} onChange={e => setNewCategory(e.target.value)} />
                     <input type="submit" value={"ADD"} className='bg-sekunder hover:bg-slate-200 cursor-pointer' />
                 </form>
-                <div className=' flex  w-full justify-center items-center'>
+                <div className=' flex  w-full justify-center items-center mb-20'>
                     <ul className='flex flex-col gap-4'>
                         {
                             categories && categories?.map((category) => (

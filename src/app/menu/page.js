@@ -95,7 +95,8 @@ export default function MenuPage() {
             </div>
             <div className="filters flex  justify-center px-2 mt-5 ">
                 <div className="  flex flex-col items-center">
-                    <div className="flex items-center">
+                    <div className="flex items-center  max-md:gap-x-0  
+                    max-md:w-[18rem] max-md:overflow-x-scroll max-md:overflow-y-hidden ">
                         {
                             categories.length > 0 && categories.map((cat, index) => <CategoryFilter key={Math.random()} isChecked={cat[Object.keys(cat)[0]]} color={index < colors.length ? colors[index] : colors[Math.floor(Math.random() * colors.length)]}
                                 handleClicked={handleClicked} category={Object.keys(cat)[0]}

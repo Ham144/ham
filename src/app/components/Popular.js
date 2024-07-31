@@ -6,9 +6,9 @@ const Popular = (props) => {
     const { popular } = props
     return (
         <div className='flex flex-1'>
-            <div className="card lg:card-side bg-white shadow-xl h-[230px]  ">
+            <div className="card lg:card-side bg-white shadow-xl lg:h-[230px] max-md:w-full  ">
                 <Image
-                    className='object-cover rounded-md p-3'
+                    className='object-cover rounded-md p-3 max-md:w-full max-md:h-44'
                     src={popular?.photoUrl} width={200} height={200} />
                 <div className="card-body ">
                     <h2 className="card-title">{popular.menuItem}</h2>

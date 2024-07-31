@@ -8,6 +8,10 @@ export async function POST(req) {
     if (found) {
         return Response.json({ status: 401 })
     }
+
+    const newname = body.name.toLowerCase().split(" ").map((item) => item.charAt(0).toUpperCase() + item.slice(1)).join("")
+
+    body.name = newname
     await Categories.create(body)
     return Response.json("ok")
 }
