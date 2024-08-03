@@ -8,5 +8,3 @@ export default function CategoryFilter(props) {
         </button>
     );
 }
-
-//TODO: need to fix weird filter concept

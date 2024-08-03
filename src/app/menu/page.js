@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
 import { FaDeleteLeft, FaFilter } from "react-icons/fa6";
@@ -7,9 +7,10 @@ import CategoryFilter from "../components/CategoryFilter";
 import NasiGoreng from "../components/NasiGoreng";
 
 export default function MenuPage() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(undefined);
     const [searchString, setSearchString] = useState("");
     const [categories, setCategories] = useState([])
+    const [filteredData, setFilteredData] = useState([])
 
     const colors = ["cyan-blue", "green-blue", "purple-pink", "pink-orange", "teal-lime", "red-yellow"];
 
@@ -22,45 +23,58 @@ export default function MenuPage() {
         if (searchString.length === 0) return;
 
 
-        const response = await fetch(`/api/menu?search=${searchString}`, {
-            method: "POST",
-            body: JSON.stringify({ categories }),
-        });
-        const data = await response.json();
-        if (data.ok == true) {
-            toast.success("Found!!");
-            setData(data.data);
-        }
-        else {
-            toast.error(`${searchString}, ${data.msg}`);
+        try {
+            const response = await fetch(`/api/menu?search=${searchString}`, {
+                method: "POST",
+                body: JSON.stringify({ categories }),
+            });
+            const data = await response.json();
+            if (data.ok == true) {
+                toast.success("Found!!");
+                setData(data.data);
+                setFilteredData(data.data);
+            }
+            else {
+                toast.error(`${searchString}, ${data.msg}`);
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 
     function getFalseCategories() {
-        fetch("/api/categories").then(res => res.json()).then(data => {
-            if (data) {
-                const temp = []
-                data.map((category) => {
-                    temp.push({ [category.name]: false })
-                })
-                setCategories(temp)
-            }
-            else {
-                toast.error("data null");
-            }
-        })
+        try {
+            fetch("/api/categories").then(res => res.json()).then(data => {
+                if (data) {
+                    const temp = []
+                    data.map((category) => {
+                        temp.push({ [category.name]: false })
+                    })
+                    setCategories(temp)
+                }
+                else {
+                    toast.error("data null");
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     function getInitialShow() {
-        fetch("/api/menuitems").then(res => res.json()).then(data => {
-            if (data) {
-                setData(data);
-            }
-            else {
-                toast.error("data null");
-            }
-        })
-
+        try {
+            fetch("/api/menuitems").then(res => res.json()).then(data => {
+                if (data) {
+                    setData(data);
+                    setFilteredData(data);
+                }
+                else {
+                    toast.error("data null");
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     function handleClicked(cat) {
@@ -78,11 +92,52 @@ export default function MenuPage() {
     }
     // console.log(categories)
 
-    useEffect(() => {
+    async function filtering() {
+        const temp = []
+        const trueCategories = []
+        try {
+
+            if (categories.map((category) => Object.values(category)[0]).includes(true)) {
+                //getting the true categories
+                Object.entries(categories).map(([index, item]) => {
+                    return Object.values(item)[0] ? trueCategories.push(Object.keys(item)[0]) : null
+                })
+                //filtering data by true categories
+                data.map((item) => {
+                    trueCategories.map((cat) => {
+                        if (item.categories.includes(cat) && !temp.includes(item)) {
+                            temp.push(item)
+                        }
+                    })
+                })
+                if (temp.length === 0) {
+                    toast.error("no items found")
+                    return setFilteredData([])
+                }
+                else {
+                    toast.success(temp.length + " items found")
+                    setFilteredData(temp)
+                }
+            }
+            else {
+                setFilteredData(data)
+            }
+
+        } catch (err) {
+            console.log(err)
+            setFilteredData(data)
+        }
+    }
+
+    useLayoutEffect(() => {
         getInitialShow()
         getFalseCategories()
     }, [])
 
+
+    useEffect(() => {
+        filtering()
+    }, [categories])
 
     return (
         <section className="menu flex flex-col min-h-screen mb-12">
@@ -110,13 +165,13 @@ export default function MenuPage() {
                 </div>
             </div>
 
-            {data.length > 0 ?
+            {data ?
                 <div className='flex flex-col  items-center ' >
                     <div className='flex flex-col font-bold items-center'>
                         <section id="Projects"
                             className="mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center  justify-center  gap-y-20 gap-x-14 mt-10 mb-5 items-center">
                             {
-                                data && data.length > 0 && data.map((item) => <NasiGoreng key={item._id} props={item} />)
+                                filteredData?.length > 0 ? filteredData.map((item, index) => <NasiGoreng key={item._id} props={item} />) : <p className="text-3xl font-extralight ">No Items Found</p>
                             }
 
                         </section>

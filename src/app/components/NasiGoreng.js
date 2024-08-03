@@ -1,4 +1,3 @@
-import { useSession } from 'next-auth/react';
 import Image from 'next/image'
 import React, { useLayoutEffect, useState } from 'react'
 import toast from 'react-hot-toast';
@@ -18,8 +17,12 @@ const NasiGoreng = ({ props }) => {
 
     const dispatch = useDispatch()
     function fetchingUserInfos() {
-        fetch("/api/profile").then(res => res.json()).then(data => setUserInfos(data))
-        return
+        try {
+            fetch("/api/profile").then(res => res.json()).then(data => setUserInfos(data))
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
