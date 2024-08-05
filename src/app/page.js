@@ -44,7 +44,11 @@ const App = () => {
 
   function getMenuLength() {
     const res = axios.get("/api/menuitems").then(res => {
-      setPopular([res.data[1], res.data[5], res.data[3]])
+      const randomPopular = []
+      for (let i = 0; i < 4; i++) {
+        randomPopular.push(res.data[Math.floor(Math.random() * res.data.length)])
+      }
+      setPopular(randomPopular)
       setMenuLength(res.data.length)
     })
   }
