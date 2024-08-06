@@ -108,7 +108,7 @@ const App = () => {
             <span className="loading loading-spinner w-[300px] h-[300px] mx-auto self-center"></span>
           }
           <div>
-            <button className='btn glass'>SEE MORE</button>
+            <button className='btn glass' onClick={() => router.push("/menu")}>SEE MORE</button>
           </div>
         </div>
         <AboutSection />
