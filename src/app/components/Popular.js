@@ -3,10 +3,10 @@ import Image from 'next/image'
 import React from 'react'
 
 const Popular = (props) => {
-    const { popular } = props
+    const { popular, handleLook } = props
     return (
-        <div className='flex flex-1'>
-            <div className="card lg:card-side bg-white shadow-xl lg:h-[230px] max-md:w-full  ">
+        <div className='flex flex-1 '>
+            <div className="card  lg:w-[600px] flex-1 lg:card-side bg-white shadow-xl lg:h-[230px] max-md:w-full  ">
                 <Image
                     className='object-cover rounded-md p-3 max-md:w-full max-md:h-44'
                     src={popular?.photoUrl} width={200} height={200} />
@@ -21,7 +21,7 @@ const Popular = (props) => {
                         ))}
                     </span>
                     <div className="card-actions justify-end">
-                        <button className="btn bg-orange-300">Look</button>
+                        <button className="btn bg-orange-300" onClick={handleLook}>Look</button>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import Popular from './components/Popular';
 import AboutSection from './components/AboutSection';
 import WhyChooseUs from './components/WhyChooseUs';
+import { useRouter } from 'next/navigation';
 
 const testimonials = [
   {
@@ -39,19 +40,26 @@ const testimonials = [
 ];
 
 const App = () => {
+  const router = useRouter()
+
   const [menuLength, setMenuLength] = useState(0)
   const [popular, setPopular] = useState(["xmnmxni", "nxmnxmnx", "nxmnxm"])
 
   function getMenuLength() {
     const res = axios.get("/api/menuitems").then(res => {
       const randomPopular = []
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 6; i++) {
         randomPopular.push(res.data[Math.floor(Math.random() * res.data.length)])
       }
       setPopular(randomPopular)
       setMenuLength(res.data.length)
     })
   }
+
+  function handleLook(_id) {
+    router.push(`/menu/${_id}`)
+  }
+
 
   useEffect(() => {
     getMenuLength()
@@ -94,11 +102,14 @@ const App = () => {
         <div className='grid md:grid-cols-3  gap-5 mx-auto items-center lg:w-[95%] w'>
           {popular && popular.length > 1 ?
             popular.map((item) => (
-              <Popular popular={item} />
+              <Popular popular={item} handleLook={() => handleLook(item?._id)} />
             ))
             :
             <span className="loading loading-spinner w-[300px] h-[300px] mx-auto self-center"></span>
           }
+          <div>
+            <button className='btn glass'>SEE MORE</button>
+          </div>
         </div>
         <AboutSection />
         <WhyChooseUs />
