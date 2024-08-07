@@ -1,7 +1,7 @@
 "use client"
 import axios from 'axios';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import Popular from './components/Popular';
 import AboutSection from './components/AboutSection';
 import WhyChooseUs from './components/WhyChooseUs';
@@ -61,19 +61,19 @@ const App = () => {
   }
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getMenuLength()
   }, [])
   return (
     <>
-      <div className='flex-col pb-12 md:px-9 px-2 min-h-screen mx-auto max-md:py-4 max-md:w-screen overflow-x-hidden'>
+      <div className='flex flex-col pb-12 md:px-9 px-2 min-h-screen mx-auto max-md:py-4 max-md:w-screen overflow-x-hidden items-center'>
         <div className='md:flex flex-1 mx-auto  items-center md:py-[100px]'>
           <div className='lg:w-[50%] flex flex-col gap-5 flex-1 '>
             <h1 className='md:text-8xl text-5xl  font-bold font-sans text-gray-700  text-wrap drop-shadow-lg max-md:z-20 max-md:text-center'>
               Do You Like Fried Rice..??
             </h1>
             <p className='description lg:opacity-60  text-wrap max-md:z-20 '>
-              Welcome to Nasi Goreng, your go-to destination for the most delicious and mouth-watering fried rice menus. Whether you're a fan of classic fried rice or adventurous flavors, we've got something for everyone. Explore our extensive collection of menus, tips, and cooking techniques to elevate your fried rice taste level.
+              Welcome to Nasi Goreng, your go-to destination for the most delicious and mouth-watering fried rice menus. Whether you&apos;re a fan of classic fried rice or adventurous flavors, we&apos;ve got something for everyone. Explore our extensive collection of menus, tips, and cooking techniques to elevate your fried rice taste level.
             </p>
             <div className='flex gap-4 items-center max-md:flex-col'>
               <div className="chat chat-start flex max-md:flex-col">
@@ -90,7 +90,7 @@ const App = () => {
                 </div>
 
               </div>
-              <button className='btn lg:animate-bounce hover:animate-none rounded-xl shadow-lg max-md:flex-1 max-md:flex glass bg-orange-500 max-md:w-full'>Explore Menu 👀</button>
+              <button className='btn lg:animate-bounce hover:animate-none rounded-xl shadow-lg max-md:flex-1 max-md:flex glass bg-orange-500 max-md:w-full' onClick={() => router.push("/menu")}>Explore Menu 👀</button>
 
             </div>
           </div>
@@ -102,15 +102,18 @@ const App = () => {
         <div className='grid md:grid-cols-3  gap-5 mx-auto items-center lg:w-[95%] w'>
           {popular && popular.length > 1 ?
             popular.map((item) => (
-              <Popular popular={item} handleLook={() => handleLook(item?._id)} />
+              <Popular popular={item} key={item?._id} handleLook={() => handleLook(item?._id)} />
             ))
             :
             <span className="loading loading-spinner w-[300px] h-[300px] mx-auto self-center"></span>
           }
-          <div>
-            <button className='btn glass' onClick={() => router.push("/menu")}>SEE MORE</button>
-          </div>
         </div>
+
+        <div>
+          <button className='btn glass lg:w-[88vw] w-96 mt-4 mx-auto ' onClick={() => router.push("/menu")}>SEE MORE</button>
+        </div>
+
+
         <AboutSection />
         <WhyChooseUs />
       </div>

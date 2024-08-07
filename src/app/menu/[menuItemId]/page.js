@@ -6,7 +6,7 @@ import React, { useLayoutEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 
-const page = (props) => {
+const MenuSinglePage = (props) => {
     const session = useSession()
     const { status } = session
 
@@ -30,11 +30,13 @@ const page = (props) => {
     }
 
     useLayoutEffect(() => {
+        if (session.status == "unauthenticated") toast.error("Please login first")
+
         fetchingSingle()
     }, [menuItemId])
 
     function handleBuy() {
-        console.log("buy button");
+        toast.success("Arrived, open the door now")
     }
 
     async function handleAddtoCart() {
@@ -59,6 +61,8 @@ const page = (props) => {
 
     if (!singleMenu) return <span className="loading min-h-screen mx-auto flex self-center items-center justify-center  w-[40%] loading-ring "></span>
 
+
+
     return (
         <div className='flex flex-col lg:w-full lg:gap-y-4 gap-2 justify-center max-md:top-7 gap-x-2 w-96 min-h-screen  items-center mx-auto '>
             <div className='flex bg-orange-50 '>
@@ -71,7 +75,7 @@ const page = (props) => {
                     src={singleMenu.photoUrl} width={500} height={500} />
                 <div className='flex gap-2 absolute self-center top-1'>
                     {singleMenu.categories.map((item) => (
-                        <span className='badge badge-ghost badge-sm p-4 cursor-pointer text-medium bg-orange-100 border border-white font-bold shadow-xl'>{item}</span>
+                        <span key={Math.random()} className='badge badge-ghost badge-sm p-4 cursor-pointer text-medium bg-orange-100 border border-white font-bold shadow-xl'>{item}</span>
                     ))}
                 </div>
             </div>
@@ -80,11 +84,11 @@ const page = (props) => {
             </p>
             <div className='flex items-center justify-between gap-x-4 gap-y-2'>
                 <button className="join-item btn btn-outline" onClick={() => window.location = "/menu"}>Back to Menu</button>
-                <button className="join-item btn bg-orange-200 border" onClick={handleAddtoCart}>Add To Cart</button>
+                <button className="join-item btn bg-orange-200 border" disabled={status == "unauthenticated"} onClick={handleAddtoCart}>Add To Cart</button>
                 <button className="join-item btn btn-outline" onClick={handleBuy}>Buy Now {singleMenu.basePrice}$</button>
             </div>
         </div>
     )
 }
 
-export default page
+export default MenuSinglePage

@@ -37,7 +37,7 @@ const NasiGoreng = ({ props }) => {
     const basePrice = props?.basePrice
     const photoUrl = props?.photoUrl
     const categories = props?.categories
-    const menuItemId = props?._id
+    const menuItemId = props?._id || props?.menuItemId
 
     async function addedToCart(menuItemId, name, quantity, price, image, addedDate, checked, userInfos_id) {
         if (!userInfos_id) {

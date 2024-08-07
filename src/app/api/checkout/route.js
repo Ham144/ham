@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 
 //init stripe: 
-const stripe = require('stripe')(process.env.STRIPE_SK)
 
 
 export async function POST(req) {

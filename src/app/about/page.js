@@ -39,7 +39,7 @@ export default function AboutPage() {
                         Have you get married?
                     </div>
                     <div className="collapse-content">
-                        <p>that&apos;s weird question, i don&apos;t even have girlfriend my entire life </p>
+                        <p>that&apos;s weird question, i don&apos;t even have girlfriend my whole life </p>
                     </div>
                 </div>
 
@@ -59,7 +59,7 @@ export default function AboutPage() {
                         Your favorite music?
                     </div>
                     <div className="collapse-content">
-                        <p>there are tons, but for general i like Phonk recently</p>
+                        <p>there are tons, but for general I like Phonk recently</p>
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@ export default function AboutPage() {
                         Whats stack you had to make this done?
                     </div>
                     <div className="collapse-content">
-                        <p>As i make about page, the dependencies and tech I used are: Tailwind, Mongoose, Nextjs, MongoDB, React, NextAuth, Daisy, react icons, postcss, bun and yea maybe thats all</p>
+                        <p>As i made about page, the dependencies and techs I used are: Tailwind, Mongoose, Nextjs, MongoDB, Redux, React, NextAuth, Daisy, react icons</p>
                     </div>
                 </div>
 
@@ -89,7 +89,7 @@ export default function AboutPage() {
                         Why did you build this website?
                     </div>
                     <div className="collapse-content">
-                        <p>To showcase my skills, to practice my coding skills, to get job soon because i really need job.</p>
+                        <p>To showcase my skills, to practice my coding skills, to get job soon because i need money to buy real fried rice job :(.</p>
                     </div>
                 </div>
 

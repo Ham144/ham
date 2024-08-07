@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import toast, { Toast } from 'react-hot-toast'
 import ProfileBar from '@/app/components/ProfileBar'
 import { redirect, useParams, useSearchParams } from 'next/navigation'
@@ -24,8 +24,11 @@ const Profilepage = () => {
     const [specificAddress, setSpecificAddress] = useState("")
     const [isAdmin, setIsAdmin] = useState(false)
 
-    if (useSession().status == "unauthenticated") return redirect("/")
+    useLayoutEffect(() => {
+        handleRefresh()
+    }, [_id])
 
+    if (useSession().status == "unauthenticated") return redirect("/")
 
     async function handleRefresh() {
         let endpoint = ""
@@ -61,9 +64,6 @@ const Profilepage = () => {
         }
 
     }
-    useEffect(() => {
-        handleRefresh()
-    }, [])
 
 
     async function handleSave(ev) {
@@ -118,6 +118,9 @@ const Profilepage = () => {
         }
 
     }
+
+
+
 
     if (session?.status === "unauthenticated") {
         return <div>

@@ -2,10 +2,9 @@
 import { FaHeart } from "react-icons/fa";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { redirect, useSelectedLayoutSegment } from "next/navigation";
+import { redirect } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeIsFavorite, getAddedToCart } from "@/features/cart/cartSlice";
 import { getUserData } from "@/features/user/userSlice";
@@ -13,13 +12,16 @@ import { getUserData } from "@/features/user/userSlice";
 export default function FavoritesPage() {
 
     const auth = useSession().status
+    let userData;
+    let data;
+    const dispatch = useDispatch()
     if (auth != "authenticated") {
         toast.error("Please login first")
-        return redirect("/login")
+        redirect("/login")
     }
-    const dispatch = useDispatch()
-    const userData = useSelector((state) => getUserData(state, auth))
-    const data = useSelector(getAddedToCart).filter(item => item.isFavorite && item?.userInfos_id == userData?.user?._id)
+
+    userData = useSelector((state) => getUserData(state, auth))
+    data = useSelector(getAddedToCart).filter(item => item.isFavorite && item?.userInfos_id == userData?.user?._id)
 
 
     return (

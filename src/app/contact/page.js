@@ -1,14 +1,23 @@
+"use client"
+
 import Image from "next/image";
 import { LuDatabaseBackup } from "react-icons/lu";
 import { SiAdobephotoshop, SiAffinitydesigner } from "react-icons/si";
 import { GiConfrontation } from "react-icons/gi";
 import { FaFacebook } from "react-icons/fa6";
-import { FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 
 
 export default function ContactPage() {
 
+    function getLinkedin(e) {
+        const url = "www.linkedin.com/in/yafiz-ham-b589051a9"
+        e.preventDefault();
+        window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
     return (
+
         <div className="min-h-screen  mx-auto flex duration-300">
 
             <div class="grid grid-cols-2 mx-auto mt-1 shadow-lg w-full rounded-sm max-md:grid-cols-1 pb-14">
@@ -24,10 +33,20 @@ export default function ContactPage() {
                         </div>
                     </figcaption>
                     <div class="flex items-start gap-5  justify-start mt-3">
-                        <FaFacebook size={37} className="hover:bg-white p-2 rounded-md " />
-                        <FaTwitter size={37} className="hover:bg-white p-2 rounded-md " />
-                        <FaYoutube size={37} className="hover:bg-white p-2 rounded-md " />
-                        <FaLinkedin size={37} className="hover:bg-white p-2 rounded-md " />
+                        <a href="https://github.com/Ham144/" target="_blank" rel="noopener noreferrer">
+                            <FaGithub size={37} href="" className="hover:bg-white p-2 rounded-md" />
+                        </a>
+
+                        <a href="https://x.com/hambebe144" target="_blank" rel="noopener noreferrer">
+                            <FaTwitter size={37} href="" className="hover:bg-white p-2 rounded-md " />
+                        </a>
+
+                        <a href="https://www.youtube.com/@myafizhambb144" target="_blank" rel="noopener noreferrer">
+                            <FaYoutube size={37} href="" className="hover:bg-white p-2 rounded-md " />
+                        </a>
+                        <a href="http://www.linkedin.com/in/yafiz-ham-b589051a9" target="_blank" rel="noopener noreferrer">
+                            <FaLinkedin size={37} className="hover:bg-white p-2 rounded-md " />
+                        </a>
                     </div>
                 </figure>
 
@@ -43,10 +62,21 @@ export default function ContactPage() {
                         </div>
                     </figcaption>
                     <div class="flex items-start gap-5  justify-start mt-3">
-                        <FaFacebook size={37} className="hover:bg-white p-2 rounded-md " />
-                        <FaTwitter size={37} className="hover:bg-white p-2 rounded-md " />
-                        <FaYoutube size={37} className="hover:bg-white p-2 rounded-md " />
-                        <FaLinkedin size={37} className="hover:bg-white p-2 rounded-md " />
+                        <a href="https://github.com/Ham144/" target="_blank" rel="noopener noreferrer">
+                            <FaGithub size={37} href="" className="hover:bg-white p-2 rounded-md" />
+                        </a>
+
+
+                        <a href="https://x.com/hambebe144" target="_blank" rel="noopener noreferrer">
+                            <FaTwitter size={37} href="" className="hover:bg-white p-2 rounded-md " />
+                        </a>
+
+                        <a href="https://www.youtube.com/@myafizhambb144" target="_blank" rel="noopener noreferrer">
+                            <FaYoutube size={37} href="" className="hover:bg-white p-2 rounded-md " />
+                        </a>
+                        <a href="http://www.linkedin.com/in/yafiz-ham-b589051a9" target="_blank" rel="noopener noreferrer">
+                            <FaLinkedin size={37} className="hover:bg-white p-2 rounded-md " />
+                        </a>
                     </div>
                 </figure>
 
@@ -63,10 +93,21 @@ export default function ContactPage() {
 
                     </figcaption>
                     <div class="flex items-start gap-5  justify-start mt-3">
-                        <FaFacebook size={37} className="hover:bg-white p-2 rounded-md " />
-                        <FaTwitter size={37} className="hover:bg-white p-2 rounded-md " />
-                        <FaYoutube size={37} className="hover:bg-white p-2 rounded-md " />
-                        <FaLinkedin size={37} className="hover:bg-white p-2 rounded-md " />
+                        <a href="https://github.com/Ham144/" target="_blank" rel="noopener noreferrer">
+                            <FaGithub size={37} href="" className="hover:bg-white p-2 rounded-md" />
+                        </a>
+
+
+                        <a href="https://x.com/hambebe144" target="_blank" rel="noopener noreferrer">
+                            <FaTwitter size={37} href="" className="hover:bg-white p-2 rounded-md " />
+                        </a>
+
+                        <a href="https://www.youtube.com/@myafizhambb144" target="_blank" rel="noopener noreferrer">
+                            <FaYoutube size={37} href="" className="hover:bg-white p-2 rounded-md " />
+                        </a>
+                        <a href="http://www.linkedin.com/in/yafiz-ham-b589051a9" target="_blank" rel="noopener noreferrer">
+                            <FaLinkedin size={37} className="hover:bg-white p-2 rounded-md " />
+                        </a>
                     </div>
                 </figure>
 
@@ -82,10 +123,21 @@ export default function ContactPage() {
                         </div>
                     </figcaption>
                     <div class="flex items-start gap-5  justify-start mt-3">
-                        <FaFacebook size={37} className="hover:bg-white p-2 rounded-md " />
-                        <FaTwitter size={37} className="hover:bg-white p-2 rounded-md " />
-                        <FaYoutube size={37} className="hover:bg-white p-2 rounded-md " />
-                        <FaLinkedin size={37} className="hover:bg-white p-2 rounded-md " />
+                        <a href="https://github.com/Ham144/" target="_blank" rel="noopener noreferrer">
+                            <FaGithub size={37} href="" className="hover:bg-white p-2 rounded-md" />
+                        </a>
+
+
+                        <a href="https://x.com/hambebe144" target="_blank" rel="noopener noreferrer">
+                            <FaTwitter size={37} href="" className="hover:bg-white p-2 rounded-md " />
+                        </a>
+
+                        <a href="https://www.youtube.com/@myafizhambb144" target="_blank" rel="noopener noreferrer">
+                            <FaYoutube size={37} href="" className="hover:bg-white p-2 rounded-md " />
+                        </a>
+                        <a href="http://www.linkedin.com/in/yafiz-ham-b589051a9" target="_blank" rel="noopener noreferrer">
+                            <FaLinkedin size={37} className="hover:bg-white p-2 rounded-md " />
+                        </a>
                     </div>
                 </figure>
 
