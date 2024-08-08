@@ -45,19 +45,20 @@ const Registerpage = () => {
         <section className='min-h-screen py-5 '>
             < form onSubmit={handleSubmitRegister} className='flex flex-col justify-center items-center mx-auto shadow-lg w-[400px] bg-sekunder rounded-md  mt-6 gap-y-2 ' >
                 < h1 className='text-4xl mb-4 font-serif font-light ' > Register</ h1>
+                <div className="badge badge-info mb-4 text-center mx-auto ">Register with google only currently</div>
                 <label className='font-bold' htmlFor="name">
-                    <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' placeholder='Name' value={name} onChange={ev => setName(ev.target.value)} autoFocus type="text" />
+                    <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' placeholder='Name' value={name} onChange={ev => setName(ev.target.value)} autoFocus type="text" disabled />
                 </label>
                 <label className='font-bold' htmlFor="Email">
-                    <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' placeholder='Email' type="text" value={email} onChange={(ev) => setEmail(ev.target.value)} />
+                    <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' placeholder='Email' type="text" value={email} onChange={(ev) => setEmail(ev.target.value)} disabled />
                 </label>
                 <label className='font-bold' htmlFor="Password">
                     <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' type="text" placeholder='Password' value={password} onChange={(ev) => setPassword(ev.target.value)} />
                 </label>
                 <label className='font-bold' htmlFor="name">
-                    <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' placeholder='Phone' value={phone} onChange={ev => setPhone(ev.target.value)} type="text" />
+                    <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' placeholder='Phone' value={phone} onChange={ev => setPhone(ev.target.value)} type="text" disabled />
                 </label>
-                <button type='submit' className='bg-primer text-black w-full'>
+                <button type='submit' className='bg-primer text-black w-full' disabled>
                     Register
                 </button>
                 <p className='text-center text-slate-500'>-Or Login with-</p>
