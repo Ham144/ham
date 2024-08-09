@@ -1,6 +1,7 @@
 import { AddedToCart } from "@/app/models/addedtocart"
 import { UserInfo } from "@/app/models/userInfo";
-import mongoose from "mongoose"
+
+const mongoose = require('mongoose');
 
 export async function POST(req) {
     mongoose.connect(process.env.MONGO_URL)
