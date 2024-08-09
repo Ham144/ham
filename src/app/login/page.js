@@ -28,12 +28,12 @@ export default function Loginpage() {
     return (
         <div className='min-h-screen py-5 flex flex-col items-center'>
 
-            <form onSubmit={handleSubmitLogin} className='flex flex-col justify-center items-center mx-auto shadow-lg w-[400px] bg-sekunder rounded-md   gap-y-2 '>
+            <form onSubmit={handleSubmitLogin} className='flex flex-col justify-center items-center mx-auto shadow-lg lg:w-[400px] w-full bg-sekunder rounded-md gap-y-2 '>
                 <h1 className='text-4xl mb-4 font-serif font-light '>Login</h1>
                 <div className="badge badge-info mb-4 text-center mx-auto ">Login with google only currently</div>
 
                 <label className='font-bold' htmlFor="Email">
-                    <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' placeholder='Email' type="text" value={email} onChange={(ev) => setEmail(ev.target.value)} disabled={loginInProgress} />
+                    <input className='border-2 rounded-md w-[300px]  h-12 mb-3 bg-slate-200 px-4 text-black mt-auto' placeholder='Email' type="text" value={email} onChange={(ev) => setEmail(ev.target.value)} disabled={loginInProgress} />
                 </label>
                 <label className='font-bold' htmlFor="Password">
                     <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' type="text" placeholder='Password' value={password} onChange={(ev) => setPassword(ev.target.value)} disabled={loginInProgress} />
@@ -42,10 +42,10 @@ export default function Loginpage() {
                     Login
                 </button>
                 <p className='text-center text-slate-500'>-Or Login with-</p>
-                <button type='button' onClick={handleGoogle} className='bg-sekunder flex justify-center items-center gap-x-5 w-full  hover:bg-slate-200 hover:text-black mb-2 cursor-pointer'>
+                <button type='button' onClick={handleGoogle} className='bg-sekunder flex justify-center items-center gap-x-5 w-full  hover:bg-slate-200 hover:text-black mb-2 cursor-pointer '>
                     <Image src={"/google.png"} alt='google' width={15} height={15} /> Google
                 </button>
-                <div>
+                <div className='lg:text-lg text-xs'>
                     no account yet? {" "}
                     <Link className='text-slate-600 ' href={"/register"} >Registration page here &raquo;</Link>
                 </div>

@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
             <Providers>
               <Navbar />
               <Toaster />
-              <div className="flex w-full lg:h-[100px] h-[40px] ">
+              <div className="flex w-full lg:h-[100px] h-[60px] ">
                 {/* ini untuk menjaga semua page tidak mepet keatas dan tidak tertutup fixed navbar */}
               </div>
               <div className="

@@ -42,8 +42,8 @@ const Registerpage = () => {
     }
 
     return (
-        <section className='min-h-screen py-5 '>
-            < form onSubmit={handleSubmitRegister} className='flex flex-col justify-center items-center mx-auto shadow-lg w-[400px] bg-sekunder rounded-md  mt-6 gap-y-2 ' >
+        <section className='min-h-screen py-5 mx-auto '>
+            < form onSubmit={handleSubmitRegister} className='flex flex-col justify-center items-center mx-auto shadow-lg lg:w-[400px] bg-sekunder rounded-md  mt-6 lg:gap-y-2 ' >
                 < h1 className='text-4xl mb-4 font-serif font-light ' > Register</ h1>
                 <div className="badge badge-info mb-4 text-center mx-auto ">Register with google only currently</div>
                 <label className='font-bold' htmlFor="name">
@@ -58,14 +58,14 @@ const Registerpage = () => {
                 <label className='font-bold' htmlFor="name">
                     <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' placeholder='Phone' value={phone} onChange={ev => setPhone(ev.target.value)} type="text" disabled />
                 </label>
-                <button type='submit' className='bg-primer text-black w-full' disabled>
+                <button type='submit' className='bg-primer text-black w-full ' disabled>
                     Register
                 </button>
-                <p className='text-center text-slate-500'>-Or Login with-</p>
+                <p className='text-center text-slate-500 '>-Or Login with-</p>
                 <button onClick={handleGoogle} className='bg-sekunder flex justify-center items-center gap-x-5 w-full  hover:bg-slate-200 hover:text-black mb-2'>
                     <Image src={"/google.png"} alt='google' width={15} height={15} /> Google
                 </button>
-                <div>
+                <div className='lg:text-lg text-xs'>
                     already have an acoount? {" "}
                     <Link className='text-slate-600 ' href={"/login"} >Login page here &raquo;</Link>
                 </div>

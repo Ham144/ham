@@ -2,7 +2,7 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
-import { FaDeleteLeft, FaFilter } from "react-icons/fa6";
+import { FaC, FaDeleteLeft, FaFilter } from "react-icons/fa6";
 import CategoryFilter from "../components/CategoryFilter";
 import NasiGoreng from "../components/NasiGoreng";
 
@@ -43,12 +43,24 @@ export default function MenuPage() {
     }
 
     function getFalseCategories() {
+        const preFilter = sessionStorage.getItem("preFilter")
         try {
             fetch("/api/categories").then(res => res.json()).then(data => {
                 if (data) {
                     const temp = []
                     data.map((category) => {
-                        temp.push({ [category.name]: false })
+                        if (!preFilter) {
+                            temp.push({ [category.name]: false })
+                        }
+                        else {
+                            if (category.name == preFilter) {
+                                temp.push({ [category.name]: true })
+                            }
+                            else {
+                                temp.push({ [category.name]: false })
+                            }
+                            sessionStorage.removeItem("preFilter")
+                        }
                     })
                     setCategories(temp)
                 }
@@ -128,6 +140,17 @@ export default function MenuPage() {
             setFilteredData(data)
         }
     }
+
+    // function setPreFiltering() {
+    //     try {
+    //         const preFilter = sessionStorage.getItem("preFilter")
+    //         if (!preFilter) return
+    //         handleClicked(preFilter)
+    //         sessionStorage.removeItem("preFilter")
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     useLayoutEffect(() => {
         getInitialShow()

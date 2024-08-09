@@ -68,7 +68,7 @@ const NasiGoreng = ({ props }) => {
     return (
 
 
-        <div className={`w-72   bg-gradient-radial from-white to-orange-200 shadow-md rounded-xl duration-1000 cursor-pointer hover:scale-105 hover:shadow-xl relative`} onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+        <div className={`w-72 min-h-[500px]  bg-gradient-radial from-white to-orange-200 shadow-md rounded-xl duration-1000 cursor-pointer hover:scale-105 hover:shadow-xl relative`} onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
             <div onClick={handleSingle} className={`${!hover ? "h-[430px]" : "500px"}}`}>
                 <Image className="h-80 w-72 object-cover rounded-t-xl" src={photoUrl} alt="Nasi Goreng" width={300} height={300} />
                 <div className="px-4 py-3 w-72 ">

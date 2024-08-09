@@ -6,6 +6,7 @@ import Popular from './components/Popular';
 import AboutSection from './components/AboutSection';
 import WhyChooseUs from './components/WhyChooseUs';
 import { useRouter } from 'next/navigation';
+import TypeWriterEffect from './components/TypeWriterEffect';
 
 const testimonials = [
   {
@@ -41,7 +42,7 @@ const testimonials = [
 
 const App = () => {
   const router = useRouter()
-
+  const stringHeading = "Do You Like Fried Rice..?"
   const [menuLength, setMenuLength] = useState(0)
   const [popular, setPopular] = useState(["xmnmxni", "nxmnxmnx", "nxmnxm"])
 
@@ -66,11 +67,11 @@ const App = () => {
   }, [])
   return (
     <>
-      <div className='flex flex-col pb-12 md:px-9 px-2 min-h-screen mx-auto max-md:py-4 max-md:w-screen overflow-x-hidden items-center'>
+      <div className='flex flex-col pb-12 md:px-9 px-2 min-h-screen mx-auto max-md:py-4 max-md:w-screen overflow-x-hidden items-center '>
         <div className='md:flex flex-1 mx-auto  items-center md:py-[100px]'>
           <div className='lg:w-[50%] flex flex-col gap-5 flex-1 '>
             <h1 className='md:text-8xl text-5xl  font-bold font-sans text-gray-700  text-wrap drop-shadow-lg max-md:z-20 max-md:text-center'>
-              Do You Like Fried Rice..??
+              <TypeWriterEffect strings={stringHeading} />
             </h1>
             <p className='description lg:opacity-60  text-wrap max-md:z-20 '>
               Welcome to Nasi Goreng, your go-to destination for the most delicious and mouth-watering fried rice menus. Whether you&apos;re a fan of classic fried rice or adventurous flavors, we&apos;ve got something for everyone. Explore our extensive collection of menus, tips, and cooking techniques to elevate your fried rice taste level.

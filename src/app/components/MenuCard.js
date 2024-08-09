@@ -105,16 +105,16 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id,
     }
 
     return (
-        <div className={`${deleted ? "hidden" : "flex"} justify-between w-full bg-slate-200 shadow-md mt-3 items-center`} >
+        <div className={`${deleted ? "hidden" : "flex"} justify-between w-full lg:flex-row flex-col bg-slate-200 shadow-md mt-3 items-center overflow-x-hidden`} >
 
             <div className='flex   gap-x-3 gap-y-2 py-2 px-3 mt-3 w-full border ' style={inEdit ? { border: "2px dashed black", backgroundColor: "#f7b86f" } : null}>
                 <div className='flex flex-col items-center  '>
-                    <Image width={200} height={200} src={editedPhotoUrl || "/main-logo.png"} alt='photoUrl' className='w-[180px] h-full object-cover flex ' />
+                    <Image width={200} height={200} src={editedPhotoUrl || "/main-logo.png"} alt='photoUrl' className='lg:w-[180px] w-full h-full object-cover flex ' />
                     <input type="text" className={`flex w-20 mt-2 p-1 ${inEdit ? "" :
                         "hidden "} `} placeholder='Photo url' value={editedPhotoUrl || ""} onChange={e => setEditedPhotoUrl(e.target.value)} />
                 </div>
                 <div className='flex flex-col justify-around items-start gap-y-3 w-[80%]'>
-                    <input type="text" value={editedMenuItem} onChange={e => setEditedMenuItem(e.target.value)} className={`font-bold underline ${inEdit ? "" : ""} px-1 `} disabled={!inEdit} />
+                    <input type="text" value={editedMenuItem} onChange={e => setEditedMenuItem(e.target.value)} className={`font-bold max-md:text-sm ${inEdit ? "" : ""} px-1 `} disabled={!inEdit} />
                     {
                         inEdit ?
                             <input type="text" value={editedDescription} onChange={e => setEditedDescription(e.target.value)} className={`flex w-full h-full text-wrap`}
@@ -137,20 +137,20 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id,
 
                 </div>
             </div>
-            <div className='editortab  flex flex-col items-center justify-self-end '>
-                <div className={`border hover:bg-blue-200 p-1 text-center flex flex-col items-center w-20 cursor-pointer ${someChanged && "bg-red-200"}`} onClick={cancel}>
+            <div className='editortab  flex lg:flex-col flex-row items-center justify-self-end '>
+                <div className={`border hover:bg-blue-200 p-1 text-center flex flex-col items-center lg:w-20 w-fit cursor-pointer ${someChanged && "bg-red-200"}`} onClick={cancel}>
                     <MdOutlineCancelScheduleSend size={20} />
                     cancel edit
                 </div>
-                <div className='border hover:bg-red-300 p-1 text-center flex flex-col items-center w-20 cursor-pointer' onClick={handleDelete}>
+                <div className='border hover:bg-red-300 p-1 text-center flex flex-col items-center lg:w-20 w-fit cursor-pointer' onClick={handleDelete}>
                     <MdDeleteForever size={20} />
                     delete
                 </div>
-                <div className='border hover:bg-blue-200 p-1 text-center flex flex-col items-center  w-20 cursor-pointer' onClick={() => editMenu(_id)}>
+                <div className='border hover:bg-blue-200 p-1 text-center flex flex-col items-center  lg:w-20 w-fit cursor-pointer' onClick={() => editMenu(_id)}>
                     <FaEdit size={20} />
                     Edit
                 </div>
-                <div className={`border hover:bg-blue-200 p-1 text-center flex flex-col items-center  w-20 cursor-pointer ${someChanged && "bg-green-300"}`} onClick={save} >
+                <div className={`border hover:bg-blue-200 p-1 text-center flex flex-col items-center  lg:w-20 w-fit cursor-pointer ${someChanged && "bg-green-300"}`} onClick={save} >
                     <FaRegSave size={20} />
                     save
                 </div>

@@ -77,13 +77,13 @@ const UsersPage = () => {
         <div className='flex px-4 overflow-hidden '>
             <ProfileBar isAdmin={true} />
             <div className='flex flex-col-reverse h-full mx-auto 
-            md:w-[50%] max-md:translate-x-7 mb-12 '>{
+            lg:w-[50%] w-full max-md:translate-x-7 mb-12 pr-4 '>{
                     users.length > 0 ? users.map((u) => (
-                        <div key={u._id} className='flex  border px-4 py-2 rounded-md mt-3 '>
+                        <div key={u._id} className='flex  px-4 py-2 rounded-md mt-3 max-md:text-sm max-md:flex-col max-md:gap-y-12'>
                             <div className='flex flex-col grow' >
                                 <h1 className='font-bold'>{u.name || <span className='text-slate-700 italic'>no name</span>}</h1>
                                 <p>{u.email || <span className='text-slate-700 italic'>no email</span>}</p>
-                                <div className='flex justify-start md:w-[500px] max-md:w-[100%] bg-slate-100 py-2 rounded-md px-2'>
+                                <div className='flex justify-start md:w-[500px] max-md:w-[100%] bg-slate-100 py-2 rounded-md px-2 max-md:text-xs truncate max-md:flex-col'>
                                     <span className='border-r-4'>Created At: {u.createdAt}</span>
                                     <span>updated At: {u.updatedAt}</span>
                                 </div>
@@ -94,7 +94,7 @@ const UsersPage = () => {
                                     <p>city : {u.city || <span className='text-slate-700 italic'>not found</span>}</p>
                                     <p className='font-bold'>, {u.country || <span className='text-slate-700 italic'> unknown country</span>}</p>
                                 </div>
-                                <div className='flex gap-2 hover:bg-slate-50 w-full' onClick={() => updateAdmin(u.email, u.isAdmin)}>
+                                <div className='flex gap-2 hover:bg-slate-50 w-full border p-2 rounded-md ' onClick={() => updateAdmin(u.email, u.isAdmin)}>
 
                                     <input type="checkbox" id={u._id} checked={u.isAdmin} />
                                     <label htmlFor={u._id}>{u?.isAdmin ? "uncheck to make this user no longer be admin" : "Check to make this user admin"} </label>

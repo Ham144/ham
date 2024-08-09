@@ -96,31 +96,31 @@ const MenuItemsPage = () => {
 
 
     return (
-        <div className='px-4 flex max-md:flex-col  min-h-screen gap-y-3 mb-8'>
+        <div className='px-4 flex max-md:flex-col   min-h-screen '>
             <ProfileBar isAdmin={true} />
 
-            <form onSubmit={handleNewItem} className=' flex flex-col gap-y-6 mx-auto border px-9 rounded-xl shadow-md py-8 mt-3 w-[600px]  max-md:w-[400px] h-full '>
-                <h1 className='text-center font-bold uppercase'>Add New Menu </h1>
+            <form onSubmit={handleNewItem} className=' flex flex-col gap-y-6 mx-auto   lg:border lg:px-9 rounded-xl lg:shadow-md py-8 mt-3 lg:w-[600px]  w-[86%] max-md:items-center h-full translate-x-7'>
+                <h1 className='text-center font-bold uppercase max-md:self-center'>Add New Menu </h1>
                 <div className='flex flex-col items-center gap-y-4'>
                     <Image src={photoUrl || '/main-logo.png'} width={100} height={100} alt='photo holder' />
-                    <div className='flex gap-x-3 items-stretch'>
-                        <input type="text" className='flex px-2 bg-slate-100 ' placeholder='paste link photo here' value={newPhoto} onChange={e => setNewPhoto(e.target.value)} />
-                        <button type='button' className='bg-primer' onClick={e => setPhotoUrl(prev => prev = newPhoto)}>save  photo</button>
+                    <div className='flex gap-x-3 items-stretch max-md:flex-col max-md:gap-y-3'>
+                        <input type="text" className='flex max-md:rounded-md text-center  bg-slate-100 max-md:px-0 max-md:h-12 ' placeholder='paste link photo here' value={newPhoto} onChange={e => setNewPhoto(e.target.value)} />
+                        <button type='button' className='bg-primer max-md:h-12 max-md:text-xs' onClick={e => setPhotoUrl(prev => prev = newPhoto)}>save  photo</button>
                     </div>
                 </div>
-                <div className='flex gap-x-5 justify-between  font-bold uppercase  mt-3 items-center'>
-                    <label htmlFor="menu-name" className='text-wrap'>menu name</label>
+                <div className='flex gap-x-5 justify-between  font-bold uppercase  mt-3 items-center '>
+                    <label htmlFor="menu-name" className='text-wrap max-md:text-sm'>menu name</label>
                     <input type="text" className='flex px-3 py-1 rounded-full w-[60%]  bg-slate-300 font-bold ' value={menuItem} onChange={e => setMenuItem(e.target.value)} />
                 </div>
                 <div className='flex gap-x-5 justify-between  font-bold uppercase  mt-3 '>
-                    <label htmlFor="description" className='text-wrap'>Description</label>
+                    <label htmlFor="description" className='text-wrap max-md:text-sm'>Description</label>
                     <input type="text" id='description' className='flex bg-slate-300 px-2 py-1 w-[60%] rounded-full ' value={description} onChange={e => setDescription(e.target.value)} />
                 </div>
                 <div className='flex gap-x-5 justify-between  font-bold uppercase  mt-3 items-center'>
-                    <label htmlFor="base-price" className='text-wrap'>base price</label>
+                    <label htmlFor="base-price" className='text-wrap max-md:text-sm'>base price</label>
                     <input type="text" className='flex px-3 py-1 rounded-full w-[60%]  bg-slate-300 font-bold ' value={basePrice} onChange={e => setBasePrice(e.target.value)} />
                 </div>
-                <div className='grid border p-4 justify-center items-center grid-cols-3'>
+                <div className='grid border lg:p-4 justify-center items-center lg:grid-cols-3 grid-cols-2 p-2 max-md:gap-6'>
                     {getCategories && getCategories[0]?.map((categ, index) => (
                         <div key={categ?._id} className='flex items-center  py-5 hover:bg-slate-100 justify-around shadow-lg'>
                             <label htmlFor={categ?._id}>{categ?.name}
@@ -136,9 +136,9 @@ const MenuItemsPage = () => {
 
             </form>
             {/* ----------------------- */}
-            <div className='flex flex-col my-4 md:w-[50%]  min-h-screen'>
+            <div className='flex flex-col my-4 md:w-[50%]  min-h-screen w-[90%] translate-x-8'>
                 <h1 className='text-center uppercase flex justify-center font-bold'>All menu List</h1>
-                <div className='flex flex-col-reverse'>
+                <div className='flex flex-col-reverse '>
                     {
                         createdMenus && createdMenus.length > 0 ?
                             createdMenus?.map((menu) => (

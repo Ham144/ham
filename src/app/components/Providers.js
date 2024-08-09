@@ -1,5 +1,5 @@
 "use client"
-import { getCartLength, getFavoriteLength, getItemsInCart } from '@/features/cart/cartSlice'
+import { getCartLength, getFavoriteLength, getItemsInCart } from '../../features/cart/cartSlice'
 import { store } from '@/store'
 import React from 'react'
 import { Provider } from 'react-redux'
