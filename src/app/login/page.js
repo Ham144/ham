@@ -36,7 +36,7 @@ export default function Loginpage() {
                     <input className='border-2 rounded-md w-[300px]  h-12 mb-3 bg-slate-200 px-4 text-black mt-auto' placeholder='Email' type="text" value={email} onChange={(ev) => setEmail(ev.target.value)} disabled={loginInProgress} />
                 </label>
                 <label className='font-bold' htmlFor="Password">
-                    <input className='border-2 rounded-md w-[300px] ml-4 h-12 mb-3 bg-slate-200 px-4 text-black' type="text" placeholder='Password' value={password} onChange={(ev) => setPassword(ev.target.value)} disabled={loginInProgress} />
+                    <input className='border-2 rounded-md w-[300px]  h-12 mb-3 bg-slate-200 px-4 text-black mt-auto' type="text" placeholder='Password' value={password} onChange={(ev) => setPassword(ev.target.value)} disabled={loginInProgress} />
                 </label>
                 <button type='submit' disabled={true} className='bg-primer bg-white text-black w-full' >
                     Login
@@ -45,7 +45,7 @@ export default function Loginpage() {
                 <button type='button' onClick={handleGoogle} className='bg-sekunder flex justify-center items-center gap-x-5 w-full  hover:bg-slate-200 hover:text-black mb-2 cursor-pointer '>
                     <Image src={"/google.png"} alt='google' width={15} height={15} /> Google
                 </button>
-                <div className='lg:text-lg text-xs'>
+                <div className='lg:text-[1.1rem] text-xs'>
                     no account yet? {" "}
                     <Link className='text-slate-600 ' href={"/register"} >Registration page here &raquo;</Link>
                 </div>

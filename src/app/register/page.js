@@ -65,7 +65,7 @@ const Registerpage = () => {
                 <button onClick={handleGoogle} className='bg-sekunder flex justify-center items-center gap-x-5 w-full  hover:bg-slate-200 hover:text-black mb-2'>
                     <Image src={"/google.png"} alt='google' width={15} height={15} /> Google
                 </button>
-                <div className='lg:text-lg text-xs'>
+                <div className='lg:text-[0.9rem] text-xs'>
                     already have an acoount? {" "}
                     <Link className='text-slate-600 ' href={"/login"} >Login page here &raquo;</Link>
                 </div>
