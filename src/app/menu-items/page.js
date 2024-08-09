@@ -96,7 +96,7 @@ const MenuItemsPage = () => {
 
 
     return (
-        <div className='px-4 flex max-md:flex-col   min-h-screen '>
+        <div className='px-4 flex max-md:flex-col   min-h-screen lg:overflow-x-hidden'>
             <ProfileBar isAdmin={true} />
 
             <form onSubmit={handleNewItem} className=' flex flex-col gap-y-6 mx-auto   lg:border lg:px-9 rounded-xl lg:shadow-md py-8 mt-3 lg:w-[600px]  w-[86%] max-md:items-center h-full translate-x-7'>
