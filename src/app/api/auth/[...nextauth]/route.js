@@ -19,7 +19,7 @@ if (!mongoose.connection.readyState) {
 
 export const authOption = {
     // Configure one or more authentication providers
-    secret: process.env.SECRET,
+    secret: process.env.SECRET, //production
     adapter: MongoDBAdapter(clientPromise),
     providers: [
         CredentialsProvider({
