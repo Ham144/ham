@@ -61,10 +61,10 @@ export const authOption = {
         // ...add more providers here
     ],
     callbacks: {
-        async signIn({ user, account, profile }) {
+        async signIn({ user, account, profile, credentials, email }) {
             console.log("SignIn callback - user:", user, "account:", account, "profile:", profile);
             if (account.provider === "google") {
-                const existingUser = await User.findOne({ email: profile.email });
+                const existingUser = await User.findOne({ email });
                 console.log("Google SignIn:", existingUser ? "User exists" : "User does not exist");
 
                 if (existingUser) {
