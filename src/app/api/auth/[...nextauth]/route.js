@@ -19,7 +19,7 @@ if (!mongoose.connection.readyState) {
 
 export const authOption = {
     // Configure one or more authentication providers
-    secret: process.env.SECRET, //production
+    secret: process.env.SECRET,
     adapter: MongoDBAdapter(clientPromise),
     providers: [
         CredentialsProvider({
@@ -70,7 +70,7 @@ export const authOption = {
                 if (existingUser) {
                     return true;
                 } else {
-                    return false;
+                    return true;
                 }
             }
             if (account.provider === "credentials") {
