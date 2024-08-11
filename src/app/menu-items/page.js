@@ -135,8 +135,8 @@ const MenuItemsPage = () => {
                 <button className='bg-sekunder hover:bg-slate-200 w-full mt-3 '>Add Menu</button>
 
             </form>
-            {/* ----------------------- */}
-            <div className='flex flex-col my-4 md:w-[50%]  min-h-screen w-[90%] translate-x-8'>
+            {/* ----------------------- all menu items editable */}
+            <div className='flex flex-col my-4 md:w-[50%]  min-h-screen w-[90%] translate-x-8 '>
                 <h1 className='text-center uppercase flex justify-center font-bold'>All menu List</h1>
                 <div className='flex flex-col-reverse '>
                     {

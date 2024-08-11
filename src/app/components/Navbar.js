@@ -27,7 +27,6 @@ const Navbar = () => {
             }, {});
     };
 
-    console.log(session.status)
 
     return (
         <nav className='flex fixed justify-between items-center md:px-5 px-1 py-4 w-full md:backdrop-blur-md shadow-md  max-md:px-2 
@@ -43,7 +42,7 @@ const Navbar = () => {
                 <Link className={`font-semibold ${path === "/about" ? " max-md:border-none max-md:border-t-2 " : ""} border-b-black hover:font-extrabold hover:border-b-2 duration-150`} href={"/about"}>About</Link>
                 <Link className={`font-semibold ${path === "/contact" ? "max-md:border-none max-md:border-t-2" : ""} border-b-black hover:font-extrabold hover:border-b-2 duration-150`} href={"/contact"}>Contact</Link>
             </div >
-            <div className='flex items-center gap-x-5'>
+            <div className='flex items-center lg:gap-x-5 gap-x-4'>
 
                 {
                     session?.status === "authenticated" ?
@@ -52,15 +51,15 @@ const Navbar = () => {
                             <div className='flex gap-x-4'>
                                 <button className='rounded-full  lg:mr-4 mr-3 ' title='profile current user' onClick={() => session?.status === "authenticated" ? router.push("/profile/0") : router.push("/login")}>
                                     <div className='flex  self-end justify-center'>
-                                        <CgProfile size={25} />
+                                        <CgProfile size={25} className='max-md:size-5' />
                                     </div>
                                 </button>
-                                <div className='cursor-pointer' onClick={() => router.push("/cart")}><BsCart size={26} />
+                                <div className='cursor-pointer' onClick={() => router.push("/cart")}><BsCart size={26} className='max-md:size-5' />
                                     <span title='the amount of item in total cheked and unchecked' className='absolute bottom-6 cursor-pointer translate-x-[-5px] bg-yellow-200 font-bold px-1 py-0 rounded-full  '>
                                         {totalProductinCart}
                                     </span>
                                 </div>
-                                <div className='cursor-pointer' onClick={() => router.push("/favorites")}><GrFavorite size={26} />
+                                <div className='cursor-pointer' onClick={() => router.push("/favorites")}><GrFavorite size={26} className='max-md:size-5' />
                                     <span title='the product you favorited' className='absolute bottom-6 cursor-pointer translate-x-[-5px] bg-yellow-200 font-bold px-1 py-0 rounded-full  '>
                                         {totalFavorites}
                                     </span>
@@ -83,11 +82,11 @@ const Navbar = () => {
                         <button onClick={() => {
                             signOut()
                             router.push("/")
-                        }} className='bg-primer w-[130px]'>Log Out</button>
+                        }} className='bg-primer lg:w-[130px] w-full max-md:text-xs max-md:p-2'>Log Out</button>
                     </div>
                 }
             </div>
-        </nav>
+        </nav >
     )
 }
 

@@ -6,6 +6,8 @@ import { addPlusMinusQuantity, changeIsFavorite, deleteOne, getFavoriteLength, g
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { changeCheck } from '@/features/cart/cartSlice'
+import { MdOutlineZoomOutMap } from "react-icons/md";
+
 
 const CartItem = (props) => {
     const { ...item } = props.item
@@ -67,7 +69,7 @@ const CartItem = (props) => {
         <div >
             <ul className="flex flex-col divide-y lg:w-[60%] mx-auto dark:divide-gray-300" >
                 <li className="flex flex-col py-6 sm:flex-row sm:justify-between border p-4">
-                    <div className="flex w-full space-x-2 sm:space-x-4 ">
+                    <div className="flex w-full space-x-2 sm:space-x-4 max-md:flex-col">
                         {/* <Image className="flex-shrink-0 object-cover w-20 h-20 dark:border- rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500" src={image} alt="Polaroid camera" width={300} height={300} /> */}
                         <Image onClick={() => setZoomin((prev) => setZoomin(!prev))} title='click  twice to zoom' style={zoomin ? {
                             position: "fixed",
@@ -78,11 +80,12 @@ const CartItem = (props) => {
                             zIndex: "20",
                             alignSelf: "center",
                             cursor: "zoom-out",
-                        } : ""} className={!zoomin ? `flex lg:h-56 lg:w-32 w-28 h-30
-                        object-cover cursor-zoom-in` : "lg:left-0 lg:top-[10%] self-center lg:w-full lg:h-[98vh] mx-auto"} src={image} alt='fried frice pic' width={1000} height={1000} />
+                        } : ""} className={!zoomin ? `flex lg:h-56 lg:w-32 w-28 max-md:w-full max-md:h-36 h-30
+                        object-cover cursor-zoom-in relative` : "lg:left-0 lg:top-[10%] self-center lg:w-full lg:h-[98vh] mx-auto relative"} src={image} alt='fried frice pic' width={1000} height={1000} />
+                        <MdOutlineZoomOutMap className='absolute translate-y-[-2]' />
 
                         <div className="flex flex-col justify-between w-full pb-4">
-                            <div className="flex justify-between w-full pb-2 space-x-2">
+                            <div className="flex max-md:flex-col justify-between w-full pb-2 space-x-2">
                                 <div className="space-y-1">
                                     <h3 className="text-lg font-semibold leading-snug sm:pr-8">{name}</h3>
                                     <p className="text-sm dark:text-gray-600 font-semibold">Quantity : {quantityOfItem}</p>
@@ -97,8 +100,8 @@ const CartItem = (props) => {
                             <div className='flex space-x-2 flex-1 font-extrabold '>
                                 <button onClick={() => {
                                     handleQuantity("minus")
-                                }} className='btn glass border  rounded-lg bg-orange-200 px-7 text-2xl'>-</button>
-                                <button onClick={() => handleQuantity("plus")} className='btn glass border  rounded-lg bg-orange-200 px-7 text-2xl'>+</button>
+                                }} className='btn glass border  rounded-lg bg-orange-200 lg:px-7 lg:text-2xl'>-</button>
+                                <button onClick={() => handleQuantity("plus")} className='btn glass border rounded-lg bg-orange-200 lg:px-7 lg:text-2xl'>+</button>
                             </div>
                             <div className="flex text-sm divide-x">
                                 <button type="button" className="hover:font-bold hover:text-red-500 flex items-center px-2 py-1 pl-0 space-x-1" onClick={async () => {
@@ -116,8 +119,8 @@ const CartItem = (props) => {
                                     <IoIosRemoveCircleOutline size={26} />
                                     <span>Remove</span>
                                 </button>
-                                <button type="button" className="hover:font-bold hover:text-yellow-500 flex items-center px-2 py-1 space-x-1">
-                                    <input type="checkbox" id='favorited' className="toggle bg-yellow-500" checked={isFavorited} onChange={(e) => setFavorited(menuItemId, e.target.checked)} />
+                                <button type="button" className="hover:font-bold hover:text-yellow-500 flex items-center px-2 py-1 space-x-1 ">
+                                    <input type="checkbox" id='favorited' className="toggle bg-yellow-500 " checked={isFavorited} onChange={(e) => setFavorited(menuItemId, e.target.checked)} />
                                     <label htmlFor="favorited">Favorite</label>
                                 </button>
                             </div>
@@ -127,7 +130,7 @@ const CartItem = (props) => {
                             </div>
                         </div>
                         <div className="flex flex-col w-14 items-center justify-center h-full ">
-                            <input type="checkbox" className="checkbox checkbox-warning" checked={isChecked} onChange={async () => {
+                            <input type="checkbox" className="checkbox checkbox-warning max-md:absolute right-6 max-md:text-xs" checked={isChecked} onChange={async () => {
                                 try {
                                     dispatch(changeCheck({ menuItemId, isChecked: !isChecked }))
                                     resetCheked(!isChecked, menuItemId)
