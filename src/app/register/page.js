@@ -43,9 +43,6 @@ const Registerpage = () => {
         }
     }
 
-    useEffect(() => {
-        handleSubmitRegister()
-    }, [])
 
     return (
         <section className='min-h-screen py-5 mx-auto '>
