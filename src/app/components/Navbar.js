@@ -75,7 +75,7 @@ const Navbar = () => {
                 {session?.status !== "authenticated" ?
                     <div className='flex lg:gap-x-5 gap-x-2 '>
                         <button onClick={() => router.push("/login")} className='bg-sekunder max-md:text-xs  ' >Login</button>
-                        <button onClick={() => router.push("/register")} className='bg-primer max-md:text-xs  ' >Register</button>
+                        {/* <button onClick={() => router.push("/register")} className='bg-primer max-md:text-xs  ' >Register</button> */}
                     </div>
                     :
                     <div>

@@ -4,6 +4,8 @@ import ProfileBar from '../components/ProfileBar'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
 import MenuCard from '../components/MenuCard'
+import { useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
 
 const MenuItemsPage = () => {
     const [menuItem, setMenuItem] = useState("")
@@ -16,6 +18,13 @@ const MenuItemsPage = () => {
     // ------------------------------------show created menus
     const [createdMenus, setCreatedMenus] = useState([])
 
+    const { user } = useSelector(state => state.user)
+
+    //redirect to home if not logged in
+    if (!user) {
+        const router = useRouter()
+        router.push("/")
+    }
 
     function fetchingMenus() {
         const getMenuPromise = fetch("/api/menuitems")

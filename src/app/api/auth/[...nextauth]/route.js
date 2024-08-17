@@ -6,6 +6,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "@/libs/mongoConnect";
 import bcrypt from "bcryptjs";
+import TwitterProvider from "next-auth/providers/twitter";
 
 if (!mongoose.connection.readyState) {
     mongoose.connect(process.env.MONGO_URL, {
@@ -27,13 +28,15 @@ export const authOption = {
             id: "credentials",
 
             credentials: {
-                email: { label: "Email", type: "email", placeholder: "email" },
-                password: { label: "Password", type: "password" },
+                email: { label: "email", type: "text" },
+                password: { label: "password", type: "password" }
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 const email = credentials?.email;
                 const password = credentials?.password;
 
+
+                console.log(email, password);// checking email and password is sent
                 mongoose.connect(process.env.MONGO_URL);
                 const user = await User.findOne({ email });
                 if (!user) {
@@ -57,49 +60,84 @@ export const authOption = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             allowDangerousEmailAccountLinking: true, // penting, kalau ga gini ga bisa login pake akun lain
         }),
-
+        TwitterProvider({
+            clientId: process.env.X_CLIENT_ID,
+            clientSecret: process.env.X_CLIENT_SECRET,
+            version: "2.0",
+        })
         // ...add more providers here
     ],
     callbacks: {
+
+        async jwt({ token, user }) {
+            if (user) {
+                token.id = user.id;
+                token.email = user?.email;
+                token.name = user?.name;
+                token.image = user?.image;
+                token.isAdmin = true
+            }
+            return token;
+        },
         async signIn({ user, account, profile, credentials, email }) {
-            console.log("SignIn callback - user:", user, "account:", account, "profile:", profile);
             if (account.provider === "google") {
                 const existingUser = await User.findOne({ email });
-                console.log("Google SignIn:", existingUser ? "User exists" : "User does not exist");
 
+                if (existingUser) {
+                    return true;
+                } else {
+                    user.isAdmin = true
+                    return true;
+                }
+            }
+            else if (account.provider === "twitter") {
+                const existingUser = await User.findOne({ email });
                 if (existingUser) {
                     return true;
                 } else {
                     return true;
                 }
             }
-            if (account.provider === "credentials") {
-                console.log("Credentials SignIn:", user ? "User exists" : "User does not exist");
+            else if (account.provider === "credentials") {
+                profile.isAdmin = true
                 this.session.user = profile;
-                return true;
+                this.session.jwt = profile;
+                this.session = user
+                return true
             }
         },
-        async session({ session, token }) {
+        async session({ session, token, user }) {
+            console.log(session, token)
             if (token?.sub) {
                 const user = await User.findById(token.sub);
                 if (user) {
                     session.user = {
                         id: user?._id,
-                        email: user.email,
+                        email: user?.email,
                         name: user?.name,
                         image: user?.image,
+                        isAdmin: true
                     };
                 }
+                return session;
+            } else {
+                session.user.isAdmin = true;
+                return session
             }
-            return session;
         },
         async jwt({ token, user }) {
-            console.log("JWT callback - token:", token, "user:", user);
             if (user) {
-                token.sub = user.id;
+                token.isAdmin = true;
             }
             return token;
-        }
+        },
+
+    },
+    session: {
+        jwt: true
+    },
+    jwt: {
+        secret: process.env.JWT_SECRET
     },
     events: {
         async signOut(message) {

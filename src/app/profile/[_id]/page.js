@@ -132,49 +132,47 @@ const Profilepage = () => {
 
     return (
         <section className='flex flex-col  w-full px-4 '>
-            <ProfileBar isAdmin={isAdmin} />
-            <div className='flex flex-col md:w-[50%] w-full mt-6 border-t-8  border-yellow-500 mx-auto py-5 px-12  bg-slate-100 min-h-[500px] rounded-b-md shadow-md gap-x-5 max-md:flex-col  justify-center   items-center'  >
+            <ProfileBar isAdmin={true} />
+            <div className='flex flex-col md:w-[50%] w-full mt-6 border-t-8  border-yellow-500 mx-auto py-5 lg:px-12 px-4  bg-slate-100 min-h-[500px] rounded-b-md shadow-md gap-x-5 max-md:flex-col  justify-center items-center'  >
                 <Image onClick={() => setZoomin(() => setZoomin(!zoomin))} style={zoomin ? { position: "absolute", width: "1680px", height: "1000px", borderRadius: "0", objectFit: "contain", border: "none", padding: "15%", backgroundColor: "rgba(23,23,23,0.3)", zIndex: "20", alignSelf: "center", cursor: "zoom-out" } : ""} className='w-[30%] h-[50%]  rounded-full border-4 border-yellow-500 cursor-zoom-in' src={image || "/profile.png"} alt='profile pic' width={1000} height={1000} />
-                <div className='mt-[-10px] '>
+                <div className='mt-[-10px] max-md:mb-12 '>
                     <label htmlFor="change">
                         <input type="file" id='change' onChange={handleChangePicture} className='hidden' />
                         <span className='bg-primer max-md:p-2'>change</span>
                     </label>
                 </div>
-                <form onSubmit={handleSave} className='flex flex-col w-full gap-y-5 h-[120%] mb-10'>
-                    <button type='button' onClick={handleRefresh} className='shadow-md active:shadow-none px-6 py-2'>Refresh</button>
+                <form onSubmit={handleSave} className='flex flex-col w-full lg:gap-y-5 gap-3 h-[120%] mb-10 '>
+                    {/* <button type='button' onClick={handleRefresh} className='shadow-md active:shadow-none px-6 py-2'>Refresh</button> */}
                     <div className='flex justify-between items-center'>
                         <label htmlFor="name" className='text-primer max-md:text-xs'>Name </label>
-                        <input type="text" id='name' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={name} onChange={e => setName(e.target.value)} />
+                        <input type="text" id='name' className='px-3  bg-slate-200 lg:w-[70%] w-[150px] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={name} onChange={e => setName(e.target.value)} />
                     </div>
                     <div className='flex justify-between items-center' onClick={() => toast(" Email is not changeable")}>
                         <label htmlFor="email" className='text-primer max-md:text-xs'  >Email</label>
-                        <input type="text" id='email' disabled value={email} className='px-3  bg-gray-400 w-[70%] h-11 max-md:w-[170px] rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' />
+                        <input type="text" id='email' disabled value={email} className='px-3  bg-gray-400 lg:w-[70%] w-[150px]  h-11  rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' />
 
                     </div>
 
-
-
                     <div className='flex justify-between items-center'>
                         <label htmlFor="phone" className='text-primer max-md:text-xs'>phone </label>
-                        <input type="text" id='phone' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 max-md:w-[170px] font-extrabold mb-4 focus:shadow-lg' value={phone} onChange={e => setPhone(e.target.value)} />
+                        <input type="text" id='phone' className='px-3  bg-slate-200 lg:w-[70%] w-[150px] h-11 rounded-full duration-500  font-extrabold mb-4 focus:shadow-lg' value={phone} onChange={e => setPhone(e.target.value)} />
                     </div>
 
                     <div className='flex justify-between items-center'>
                         <label htmlFor="city" className='text-primer max-md:text-xs'>city </label>
-                        <input type="text" id='city' className='px-3  bg-slate-200 w-[70%] h-11 rounded-full duration-500 max-md:w-[170px] font-extrabold mb-4 focus:shadow-lg' value={city} onChange={e => setCity(e.target.value)} />
+                        <input type="text" id='city' className='px-3  bg-slate-200 lg:w-[70%] w-[150px] h-11 rounded-full duration-500  font-extrabold mb-4 focus:shadow-lg' value={city} onChange={e => setCity(e.target.value)} />
                     </div>
                     <div className='flex justify-between items-center'>
                         <label htmlFor="postalCode" className='text-primer max-md:text-xs'>Postal code</label>
-                        <input type="text" id='postalCode' className='px-3  bg-slate-200 w-[70%] max-md:w-[170px] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={postalCode} onChange={e => setPostalCode(e.target.value)} />
+                        <input type="text" id='postalCode' className='px-3  bg-slate-200 lg:w-[70%] w-[150px] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={postalCode} onChange={e => setPostalCode(e.target.value)} />
                     </div>
                     <div className='flex justify-between items-center'>
                         <label htmlFor="country" className='text-primer max-md:text-xs'>country</label>
-                        <input type="text" id='country' className='px-3  bg-slate-200 w-[70%] max-md:w-[170px] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg ' value={country} onChange={e => setCountry(e.target.value)} />
+                        <input type="text" id='country' className='px-3  bg-slate-200 lg:w-[70%] w-[150px] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg ' value={country} onChange={e => setCountry(e.target.value)} />
                     </div>
                     <div className='flex justify-between items-center'>
                         <label htmlFor="specificAddress" className='text-primer max-md:text-xs'>specific address</label>
-                        <input type="text" id='specificAddress' className='px-3  bg-slate-200 w-[70%] max-md:w-[170px] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={specificAddress} onChange={e => setSpecificAddress(e.target.value)} />
+                        <input type="text" id='specificAddress' className='px-3  bg-slate-200 lg:w-[70%] w-[150px] h-11 rounded-full duration-500 font-extrabold mb-4 focus:shadow-lg' value={specificAddress} onChange={e => setSpecificAddress(e.target.value)} />
                     </div>
 
 

@@ -9,6 +9,10 @@ const AuthenticationProvider = ({ children }) => {
         await signIn("google", { callbackUrl: "/" })
     }
 
+    async function handleTwitter() {
+        await signIn("twitter", { callbackUrl: "/" })
+    }
+
     async function handleSubmitLogin(setloginInProgress, email, password, signIn) {
         setloginInProgress(true)
         try {
@@ -21,7 +25,7 @@ const AuthenticationProvider = ({ children }) => {
 
 
     return (
-        <GlobalContext.Provider value={{ handleGoogle, handleCredentials: handleSubmitLogin, }}>
+        <GlobalContext.Provider value={{ handleGoogle, handleCredentials: handleSubmitLogin, handleTwitter }}>
             {children}
         </GlobalContext.Provider>
     )

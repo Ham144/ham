@@ -34,7 +34,8 @@ const UserInfoSchema = new Schema({
     },
     isAdmin: {
         type: Boolean,
-        default: true
+        default: true,
+        required: true
     }
 }, { timestamps: true })
 

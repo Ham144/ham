@@ -10,10 +10,10 @@ export async function POST(req) {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(body.password, salt);
         body.password = hash
+        body.isAdmin = true
         createdUser = await User.create(body)
-        // console.log(body.password)
     } catch (error) {
-        console.log("Registration failed, similar email found.")
+        throw new Error("Registration failed, similar email found.")
     }
     if (createdUser) {
         return Response.json({ ok: true, msg: "Registration success!!" })

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import ProfileBar from '../components/ProfileBar'
 import useProfile from '../components/UseProfile'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
 
 const CategoriesPage = () => {
 
@@ -10,8 +12,15 @@ const CategoriesPage = () => {
     const [newCategory, setNewCategory] = useState("")
     const [categories, setCategories] = useState(null)
 
+    const { user } = useSelector(state => state.user)
+
+    if (!user) {
+        const router = useRouter()
+        router.push("/")
+    }
+
     function getCategory() {
-        const response = fetch("/api/categories")
+        fetch("/api/categories")
             .then(response => response.json())
             .then(data => setCategories(prev => prev = data))
     }
@@ -83,7 +92,7 @@ const CategoriesPage = () => {
 
     return (
         <div className='flex flex-col px-4 min-h-screen  '>
-            <ProfileBar isAdmin={data?.isAdmin} />
+            <ProfileBar isAdmin={true} />
             <div className='flex flex-col justify-center items-center  mx-auto '>
                 <form onSubmit={handleSubmitCategories} className='flex flex-col md:w-[500px] py-5 gap-y-4'>
                     <label htmlFor="category" className=' flex font-bold  w-full '>New Category</label>
