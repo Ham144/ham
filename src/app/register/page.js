@@ -17,6 +17,7 @@ const Registerpage = () => {
     const router = useRouter()
     const { handleGoogle } = useContext(GlobalContext)
 
+
     if (useSession().status == "authenticated") return redirect("/")
 
     async function handleSubmitRegister(ev) {
@@ -62,7 +63,7 @@ const Registerpage = () => {
                     Register
                 </button>
                 <p className='text-center text-slate-500 '>-Or Login with-</p>
-                <button onClick={handleGoogle} className='bg-sekunder flex justify-center items-center gap-x-5 w-full  hover:bg-slate-200 hover:text-black mb-2'>
+                <button type='button' onClick={handleGoogle} className='bg-sekunder flex justify-center items-center gap-x-5 w-full  hover:bg-slate-200 hover:text-black mb-2 cursor-pointer '>
                     <Image src={"/google.png"} alt='google' width={15} height={15} /> Google
                 </button>
                 <div className='lg:text-[0.9rem] text-xs'>
