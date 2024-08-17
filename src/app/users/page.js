@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 import { FaExternalLinkAlt } from 'react-icons/fa'
 import Spinner from '../components/Spinner'
 import { useSelector } from 'react-redux'
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 
 
 const UsersPage = () => {
