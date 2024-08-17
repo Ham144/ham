@@ -4,7 +4,7 @@ import ProfileBar from '../components/ProfileBar'
 import useProfile from '../components/UseProfile'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 
 const CategoriesPage = () => {
 
@@ -14,8 +14,9 @@ const CategoriesPage = () => {
 
     const { user } = useSelector(state => state.user)
 
+
     if (!user) {
-        document.URL = "/"
+        redirect("/login")
     }
 
     function getCategory() {

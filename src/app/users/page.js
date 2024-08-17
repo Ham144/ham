@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 import { FaExternalLinkAlt } from 'react-icons/fa'
 import Spinner from '../components/Spinner'
 import { useSelector } from 'react-redux'
+import { redirect } from 'next/navigation'
 
 
 const UsersPage = () => {
@@ -14,8 +15,9 @@ const UsersPage = () => {
     const { user } = useSelector(state => state?.user)
 
     //redirect to home if not authenticated
+
     if (!user) {
-        document.URL = "/"
+        redirect("/login")
     }
     const getAllUsers = async () => {
         const usersPromise = fetch("/api/users")

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import toast from 'react-hot-toast'
 import MenuCard from '../components/MenuCard'
 import { useSelector } from 'react-redux'
+import { redirect } from 'next/navigation'
 
 const MenuItemsPage = () => {
     const [menuItem, setMenuItem] = useState("")
@@ -20,8 +21,9 @@ const MenuItemsPage = () => {
     const { user } = useSelector(state => state.user)
 
     //redirect to home if not logged in
+
     if (!user) {
-        document.URL = "/"
+        redirect("/login")
     }
 
     function fetchingMenus() {
