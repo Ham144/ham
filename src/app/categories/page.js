@@ -15,8 +15,7 @@ const CategoriesPage = () => {
     const { user } = useSelector(state => state.user)
 
     if (!user) {
-        const router = useRouter()
-        router.push("/")
+        document.URL = "/"
     }
 
     function getCategory() {
