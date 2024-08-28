@@ -69,7 +69,7 @@ const App = () => {
     <>
       <div className='flex flex-col pb-12 md:px-9 px-2 min-h-screen mx-auto max-md:py-4 max-md:w-screen overflow-x-hidden items-center '>
         <div className='md:flex flex-1 mx-auto  items-center md:py-[100px]'>
-          <div className='lg:w-[50%] flex flex-col gap-5 flex-1 '>
+          <div className='lg:w-[50%]  flex flex-col gap-5 flex-1 '>
             <h1 className='md:text-8xl text-5xl  font-bold font-sans text-gray-700  text-wrap drop-shadow-lg max-md:z-20 max-md:text-center'>
               <TypeWriterEffect strings={stringHeading} />
             </h1>

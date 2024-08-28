@@ -164,7 +164,7 @@ export default function MenuPage() {
 
     return (
         <section className="menu flex flex-col min-h-screen mb-12">
-            <div className="search flex w-full justify-center items-center mt-7">
+            <div className="search flex w-full justify-center items-center mt-7 ">
                 <input type="text" className="md:w-[50%] max-md:w-[90%] flex px-4 py-2 bg-gradient-radial from-orange-100 to-red-50 shadow-lg outline-dashed  cursor-text rounded-3xl  font-bold italic items-center" onChange={e => setSearchString(e.target.value)} value={searchString} onKeyDown={e => e.key === "Enter" && handleSearch()} />
                 {
                     searchString.length > 0 ? <FaDeleteLeft onClick={handleClear} className="flex cursor-pointer translate-x-[-40px] drop-shadow-lg" /> :
@@ -192,7 +192,7 @@ export default function MenuPage() {
                 <div className='flex flex-col  items-center ' >
                     <div className='flex flex-col font-bold items-center'>
                         <section id="Projects"
-                            className="mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center  justify-center  gap-y-20 gap-x-14 mt-10 mb-5 items-center">
+                            className="mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center  justify-center  gap-y-20 gap-x-14 mt-10 mb-5 items-center lg:w-[90%] ">
                             {
                                 filteredData?.length > 0 ? filteredData.map((item, index) => <NasiGoreng key={item._id} props={item} />) : <p className="text-3xl font-extralight ">No Items Found</p>
                             }
