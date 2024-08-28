@@ -192,7 +192,7 @@ export default function MenuPage() {
                 <div className='flex flex-col  items-center ' >
                     <div className='flex flex-col font-bold items-center'>
                         <section id="Projects"
-                            className="mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center  justify-center  gap-y-20 gap-x-14 mt-10 mb-5 items-center lg:w-[90%] ">
+                            className="mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center  justify-center  gap-y-20 gap-x-14 lg:gap-x-20 mt-10 mb-5 items-center lg:w-[85%] ">
                             {
                                 filteredData?.length > 0 ? filteredData.map((item, index) => <NasiGoreng key={item._id} props={item} />) : <p className="text-3xl font-extralight ">No Items Found</p>
                             }

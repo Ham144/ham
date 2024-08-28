@@ -11,7 +11,7 @@ const Popular = (props) => {
                     className='object-cover rounded-md p-3 max-md:w-full max-md:h-44'
                     src={popular?.photoUrl} width={200} height={200} />
                 <div className="card-body ">
-                    <h2 className="card-title">{popular.menuItem}</h2>
+                    <h2 className="card-title text-sm font-bold font-sans">{popular.menuItem}</h2>
                     <div className='truncate h-12 text-wrap'>Start from :
                         <span className="badge bg-orange-100 mx-3 font-extrabold">{popular.basePrice}$</span>
                     </div>

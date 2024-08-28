@@ -70,10 +70,10 @@ const App = () => {
       <div className='flex flex-col pb-12 md:px-9 px-2 min-h-screen mx-auto max-md:py-4 max-md:w-screen overflow-x-hidden items-center '>
         <div className='md:flex flex-1 mx-auto  items-center md:py-[100px]'>
           <div className='lg:w-[50%]  flex flex-col gap-5 flex-1 '>
-            <h1 className='md:text-8xl text-5xl  font-bold font-sans text-gray-700  text-wrap drop-shadow-lg max-md:z-20 max-md:text-center'>
+            <h1 className='md:text-8xl text-5xl  font-extralight text-gray-700  text-wrap drop-shadow-lg max-md:z-20 max-md:text-center '>
               <TypeWriterEffect strings={stringHeading} />
             </h1>
-            <p className='description lg:opacity-60  text-wrap max-md:z-20 '>
+            <p className='description font-sans lg:opacity-60  text-wrap max-md:z-20 '>
               Welcome to Nasi Goreng, your go-to destination for the most delicious and mouth-watering fried rice menus. Whether you&apos;re a fan of classic fried rice or adventurous flavors, we&apos;ve got something for everyone. Explore our extensive collection of menus, tips, and cooking techniques to elevate your fried rice taste level.
             </p>
             <div className='flex gap-4 items-center max-md:flex-col'>
