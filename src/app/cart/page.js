@@ -21,7 +21,6 @@ export default function CartPage() {
     dispatch(getFavoriteLength(user?._id))
 
 
-
     let data = useSelector(getAddedToCart)
 
 
@@ -82,8 +81,8 @@ export default function CartPage() {
     }, [itemCheckedTotal, data.checked, data])
 
     useEffect(() => {
-        if (!itemCheckedTotal || itemCheckedTotal == undefined) return
-        toast.success('Your total is : ' + itemCheckedTotal + "$")
+        if (!itemCheckedTotal || itemCheckedTotal == undefined)
+            toast.success('Your total is : ' + itemCheckedTotal + "$")
     }, [itemCheckedTotal])
 
     return (

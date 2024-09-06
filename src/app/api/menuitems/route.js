@@ -21,7 +21,6 @@ export async function PUT(req) {
 //get All created Menu
 export async function GET() {
     mongoose.connect(process.env.MONGO_URL)
-    console.log("hited")
     const data = await MenuItems.find()
     if (!data || (await data).length <= 0) return Response.json({ ok: false, status: 404, msg: "item is 0" })
     return Response.json(data, { ok: true })

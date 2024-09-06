@@ -60,7 +60,6 @@ export async function PATCH(req) {
     mongoose.connect(process.env.MONGO_URL)
     const data = await AddedToCart.findOneAndUpdate({ menuItemId: _id, userInfos_id }, { checked, quantity })
     if (!data || data == null) {
-        console.log(data)
         return Response.json({ ok: false, msg: "data not found" })
     }
     else {

@@ -16,9 +16,9 @@ const NasiGoreng = ({ props }) => {
     const router = useRouter()
 
     const dispatch = useDispatch()
-    function fetchingUserInfos() {
+    async function fetchingUserInfos() {
         try {
-            fetch("/api/profile").then(res => res.json()).then(data => setUserInfos(data))
+            await fetch("/api/profile").then(res => res.json()).then(data => setUserInfos(data))
 
         } catch (error) {
             console.log(error)
@@ -35,7 +35,7 @@ const NasiGoreng = ({ props }) => {
     const menuItem = props?.menuItem
     const description = props?.description
     const basePrice = props?.basePrice
-    const photoUrl = props?.photoUrl
+    const photoUrl = props.photoUrl || "/main-logo.png";
     const categories = props?.categories
     const menuItemId = props?._id || props?.menuItemId
 

@@ -66,7 +66,6 @@ const MenuCard = ({ menuItem, description, basePrice, photoUrl, categories, _id,
         })
         if (response.ok) {
             const data = await response.json()
-            console.log(data)
             toast.success("one or some menus has changed")
             setMenuItem(editedMenuItem)
             setDescription(editedDescription)

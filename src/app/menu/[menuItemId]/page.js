@@ -33,7 +33,6 @@ const MenuSinglePage = (props) => {
 
     useLayoutEffect(() => {
         if (session.status == "unauthenticated") toast.error("Please login first")
-
         fetchingSingle()
     }, [menuItemId])
 
@@ -42,19 +41,25 @@ const MenuSinglePage = (props) => {
     }
 
     async function handleAddtoCart() {
+
         try {
-            const data = await axios.post("/api/addedtocart", {
-                menuItemId: singleMenu._id,
-                name: singleMenu.menuItem,
-                quantity: 1,
-                price: singleMenu.basePrice,
-                image: singleMenu.photoUrl,
-                addedDate: new Date(),
-                checked: true,
-                userInfos_id: user._id
+            const response = await fetch("/api/addedtocart", {
+                method: "POST",
+                headers: { "Content-Type": "Application/json" },
+                body: JSON.stringify({
+                    menuItemId: singleMenu._id,
+                    name: singleMenu.menuItem,
+                    quantity: 1,
+                    price: singleMenu.basePrice,
+                    image: singleMenu.photoUrl,
+                    addedDate: new Date(),
+                    checked: true,
+                    userInfos_id: user._id
+                })
             })
-            if (!data.data.ok) toast.success(data.data.msg)
-            else toast.success(data.data.msg)
+            const data = await response.json()
+            if (!data.ok) toast.error(data.msg)
+            else toast.success(data.msg)
         } catch (error) {
             console.log(error)
         }
@@ -69,25 +74,27 @@ const MenuSinglePage = (props) => {
     }
 
     return (
-        <div className='flex flex-col lg:w-full overflow-x-clip lg:gap-y-4 gap-2 justify-center max-md:top-7 gap-x-2  min-h-screen  items-center mx-auto '>
+        <div className='flex flex-col  lg:w-[70%] max-md:w-full overflow-x-clip lg:gap-y-4 gap-2 justify-center max-md:top-7 gap-x-2  min-h-screen  items-center mx-auto '>
             <div className='flex bg-orange-50 '>
                 <div className='bg-gradient-to-tr from-amber-300 to-orange-500 rounded-lg ' />
                 <h2 className='text-3xl text-start font-semibold text-pretty uppercase'>{singleMenu.menuItem}</h2>
             </div>
             <div className='flex relative justify-center items-center flex-col'>
+                <div className='flex gap-2 '>
+                    {singleMenu.categories.map((item) => (
+                        <span key={Math.random()} onClick={() => setCookie(item)} className='badge badge-ghost badge-sm p-4 cursor-pointer text-medium bg-orange-100 border border-white font-bold shadow-xl mb-3'>{item}</span>
+                    ))}
+                </div>
                 <img
-                    className=' w-full rounded-md object-scale-down shadow-sm relative bg-transparent  lg:h-96 h-80'
+                    className=' w-full max-md:rounded-md rounded-md object-scale-down shadow-sm relative bg-transparent  lg:h-96 h-80 border self-center'
                     src={singleMenu.photoUrl} width={500} height={500} />
 
             </div>
             <div className='text-slate-500 font-light text-center leading-4 gap-y-4'>
 
-                <div className='flex gap-2 '>
-                    {singleMenu.categories.map((item) => (
-                        <span key={Math.random()} onClick={() => setCookie(item)} className='badge badge-ghost badge-sm p-4 cursor-pointer text-medium bg-orange-100 border border-white font-bold shadow-xl'>{item}</span>
-                    ))}
-                </div>
+
                 <p className='text-center py-5'>{singleMenu.description}</p>
+
             </div>
             <div className='flex items-center justify-between gap-x-4 gap-y-2'>
                 <button className="join-item btn btn-outline text-xs p-2" onClick={() => window.location = "/menu"}>Back to Menu</button>

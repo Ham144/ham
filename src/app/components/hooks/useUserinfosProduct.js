@@ -10,8 +10,6 @@ const useUserinfosProduct = () => {
     const [user, setUser] = useState()
     const [data, setData] = useState()
 
-
-
     let [refresh, setRefresh] = useState(false) //value ini digunakan untuk refetch
 
 
@@ -67,7 +65,7 @@ const useUserinfosProduct = () => {
                 }
             }
         }
-        else return
+
     }, [user, refresh, session.status])
 
 

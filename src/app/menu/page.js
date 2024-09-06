@@ -2,12 +2,12 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
-import { FaC, FaDeleteLeft, FaFilter } from "react-icons/fa6";
+import { FaDeleteLeft, FaFilter } from "react-icons/fa6";
 import CategoryFilter from "../components/CategoryFilter";
 import NasiGoreng from "../components/NasiGoreng";
 
 export default function MenuPage() {
-    const [data, setData] = useState(undefined);
+    const [data, setData] = useState();
     const [searchString, setSearchString] = useState("");
     const [categories, setCategories] = useState([])
     const [filteredData, setFilteredData] = useState([])
@@ -18,6 +18,7 @@ export default function MenuPage() {
     function handleClear() {
         setSearchString("");
     }
+
 
     async function handleSearch() {
         if (searchString.length === 0) return;
@@ -73,20 +74,16 @@ export default function MenuPage() {
         }
     }
 
-    function getInitialShow() {
-        try {
-            fetch("/api/menuitems").then(res => res.json()).then(data => {
-                if (data) {
-                    setData(data);
-                    setFilteredData(data);
-                }
-                else {
-                    toast.error("data null");
-                }
-            })
-        } catch (error) {
-            console.log(error)
-        }
+    async function getInitialShow() {
+        await fetch("/api/menuitems").then(res => res.json()).then(data => {
+            if (data) {
+                setData(data);
+                setFilteredData(data);
+            }
+            else {
+                throw new Error("data null");
+            }
+        })
     }
 
     function handleClicked(cat) {
@@ -152,7 +149,8 @@ export default function MenuPage() {
     //     }
     // }
 
-    useLayoutEffect(() => {
+
+    useEffect(() => {
         getInitialShow()
         getFalseCategories()
     }, [])
