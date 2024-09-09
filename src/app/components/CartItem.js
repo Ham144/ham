@@ -113,7 +113,6 @@ const CartItem = (props) => {
                                         const data = await response.json()
                                         if (data.ok) {
                                             toast.success(data.msg)
-                                            setDeletedCondition(true)
                                             return window.location.reload()
                                         }
                                     } catch (error) {
