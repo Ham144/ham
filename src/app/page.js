@@ -43,8 +43,8 @@ const testimonials = [
 const App = () => {
   const router = useRouter()
   const stringHeading = "Do You Like Fried Rice..?"
-  const [menuLength, setMenuLength] = useState(0)
-  const [popular, setPopular] = useState(["xmnmxni", "nxmnxmnx", "nxmnxm"])
+  const [menuLength, setMenuLength] = useState()
+  const [popular, setPopular] = useState([])
 
   function getMenuLength() {
     const res = axios.get("/api/menuitems").then(res => {
@@ -63,8 +63,9 @@ const App = () => {
 
 
   useLayoutEffect(() => {
-    getMenuLength()
+    // getMenuLength()
   }, [])
+
   return (
     <>
       <div className='flex flex-col pb-12 md:px-9 px-2 min-h-screen mx-auto max-md:py-4 max-md:w-screen overflow-x-hidden items-center '>
@@ -100,13 +101,16 @@ const App = () => {
           </div>
         </div>
         <h2 className='text-2xl text-center font-mono text-orange-500 py-4'>Popular</h2>
-        <div className='grid md:grid-cols-3  gap-5 mx-auto items-center lg:w-[95%] w'>
+        <div className='grid md:grid-cols-3 justify-center   gap-5 mx-auto items-center lg:w-[95%]  '>
           {popular && popular.length > 1 ?
             popular.map((item) => (
               <Popular popular={item} key={item?._id} handleLook={() => handleLook(item?._id)} />
             ))
             :
-            <span className="loading loading-spinner w-[300px] h-[300px] mx-auto self-center"></span>
+            <div className=' px-10 flex flex-1 justify-center w-full col-span-3'>
+              <span className="loading loading-spinner lg:w-20 w-12 bg-red-400  "></span>
+
+            </div>
           }
         </div>
 
@@ -117,7 +121,7 @@ const App = () => {
 
         <AboutSection />
         <WhyChooseUs />
-      </div>
+      </div >
     </>
   )
 }

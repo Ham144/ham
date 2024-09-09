@@ -1,16 +1,31 @@
 "use client";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { memo, useEffect, useLayoutEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
 import { FaDeleteLeft, FaFilter } from "react-icons/fa6";
 import CategoryFilter from "../components/CategoryFilter";
 import NasiGoreng from "../components/NasiGoreng";
+import useUserinfosProduct from "../components/hooks/useUserinfosProduct";
 
-export default function MenuPage() {
+const MenuPage = memo(() => {
     const [data, setData] = useState();
     const [searchString, setSearchString] = useState("");
     const [categories, setCategories] = useState([])
     const [filteredData, setFilteredData] = useState([])
+
+    const { user } = useUserinfosProduct()
+    const [userInfos, setUserInfos] = useState()
+
+    //jika suatu saat data tidak berubah awlau ada yg baru, kemungkinan karena memo 
+
+    async function fetchingUserInfos() {
+        try {
+            await fetch("/api/profile").then(res => res.json()).then(data => setUserInfos(data))
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const colors = ["cyan-blue", "green-blue", "purple-pink", "pink-orange", "teal-lime", "red-yellow"];
 
@@ -138,16 +153,9 @@ export default function MenuPage() {
         }
     }
 
-    // function setPreFiltering() {
-    //     try {
-    //         const preFilter = sessionStorage.getItem("preFilter")
-    //         if (!preFilter) return
-    //         handleClicked(preFilter)
-    //         sessionStorage.removeItem("preFilter")
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+    useLayoutEffect(() => {
+        fetchingUserInfos()
+    }, [])
 
 
     useEffect(() => {
@@ -192,7 +200,7 @@ export default function MenuPage() {
                         <section id="Projects"
                             className="mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center  justify-center  gap-y-20 gap-x-14 mt-10 mb-5 items-center lg:w-[94%] xl:px-8 lg:gap-x-16">
                             {
-                                filteredData?.length > 0 ? filteredData.map((item, index) => <NasiGoreng key={item._id} props={item} />) : <p className="text-3xl font-extralight ">No Items Found</p>
+                                filteredData?.length > 0 ? filteredData.map((item, index) => <NasiGoreng key={item._id} props={item} user={user} userInfos={userInfos} />) : <p className="text-3xl font-extralight ">No Items Found</p>
                             }
 
                         </section>
@@ -216,4 +224,5 @@ export default function MenuPage() {
 
         </section>
     )
-}
+})
+export default MenuPage

@@ -81,6 +81,7 @@ const CategoriesPage = () => {
     }
 
 
+
     useEffect(() => {
         getCategory()
     }, [categories?.length])

@@ -59,6 +59,10 @@ const MenuItemsPage = () => {
 
     async function handleNewItem(ev) {
         ev.preventDefault()
+        if (menuItem === "" || basePrice === "" || description === "" || newPhoto === "") toast("Please enter menu item")
+        if (Number(basePrice) == 0) toast("base price should higer then 1")
+        if (!categories.length) toast("at least 1 categories included")
+
         try {
             menuItem.at(0).toUpperCase()
             description.at(0).toUpperCase()

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { memo, useLayoutEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { FaShippingFast } from 'react-icons/fa'
 import { FaCartPlus } from "react-icons/fa";
@@ -9,27 +9,14 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 
-const NasiGoreng = ({ props }) => {
+const NasiGoreng = memo(({ props, user, userInfos }) => {
     const [hover, setHover] = useState(false)
-    const { user } = useUserinfosProduct()
-    const [userInfos, setUserInfos] = useState()
+
     const router = useRouter()
 
     const dispatch = useDispatch()
-    async function fetchingUserInfos() {
-        try {
-            await fetch("/api/profile").then(res => res.json()).then(data => setUserInfos(data))
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
 
     dispatch(getCartLength(user?._id))
-    useLayoutEffect(() => {
-        fetchingUserInfos()
-    }, [])
 
 
     const menuItem = props?.menuItem
@@ -89,6 +76,6 @@ const NasiGoreng = ({ props }) => {
             </div>
         </div>
     )
-}
+})
 
 export default NasiGoreng
