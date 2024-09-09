@@ -7,7 +7,7 @@ import CategoryFilter from "../components/CategoryFilter";
 import NasiGoreng from "../components/NasiGoreng";
 import useUserinfosProduct from "../components/hooks/useUserinfosProduct";
 
-const MenuPage = memo(() => {
+const MenuPage = () => {
     const [data, setData] = useState();
     const [searchString, setSearchString] = useState("");
     const [categories, setCategories] = useState([])
@@ -224,5 +224,5 @@ const MenuPage = memo(() => {
 
         </section>
     )
-})
+}
 export default MenuPage

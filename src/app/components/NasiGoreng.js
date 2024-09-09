@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 
-const NasiGoreng = memo(({ props, user, userInfos }) => {
+const NasiGoreng = ({ props, user, userInfos }) => {
     const [hover, setHover] = useState(false)
 
     const router = useRouter()
@@ -76,6 +76,6 @@ const NasiGoreng = memo(({ props, user, userInfos }) => {
             </div>
         </div>
     )
-})
+}
 
 export default NasiGoreng
