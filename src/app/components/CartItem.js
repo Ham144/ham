@@ -36,7 +36,7 @@ const CartItem = (props) => {
                 toast.error(data.msg)
             }
         } else {
-            toast.error("i dont even ttry")
+            toast.error("i dont even try")
         }
     }
 
@@ -106,11 +106,15 @@ const CartItem = (props) => {
                             <div className="flex text-sm divide-x">
                                 <button type="button" className="hover:font-bold hover:text-red-500 flex items-center px-2 py-1 pl-0 space-x-1" onClick={async () => {
                                     try {
-                                        const data = await axios.delete(`/api/addedtocart`, { data: { menuItemId, userInfos_id: user_id } })
-                                        if (data.data.ok) {
-                                            toast.success(data.data.msg)
+                                        const response = await fetch(`/api/addedtocart`, {
+                                            method: 'DELETE',
+                                            body: JSON.stringify({ menuItemId, userInfos_id: user_id }),
+                                        })
+                                        const data = await response.json()
+                                        if (data.ok) {
+                                            toast.success(data.msg)
                                             setDeletedCondition(true)
-                                            return
+                                            return window.location.reload()
                                         }
                                     } catch (error) {
                                         console.log(error)
