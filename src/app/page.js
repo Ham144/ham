@@ -63,7 +63,7 @@ const App = () => {
 
 
   useLayoutEffect(() => {
-    // getMenuLength()
+    getMenuLength()
   }, [])
 
   return (
